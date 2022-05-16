@@ -17,6 +17,18 @@ public partial class SportsGame : Game
 	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
 	public static SportsGame Instance => Current as SportsGame;
 
+	// Clientside HUD
+	public SportsHud Hud { get; set; }
+
+	public SportsGame()
+	{
+		// Create HUD clientside
+		if ( Host.IsClient )
+		{
+			Hud = new();
+		}
+	}
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
