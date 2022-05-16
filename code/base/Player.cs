@@ -8,6 +8,10 @@ public partial class BasePlayer : AnimEntity
 	[Net, Predicted] public BaseCarriable LastActiveChild { get; set; }
 	[Net, Predicted] public BaseCarriable ActiveChild { get; set; }
 
+	public DamageInfo LastDamageInfo { get; protected set; }
+
+	public BaseGamemode CurrentGamemode => GamemodeEntityComponent.GetOrCreate( Client )?.Gamemode;
+
 	public override void Simulate( Client cl )
 	{
 		if ( LifeState == LifeState.Dead )
@@ -25,8 +29,6 @@ public partial class BasePlayer : AnimEntity
 	public virtual void InitialSpawn()
 	{
 		Respawn();
-
-		SportsGame.Instance?.OnPawnJoined( this );
 	}
 
 	public virtual void Respawn()
@@ -46,22 +48,33 @@ public partial class BasePlayer : AnimEntity
 		CreateHull();
 		ResetInterpolation();
 
-		SportsGame.Instance?.OnPawnRespawned( this );
-		SportsGame.Instance?.MoveToSpawnpoint( this );
+		var gamemode = CurrentGamemode;
+		if ( gamemode.IsValid() )
+		{
+			// Decide spawn for when not in a gamemode
+			gamemode.MovePawnToSpawnpoint( this );
+		}
+		else
+		{
+			// Decide spawn for when not in a gamemode
+			SportsGame.Instance?.MoveToSpawnpoint( this );
+		}
 	}
 
 	public override void TakeDamage( DamageInfo info )
 	{
 		base.TakeDamage( info );
 
-		SportsGame.Instance?.OnPawnDamaged( this, info );
+		LastDamageInfo = info;
+
+		CurrentGamemode?.OnPawnDamaged( this, info );
 	}
 
 	public override void OnKilled()
 	{
 		base.OnKilled();
 
-		SportsGame.Instance?.OnPawnKilled( this );
+		CurrentGamemode?.OnPawnKilled( this, LastDamageInfo );
 	}
 
 	public virtual void SimulateActiveChild( Client client, BaseCarriable child )

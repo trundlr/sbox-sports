@@ -14,68 +14,37 @@ namespace Sports;
 
 public partial class SportsGame : Game
 {
-	[Net] public BaseGamemode Gamemode { get; set; }
+	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
 	public static SportsGame Instance => Current as SportsGame;
-
-	/// <summary>
-	/// Called on a pawn's Initial respawn.
-	/// </summary>
-	/// <param name="pawn">The Pawn that was respawned.</param>
-	public void OnPawnJoined( BasePlayer pawn )
-	{
-		Gamemode?.OnPawnJoined( pawn );
-	}
-
-	/// <summary>
-	/// Called when a pawn respawns.
-	/// </summary>
-	/// <param name="pawn">The Pawn that was respawned.</param>
-	public void OnPawnRespawned( BasePlayer pawn )
-	{
-		Gamemode?.OnPawnRespawned( pawn );
-	}
-
-	public override void MoveToSpawnpoint( Entity pawn )
-	{
-		if ( pawn is BasePlayer player )
-			Gamemode?.MovePawnToSpawnpoint( player );
-	}
-
-	public void OnPawnDamaged( BasePlayer pawn, DamageInfo dmg )
-	{
-		Gamemode?.OnPawnDamaged( pawn, dmg );
-	}
-
-	public void OnPawnKilled( BasePlayer pawn )
-	{
-		Gamemode?.OnPawnKilled( pawn );
-	}
 
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
 
-		Gamemode?.Simulate( cl );
+		foreach ( var gamemode in Gamemodes )
+		{
+			gamemode.Simulate( cl );
+		}
 	}
 
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
 
-		Gamemode?.OnClientJoined( cl );
+		// Give the client the ability to be referenced to a specific gamemode
+		GamemodeEntityComponent.GetOrCreate( cl );
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( cl, reason );
 
-		Gamemode?.OnClientDisconnected( cl, reason );
-	}
+		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		var gamemode = component.Gamemode;
 
-	public override void BuildInput( InputBuilder input )
-	{
-		base.BuildInput( input );
-
-		Gamemode?.BuildInput( input );
+		if ( gamemode.IsValid() )
+		{
+			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
+		}
 	}
 }
