@@ -127,4 +127,10 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <param name="pawn"></param>
 	public virtual void MovePawnToSpawnpoint( BasePlayer pawn ) { }
+	/// <summary>
+	/// Called to dress the pawn with the client's selected clothing
+	/// </summary>
+	/// <param name="pawn"></param>
+	/// <param name="container"></param>
+	public virtual void DressPlayer( BasePlayer pawn, Clothing.Container container ) { }
 }

@@ -20,7 +20,7 @@ public partial class SportsGame : Game
 	// Clientside HUD
 	public SportsHud Hud { get; set; }
 
-	public BasePlayer CreatePawn() => new BasePlayer();
+	public BasePlayer CreatePawn() => new PlazaPlayer();
 
 	/// <summary>
 	/// Set up the default pawn for when the player is not in a gamemode
@@ -29,7 +29,9 @@ public partial class SportsGame : Game
 	public void SetupDefaultPawn( Client cl )
 	{
 		cl.Pawn?.Delete();
-		cl.Pawn = CreatePawn();
+		var PlayerPawn = CreatePawn();
+		cl.Pawn = PlayerPawn;
+		PlayerPawn.InitialSpawn();
 	}
 
 	public SportsGame()
