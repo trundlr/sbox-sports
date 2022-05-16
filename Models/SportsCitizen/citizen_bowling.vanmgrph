@@ -3087,7 +3087,7 @@
 	}
 	m_previewModels = 
 	[
-		"models/sports_citizen/citizen_bowling.vmdl",
+		"models/sportscitizen/citizen_bowling.vmdl",
 	]
 	m_boneMergeModels = [  ]
 }

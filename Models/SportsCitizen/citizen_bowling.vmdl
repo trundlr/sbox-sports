@@ -37,7 +37,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "Models/Sports_Citizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
+						source_filename = "models/SportsCitizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
 						start_frame = 15
 						end_frame = -1
 						framerate = 25.0
@@ -58,7 +58,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "Models/Sports_Citizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
+						source_filename = "models/SportsCitizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
 						start_frame = 15
 						end_frame = 15
 						framerate = 25.0
@@ -71,7 +71,7 @@
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
-		anim_graph_name = "models/sports_citizen/citizen_bowling.vanmgrph"
+		anim_graph_name = "models/sportscitizen/citizen_bowling.vanmgrph"
 		base_model_name = "models/citizen/citizen.vmdl"
 	}
 }
