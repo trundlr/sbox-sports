@@ -1,0 +1,23 @@
+{
+  "Title": "Sports",
+  "Type": "game",
+  "Org": "trndlr",
+  "Ident": "sports",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": null,
+  "HasCode": true,
+  "CodePath": "/code/",
+  "RootNamespace": "Sports",
+  "Metadata": {
+    "MapList": [],
+    "MinPlayers": 1,
+    "MaxPlayers": 10,
+    "PerMapRanking": false,
+    "LeaderboardType": 0,
+    "RankType": 0,
+    "MapSelect": 0,
+    "GameNetworkType": 0
+  }
+}
