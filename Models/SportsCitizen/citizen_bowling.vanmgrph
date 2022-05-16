@@ -1612,7 +1612,7 @@
 				{
 					_class = "CCommentAnimNode"
 					m_sName = "Facial layers"
-					m_vecPosition = [ 704.0, -416.0 ]
+					m_vecPosition = [ 707.0, -381.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1118478640
@@ -3089,5 +3089,8 @@
 	[
 		"models/sportscitizen/citizen_bowling.vmdl",
 	]
-	m_boneMergeModels = [  ]
+	m_boneMergeModels = 
+	[
+		"models/sportscitizen/clothes/bowling/bowlinggloves.vmdl",
+	]
 }
