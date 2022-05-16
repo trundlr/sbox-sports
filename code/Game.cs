@@ -14,5 +14,13 @@ namespace Sports;
 
 public partial class SportsGame : Game
 {
-	
+	public override void ClientJoined( Client cl )
+	{
+		base.ClientJoined( cl );
+
+		var pawn = new BowlingPlayer();
+		pawn.Respawn();
+
+		cl.Pawn = pawn;
+	}
 }
