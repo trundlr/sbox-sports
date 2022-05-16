@@ -14,68 +14,64 @@ namespace Sports;
 
 public partial class SportsGame : Game
 {
-	[Net] public BaseGamemode Gamemode { get; set; }
+	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
 	public static SportsGame Instance => Current as SportsGame;
 
-	/// <summary>
-	/// Called on a pawn's Initial respawn.
-	/// </summary>
-	/// <param name="pawn">The Pawn that was respawned.</param>
-	public void OnPawnJoined( BasePlayer pawn )
-	{
-		Gamemode?.OnPawnJoined( pawn );
-	}
+	// Clientside HUD
+	public SportsHud Hud { get; set; }
+
+	public BasePlayer CreatePawn() => new BasePlayer();
 
 	/// <summary>
-	/// Called when a pawn respawns.
+	/// Set up the default pawn for when the player is not in a gamemode
 	/// </summary>
-	/// <param name="pawn">The Pawn that was respawned.</param>
-	public void OnPawnRespawned( BasePlayer pawn )
+	/// <param name="cl"></param>
+	public void SetupDefaultPawn( Client cl )
 	{
-		Gamemode?.OnPawnRespawned( pawn );
+		cl.Pawn?.Delete();
+		cl.Pawn = CreatePawn();
 	}
 
-	public override void MoveToSpawnpoint( Entity pawn )
+	public SportsGame()
 	{
-		if ( pawn is BasePlayer player )
-			Gamemode?.MovePawnToSpawnpoint( player );
-	}
-
-	public void OnPawnDamaged( BasePlayer pawn, DamageInfo dmg )
-	{
-		Gamemode?.OnPawnDamaged( pawn, dmg );
-	}
-
-	public void OnPawnKilled( BasePlayer pawn )
-	{
-		Gamemode?.OnPawnKilled( pawn );
+		// Create HUD clientside
+		if ( Host.IsClient )
+		{
+			Hud = new();
+		}
 	}
 
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
 
-		Gamemode?.Simulate( cl );
+		foreach ( var gamemode in Gamemodes )
+		{
+			gamemode.Simulate( cl );
+		}
 	}
 
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
 
-		Gamemode?.OnClientJoined( cl );
+		// Give the client the ability to be referenced to a specific gamemode
+		GamemodeEntityComponent.GetOrCreate( cl );
+
+		// Set up the default pawn
+		SetupDefaultPawn( cl );
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( cl, reason );
 
-		Gamemode?.OnClientDisconnected( cl, reason );
-	}
+		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		var gamemode = component.Gamemode;
 
-	public override void BuildInput( InputBuilder input )
-	{
-		base.BuildInput( input );
-
-		Gamemode?.BuildInput( input );
+		if ( gamemode.IsValid() )
+		{
+			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
+		}
 	}
 }
