@@ -14,5 +14,5 @@ namespace Sports;
 
 public partial class SportsGame : Game
 {
-	
+	[Net] public Gamemode Gamemode { get; set; }
 }
