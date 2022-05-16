@@ -36,4 +36,11 @@ public partial class SportsGame : Game
 
 		Gamemode?.OnClientDisconnected( cl, reason );
 	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		base.BuildInput( input );
+
+		Gamemode?.BuildInput( input );
+	}
 }
