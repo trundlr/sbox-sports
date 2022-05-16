@@ -1,7 +1,7 @@
 {
   "Title": "Sports",
   "Type": "game",
-  "Org": "trndlr",
+  "Org": "eagletavern",
   "Ident": "sports",
   "Schema": 1,
   "HasAssets": true,
@@ -13,7 +13,7 @@
   "Metadata": {
     "MapList": [],
     "MinPlayers": 1,
-    "MaxPlayers": 10,
+    "MaxPlayers": 24,
     "PerMapRanking": false,
     "LeaderboardType": 0,
     "RankType": 0,
