@@ -43,12 +43,18 @@ public abstract partial class BaseGamemode : Entity
 
 		Clients.Add( cl );
 
+		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		component.Gamemode = this;
+
 		OnClientAdded( cl );
 	}
 
 	public void RemoveClient( Client cl, LeaveReason reason = LeaveReason.Leave )
 	{
 		Clients.Remove( cl );
+
+		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		component.Gamemode = null;
 
 		OnClientRemoved( cl, reason );
 	}
@@ -74,11 +80,7 @@ public abstract partial class BaseGamemode : Entity
 	/// Called when a client has joined the gamemode
 	/// </summary>
 	/// <param name="cl"></param>
-	public virtual void OnClientAdded( Client cl )
-	{
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
-		component.Gamemode = this;
-	}
+	public virtual void OnClientAdded( Client cl ) { }
 
 	/// <summary>
 	/// Can we add a client to the gamemode? I.e it's full, or it's in progress (maybe we can delete this)
@@ -92,11 +94,7 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <param name="cl"></param>
 	/// <param name="reason"></param>
-	public virtual void OnClientRemoved( Client cl, LeaveReason reason = LeaveReason.Leave
-	{
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
-		component.Gamemode = null;
-	}
+	public virtual void OnClientRemoved( Client cl, LeaveReason reason = LeaveReason.Leave ) { }
 
 	/// <summary>
 	/// Called when a pawn is damaged while in a gamemode
