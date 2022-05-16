@@ -12,6 +12,8 @@ public partial class BasePlayer : AnimEntity
 
 	public BaseGamemode CurrentGamemode => GamemodeEntityComponent.GetOrCreate( Client )?.Gamemode;
 
+	public Clothing.Container ClothingContainer { get; protected set; }
+
 	public override void Simulate( Client cl )
 	{
 		if ( LifeState == LifeState.Dead )
@@ -28,7 +30,11 @@ public partial class BasePlayer : AnimEntity
 
 	public virtual void InitialSpawn()
 	{
+		ClothingContainer = new();
+		ClothingContainer.LoadFromClient( Client );
 		Respawn();
+		CurrentGamemode?.DressPlayer( this, ClothingContainer );
+		ClothingContainer.DressEntity( this );
 	}
 
 	public virtual void Respawn()
