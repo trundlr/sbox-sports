@@ -2,6 +2,9 @@
 
 public abstract partial class BaseGamemode : Entity
 {
+	[Net]
+	public IList<Client> Clients { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -20,9 +23,6 @@ public abstract partial class BaseGamemode : Entity
 
 		SportsGame.Instance?.Gamemodes.Remove( this );
 	}
-
-	[Net]
-	public IList<Client> Clients { get; set; }
 
 	public void Start()
 	{
@@ -46,6 +46,9 @@ public abstract partial class BaseGamemode : Entity
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = this;
 
+		cl.Pawn?.Delete();
+		cl.Pawn = CreatePawn();
+
 		OnClientAdded( cl );
 	}
 
@@ -56,6 +59,9 @@ public abstract partial class BaseGamemode : Entity
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = null;
 
+		// Go back to default pawn
+		SportsGame.Instance?.SetupDefaultPawn( cl );
+
 		OnClientRemoved( cl, reason );
 	}
 
@@ -64,6 +70,12 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <returns></returns>
 	public virtual Panel CreateHud() => null;
+
+	/// <summary>
+	/// The gamemode's specified Pawn
+	/// </summary>
+	/// <returns></returns>
+	public virtual BasePlayer CreatePawn() => new BasePlayer();
 
 	/// <summary>
 	/// Called when the gamemode starts, normally by having enough players
@@ -110,9 +122,9 @@ public abstract partial class BaseGamemode : Entity
 	/// <param name="lastdmg"></param>
 	public virtual void OnPawnKilled( BasePlayer pawn, DamageInfo lastdmg ) { }
 
-	// @TODO: should we remove this?
-	public virtual void OnPawnRespawned( BasePlayer pawn ) { }
-
-	// @TODO: should we remove this?
+	/// <summary>
+	/// Called to dictate where the player's pawn is moved to upon spawn
+	/// </summary>
+	/// <param name="pawn"></param>
 	public virtual void MovePawnToSpawnpoint( BasePlayer pawn ) { }
 }

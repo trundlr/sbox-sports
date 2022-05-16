@@ -20,6 +20,18 @@ public partial class SportsGame : Game
 	// Clientside HUD
 	public SportsHud Hud { get; set; }
 
+	public BasePlayer CreatePawn() => new BasePlayer();
+
+	/// <summary>
+	/// Set up the default pawn for when the player is not in a gamemode
+	/// </summary>
+	/// <param name="cl"></param>
+	public void SetupDefaultPawn( Client cl )
+	{
+		cl.Pawn?.Delete();
+		cl.Pawn = CreatePawn();
+	}
+
 	public SportsGame()
 	{
 		// Create HUD clientside
@@ -45,6 +57,9 @@ public partial class SportsGame : Game
 
 		// Give the client the ability to be referenced to a specific gamemode
 		GamemodeEntityComponent.GetOrCreate( cl );
+
+		// Set up the default pawn
+		SetupDefaultPawn( cl );
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
