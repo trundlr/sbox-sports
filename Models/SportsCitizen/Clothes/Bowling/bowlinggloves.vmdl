@@ -15,7 +15,7 @@
 						[
 							{
 								from = "bowlinggloves_material.vmat"
-								to = "models/sportscitizen/clothes/bowling/bowlinggloves_apetavern.vmat"
+								to = "models/sportscitizen/clothes/bowling/materials/bowlinggloves_apetavern.vmat"
 							},
 						]
 						use_global_default = false
@@ -28,7 +28,7 @@
 						[
 							{
 								from = "models/sportscitizen/clothes/bowling/bowlinggloves_apetavern.vmat"
-								to = "models/sportscitizen/clothes/bowling/bowlinggloves_eagleone.vmat"
+								to = "models/sportscitizen/clothes/bowling/materials/bowlinggloves_eagleone.vmat"
 							},
 						]
 					},
