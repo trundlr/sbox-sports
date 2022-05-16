@@ -23,4 +23,8 @@ public abstract partial class Gamemode : Entity
 	}
 
 	public virtual void OnFinish() { }
+
+	public virtual void OnClientJoined( Client cl ) { }
+
+	public virtual void OnClientDisconnected( Client cl, NetworkDisconnectionReason reason ) { }
 }
