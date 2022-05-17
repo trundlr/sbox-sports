@@ -9,6 +9,7 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.ComponentModel;
 global using System.Threading.Tasks;
+using Sports.PartySystem;
 
 namespace Sports;
 
@@ -40,6 +41,11 @@ public partial class SportsGame : Game
 		if ( Host.IsClient )
 		{
 			Hud = new();
+		}
+		if ( Host.IsServer )
+		{
+			var partyManager = new PartySystem.PartyManager();
+			partyManager.Transmit = TransmitType.Always;
 		}
 	}
 
@@ -75,5 +81,6 @@ public partial class SportsGame : Game
 		{
 			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
 		}
+		cl.Components.Get<PartyComponent>( true )?.Leave();
 	}
 }
