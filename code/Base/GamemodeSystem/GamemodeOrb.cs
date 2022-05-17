@@ -7,7 +7,9 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class GamemodeOrb : AnimEntity
 {
-	public static HashSet<GamemodeOrb> Orbs { get; set; }
+	public static HashSet<GamemodeOrb> Orbs { get; set; } = new();
+
+	public static Model OrbModel = Model.Load( "models/dev/gamemode_orb.vmdl" );
 
 	[Property]
 	public string GamemodeId { get; set; }
@@ -27,6 +29,12 @@ public partial class GamemodeOrb : AnimEntity
 	{
 		base.Spawn();
 		Orbs.Add( this );
+
+		Model = OrbModel;
+		Transmit = TransmitType.Always;
+
+		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 64f );
+		CollisionGroup = CollisionGroup.Trigger;
 	}
 
 	protected override void OnDestroy()

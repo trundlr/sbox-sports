@@ -16,6 +16,9 @@ public partial class GamemodeHudPanel : Panel
 		}
 
 		Panel = gamemode.CreateHud();
+
+		if ( Panel is null ) return;
+
 		Panel.Parent = this;
 	}
 }
