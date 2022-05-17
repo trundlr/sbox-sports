@@ -6,6 +6,12 @@ namespace Sports.UI;
 [UseTemplate]
 public partial class SportsChatBox : Panel
 {
+	/// <summary>
+	/// disable chat using ClientVar
+	/// </summary>
+	/// <value></value>
+	[ClientVar]
+	public static bool ChatEnabled { get; set; } = true;
 	static SportsChatBox Current;
 
 	public Panel Canvas { get; protected set; }
@@ -40,6 +46,8 @@ public partial class SportsChatBox : Panel
 
 	public void Open()
 	{
+		if ( !ChatEnabled )
+			return;
 		AddClass( "open" );
 		if ( !Local.Client.Components.Get<PartyComponent>()?.Party.IsValid() ?? true )
 		{
@@ -70,6 +78,8 @@ public partial class SportsChatBox : Panel
 
 	public void AddEntry( string name, string message, string avatar, string chattype, string lobbyState = null )
 	{
+		if ( !ChatEnabled )
+			return;
 		var e = Canvas.AddChild<SportsChatEntry>();
 		e.ChatType.Text = $"[{chattype}]";
 		e.ChatType.AddClass( "chat-type-" + chattype.ToLower() );
