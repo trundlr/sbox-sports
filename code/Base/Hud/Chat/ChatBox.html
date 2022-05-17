@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="./ChatBox.scss" />
+
+<div class="global">
+    <div class="chat_canvas" @ref="Canvas">
+    </div>
+    <div>
+        <PartyChatTextEntry class="party_chat" @ref="Input" onsubmit="Submit()" onblur="Close()"
+            onchatswitch="SwitchChat()">
+        </PartyChatTextEntry>
+        <text class="globalChat">Global </text>
+        <text class="partyChat">Party </text>
+
+    </div>
+</div>

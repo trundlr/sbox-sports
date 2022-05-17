@@ -1,0 +1,25 @@
+.controlglyph {
+	align-items: center;
+	.glyph {
+		height: 32px;
+		&.medium {
+			height: 64px;
+		}
+		&.large {
+			height: 128px;
+		}
+	}
+	.text {
+		margin-left: 8px;
+
+		font-family: poppins;
+		font-weight: bold;
+		font-size: 18px;
+		text-align: center;
+		color: white;
+		text-shadow: -1px 3px 5px rgba(black, #343434);
+		&.hide {
+			display: none;
+		}
+	}
+}
