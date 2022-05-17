@@ -34,6 +34,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 			comp.Leave();
 		}
 	}
+
 	/// <summary>
 	/// Accept an Invite
 	/// </summary>
@@ -59,6 +60,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 		base.Spawn();
 		Transmit = TransmitType.Always;
 	}
+
 	/// <summary>
 	/// Leave this Party
 	/// </summary>
@@ -83,6 +85,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 			}
 		}
 	}
+
 	[ServerCmd]
 	public static void LeaveParty()
 	{
@@ -91,6 +94,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 		var callerComp = caller.Components.Get<PartyComponent>();
 		callerComp?.Party?.LeaveParty( callerComp );
 	}
+
 	/// <summary>
 	/// Join this Party
 	/// </summary>
