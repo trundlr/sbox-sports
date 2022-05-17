@@ -2,22 +2,42 @@ namespace Sports.PartySystem;
 
 public partial class Party : Entity // Use Entity for Parties since BaseNetworkables don't like Lists currently
 {
+	[Net] private Client _partyHost { get; set; }
+	public Client Host
+	{
+		get => _partyHost; set
+		{
+			if ( _partyHost == null )
+				_partyHost = value;
+		}
+	}
 	[Net] public IList<Client> Members { get; set; } // Can't store the PartyComponent Crashes game when adding to list directly after creation
 
+	/// <summary>
+	/// kick a Client from the Party
+	/// </summary>
+	/// <param name="ClientNetworkID"></param>
 	[ServerCmd]
 	public static void KickPlayer( int ClientNetworkID )
 	{
-		Log.Info( "KickPlayer" );
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
-		Log.Info( "Caller is " + caller.Name );
 		var callerComp = caller.Components.Get<PartyComponent>();
+		if ( callerComp?.Party?.Host != caller )
+		{
+			Log.Debug( "Only the party host can kick players" );
+			Log.Debug( "Party host: " + callerComp?.Party?.Host?.Name );
+			return;
+		}
 		if ( callerComp?.Party?.Members.FirstOrDefault( e => e.NetworkIdent == ClientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
 		{
-			Log.Info( "Found party member" );
 			comp.Leave();
 		}
 	}
+	/// <summary>
+	/// Accept an Invite
+	/// </summary>
+	/// <param name="ClientNetworkID"></param>
 	[ServerCmd]
 	public static void AcceptInvite( int ClientNetworkID )
 	{
@@ -39,11 +59,22 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 		base.Spawn();
 		Transmit = TransmitType.Always;
 	}
-
+	/// <summary>
+	/// Leave this Party
+	/// </summary>
+	/// <param name="Comp"></param>
 	public void LeaveParty( PartyComponent Comp )
 	{
+		if ( IsClient )
+		{
+			LeaveParty();
+		}
 		if ( Members.Contains( Comp.Client ) )
 		{
+			if ( Comp.Client == _partyHost )
+			{
+				_partyHost = Members.FirstOrDefault( e => e != Comp.Client );
+			}
 			Members.Remove( Comp.Client );
 			if ( Members.Count <= 1 )
 			{
@@ -52,6 +83,18 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 			}
 		}
 	}
+	[ServerCmd]
+	public static void LeaveParty()
+	{
+		if ( ConsoleSystem.Caller is not Client caller )
+			return;
+		var callerComp = caller.Components.Get<PartyComponent>();
+		callerComp?.Party?.LeaveParty( callerComp );
+	}
+	/// <summary>
+	/// Join this Party
+	/// </summary>
+	/// <param name="Comp"></param>
 	public void JoinParty( PartyComponent Comp )
 	{
 		if ( !Members.Contains( Comp.Client ) )

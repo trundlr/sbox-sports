@@ -18,17 +18,29 @@ public partial class PartyManager : Entity
 		Transmit = TransmitType.Always;
 		_instance = this;
 	}
-
+	/// <summary>
+	/// List of all Parties
+	/// </summary>
 	[Net] public IList<Party> Parties { get; private set; }
+	/// <summary>
+	/// Create a Party for a PartyComponent
+	/// </summary>
+	/// <param name="comp"></param>
 	public static void CreatePartyFor( PartyComponent comp )
 	{
 		if ( Host.IsClient )
 			return;
-		var party = new Party();
+		var party = new Party()
+		{
+			Host = comp.Client
+		};
 		Instance.Parties.Add( party );
 		comp.Party = party;
 		Log.Debug( "Created party " + party.NetworkIdent );
 	}
+	/// <summary>
+	/// List All Party Members into the Console
+	/// </summary>
 	[ServerCmd]
 	public static void ListPartyMembers()
 	{
@@ -47,6 +59,10 @@ public partial class PartyManager : Entity
 			Log.Debug( "  " + member.Name );
 		}
 	}
+	/// <summary>
+	/// Join the Party of another Player directly
+	/// </summary>
+	/// <param name="OtherPlayerNetID">The NetworkIdent of the Player Pawn</param>
 	[ServerCmd]
 	public static void JoinPlayer( int OtherPlayerNetID )
 	{
@@ -60,13 +76,27 @@ public partial class PartyManager : Entity
 		}
 		comp.Party = otherComp.Party;
 	}
+	/// <summary>
+	/// Send a Party Invite to another Player
+	/// </summary>
+	/// <param name="OtherPlayerNetID">The NetworkIdent of the Player Pawn</param>
 	[ServerCmd]
 	public static void InvitePlayer( int OtherPlayerNetID )
 	{
 		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( OtherPlayerNetID )?.Client is not Client OtherPlayer )
 			return;
-		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
 		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
+		Log.Debug( $"{ConsoleSystem.Caller.Name} invited {OtherPlayer.Name} to a party" );
+		if ( OtherPlayer.IsBot ) // no need to Invite Bots they should always accept
+		{
+			var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
+			if ( !comp.Party.IsValid() )
+			{
+				CreatePartyFor( comp );
+			}
+			otherComp.Party = comp.Party;
+			return;
+		}
 		if ( !otherComp.Party.IsValid() )
 			RpcInvitePlayer( To.Single( OtherPlayer ), ConsoleSystem.Caller.NetworkIdent );
 	}
@@ -75,8 +105,16 @@ public partial class PartyManager : Entity
 	{
 		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == FromPlayerNetID ) is not Client OtherPlayer )
 			return;
-		Local.Client.Components.Get<PartyComponent>().Invite( OtherPlayer );
+		if ( Local.Client.IsBot )
+		{
+			JoinPlayer( FromPlayerNetID );
+			return;
+		}
+		Local.Client.Components.Get<PartyComponent>().Invited( OtherPlayer );
 	}
+	/// <summary>
+	/// Leave your Current Party. TODO: Add a UI button for it instead of just a console command
+	/// </summary>
 	[ServerCmd]
 	public static void LeaveParty()
 	{
@@ -86,7 +124,9 @@ public partial class PartyManager : Entity
 		comp.Party = null;
 	}
 
-
+	/// <summary>
+	/// Notify that the Party members have changed
+	/// </summary>
 	[ClientRpc]
 	public static void PartyChanged()
 	{

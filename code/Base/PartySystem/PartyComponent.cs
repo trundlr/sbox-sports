@@ -33,8 +33,11 @@ public partial class PartyComponent : EntityComponent, ISingletonComponent
 	{
 		Party = null;
 	}
-
-	public void Invite(Client c)
+	/// <summary>
+	/// Got invited by another Client
+	/// </summary>
+	/// <param name="c"></param>
+	public void Invited( Client c )
 	{
 		UI.PartyLobby.OnInviteReceived( c );
 	}
