@@ -95,7 +95,7 @@ public partial class SportsChatBox : Panel
 		// Only log clientside if we're not the listen server host
 		if ( !Global.IsListenServer )
 		{
-			Log.Info( $"{name}: {message}" );
+			Log.Debug( $"{name}: {message}" );
 		}
 	}
 
@@ -114,7 +114,7 @@ public partial class SportsChatBox : Panel
 		if ( message.Contains( '\n' ) || message.Contains( '\r' ) )
 			return;
 
-		Log.Info( $"{ConsoleSystem.Caller}: {message}" );
+		Log.Debug( $"{ConsoleSystem.Caller}: {message}" );
 		if ( global )
 			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Global" );
 		else if ( ConsoleSystem.Caller.Components.Get<PartyComponent>() is PartyComponent comp && comp.Party.IsValid() )

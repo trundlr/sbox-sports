@@ -15,9 +15,15 @@ PartyLobby {
 		}
 		&.Control {
 			pointer-events: all;
+			&.IsHost :not(.LocalMember) .KickButton.onlyhost {
+				display: flex;
+			}
 		}
 		&:not(.Control) {
 			.KickButton {
+				display: none;
+			}
+			.leave {
 				display: none;
 			}
 		}
@@ -46,9 +52,22 @@ PartyMember {
 		align-items: center;
 	}
 	.KickButton {
+		width: 30px;
+		height: 30px;
+		color: rgb(255, 0, 0);
+		border-radius: 100px;
+		background-color: rgba(255, 255, 255, 0.247);
+		margin: 5px;
+		align-items: center;
+		justify-content: center;
+		font-size: 25px;
+		font-family: MaterialIcons;
 		display: none;
 	}
-	&:not(:first-child) .KickButton {
+	/* &:not(:first-child) .KickButton.ishost {
+		display: flex;
+	} */
+	&.LocalMember .leave {
 		width: 30px;
 		height: 30px;
 		color: rgb(255, 0, 0);

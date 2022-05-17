@@ -20,11 +20,17 @@ public partial class PartyLobby : Panel
 	{
 		base.Tick();
 		PartyCanvas.SetClass( "InParty", Party.IsValid() );
+		if ( !Party.IsValid() )
+			PartyCanvas.RemoveClass( "Control" );
 	}
+	/// <summary>
+	/// Enable Mouse when pressing tab. so you can control the Party.
+	/// </summary>
+	/// <param name="builder"></param>
 	[Event.BuildInput]
 	private void BuildInput( InputBuilder builder )
 	{
-
+		PartyCanvas.SetClass( "IsHost", Local.Client == Party?.Host );
 		if ( builder.Down( InputButton.Score ) )
 		{
 			PartyCanvas.AddClass( "Control" );
@@ -50,6 +56,10 @@ public partial class PartyLobby : Panel
 		member.Client = client;
 		member.Avatar.SetTexture( $"avatar:{client.PlayerId}" );
 		member.Name.SetText( client.Name );
+		if ( client == Local.Client )
+		{
+			member.AddClass( "LocalMember" );
+		}
 	}
 
 
@@ -62,10 +72,8 @@ public partial class PartyLobby : Panel
 		foreach ( var member in Instance.Party?.Members )
 		{
 			AddPartyMember( member );
-			Log.Info( "Added party member: " + member.Name );
 		}
 	}
-	[Event.Hotload]
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
