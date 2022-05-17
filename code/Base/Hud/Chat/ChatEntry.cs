@@ -15,9 +15,9 @@ public partial class SportsChatEntry : Panel
 	public SportsChatEntry()
 	{
 		Avatar = Add.Image();
-		ChatType = Add.Label( "[GLOBAL]", "chat-type" );
-		NameLabel = Add.Label( "Name", "name" );
-		Message = Add.Label( "Message", "message" );
+		ChatType = Add.Label( "[GLOBAL]", "ChatType" );
+		NameLabel = Add.Label( "Name", "Name" );
+		Message = Add.Label( "Message", "Message" );
 	}
 
 	public override void Tick()

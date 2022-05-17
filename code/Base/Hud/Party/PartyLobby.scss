@@ -2,23 +2,27 @@ PartyLobby {
 	margin: 10px;
 	position: absolute;
 	width: 100%;
+
 	.PartyList {
 		width: 300px;
 		flex-direction: column;
 		opacity: 0;
 		transform: scale(0);
 		position: absolute;
+
 		&.InParty {
 			opacity: 1;
 			transform: scale(1);
 			position: relative;
 		}
+
 		&.Control {
 			pointer-events: all;
-			&.IsHost :not(.LocalMember) .KickButton.onlyhost {
+			&.IsHost :not(.LocalMember) .KickButton.OnlyHost {
 				display: flex;
 			}
 		}
+
 		&:not(.Control) {
 			.KickButton {
 				display: none;
@@ -37,7 +41,7 @@ PartyMember {
 	border-radius: 10px;
 	align-items: center;
 
-	.avatar {
+	.Avatar {
 		width: 32px;
 		height: 32px;
 		min-height: 32px;
@@ -45,12 +49,14 @@ PartyMember {
 		margin: 5px;
 		border: 1px solid rgb(0, 255, 255);
 	}
-	.name {
+
+	.Name {
 		color: rgb(255, 255, 255);
 		font-size: 30px;
 		flex-grow: 1;
 		align-items: center;
 	}
+
 	.KickButton {
 		width: 30px;
 		height: 30px;
@@ -64,10 +70,8 @@ PartyMember {
 		font-family: MaterialIcons;
 		display: none;
 	}
-	/* &:not(:first-child) .KickButton.ishost {
-		display: flex;
-	} */
-	&.LocalMember .leave {
+
+	&.LocalMember .Leave {
 		width: 30px;
 		height: 30px;
 		color: rgb(255, 0, 0);
@@ -83,6 +87,7 @@ PartyMember {
 }
 .InviteList {
 	flex-direction: column;
+
 	.InviteScreen {
 		transition: all 0.1s ease-out;
 		transform: scale(1) translateX(0);
@@ -109,6 +114,7 @@ PartyMember {
 		background-color: rgb(55, 133, 185);
 		align-items: center;
 		justify-content: center;
+
 		.Buttons {
 			align-items: center;
 			justify-content: center;
@@ -117,11 +123,13 @@ PartyMember {
 			margin: 10px;
 			color: white;
 		}
+
 		.InviteMiddle {
 			align-items: center;
 			justify-content: center;
 			flex-direction: column;
 			flex-grow: 1;
+
 			.InviteText {
 				width: 100%;
 				height: 20px;
@@ -130,6 +138,7 @@ PartyMember {
 				text-align: center;
 				margin: 5px;
 			}
+
 			.InviteBar {
 				width: 60%;
 				height: 15px;
@@ -138,12 +147,12 @@ PartyMember {
 				border-radius: 10px;
 				opacity: 1;
 				transition: all 0.1s ease-out;
-				.bar {
+				.Bar {
 					height: 100%;
 					border-radius: 10px;
 					background-color: rgb(111, 221, 255);
 				}
-				&.hide {
+				&.Hide {
 					opacity: 0;
 				}
 			}

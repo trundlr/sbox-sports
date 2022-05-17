@@ -23,6 +23,7 @@ public partial class PartyLobby : Panel
 		if ( !Party.IsValid() )
 			PartyCanvas.RemoveClass( "Control" );
 	}
+
 	/// <summary>
 	/// Enable Mouse when pressing tab. so you can control the Party.
 	/// </summary>
@@ -62,7 +63,6 @@ public partial class PartyLobby : Panel
 		}
 	}
 
-
 	public static void OnPartyChanged()
 	{
 		if ( Instance == null )
@@ -80,13 +80,13 @@ public partial class PartyLobby : Panel
 		OnPartyChanged();
 	}
 
-	public static void OnInviteReceived( Client client )
+	public static void OnInviteReceived( Client cl )
 	{
-		if ( Instance == null || Instance.InviteList.Children.Any( e => e is PartyInvite partyInvite && partyInvite.Client == client ) )
+		if ( Instance == null || Instance.InviteList.Children.Any( e => e is PartyInvite partyInvite && partyInvite.Client == cl ) )
 			return;
 		var invite = Instance.InviteList.AddChild<PartyInvite>();
-		invite.Client = client;
-		invite.InviteText.Text = $"{client.Name} invited you to their party!";
+		invite.Client = cl;
+		invite.InviteText.Text = $"{cl.Name} invited you to their party!";
 		invite.AddClass( "open" );
 	}
 }

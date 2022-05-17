@@ -16,9 +16,9 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// kick a Client from the Party
 	/// </summary>
-	/// <param name="ClientNetworkID"></param>
+	/// <param name="clientNetworkID"></param>
 	[ServerCmd]
-	public static void KickPlayer( int ClientNetworkID )
+	public static void KickPlayer( int clientNetworkID )
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
@@ -29,7 +29,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 			Log.Debug( "Party host: " + callerComp?.Party?.Host?.Name );
 			return;
 		}
-		if ( callerComp?.Party?.Members.FirstOrDefault( e => e.NetworkIdent == ClientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
+		if ( callerComp?.Party?.Members.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
 		{
 			comp.Leave();
 		}
@@ -37,14 +37,14 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// Accept an Invite
 	/// </summary>
-	/// <param name="ClientNetworkID"></param>
+	/// <param name="clientNetworkID"></param>
 	[ServerCmd]
-	public static void AcceptInvite( int ClientNetworkID )
+	public static void AcceptInvite( int clientNetworkID )
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
 		var callerComp = caller.Components.Get<PartyComponent>();
-		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == ClientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
 		{
 			if ( comp.Party == null )
 			{
@@ -62,20 +62,20 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// Leave this Party
 	/// </summary>
-	/// <param name="Comp"></param>
-	public void LeaveParty( PartyComponent Comp )
+	/// <param name="comp"></param>
+	public void LeaveParty( PartyComponent comp )
 	{
 		if ( IsClient )
 		{
 			LeaveParty();
 		}
-		if ( Members.Contains( Comp.Client ) )
+		if ( Members.Contains( comp.Client ) )
 		{
-			if ( Comp.Client == _partyHost )
+			if ( comp.Client == _partyHost )
 			{
-				_partyHost = Members.FirstOrDefault( e => e != Comp.Client );
+				_partyHost = Members.FirstOrDefault( e => e != comp.Client );
 			}
-			Members.Remove( Comp.Client );
+			Members.Remove( comp.Client );
 			if ( Members.Count <= 1 )
 			{
 				PartyManager.Instance.Parties.Remove( this );
@@ -94,12 +94,12 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// Join this Party
 	/// </summary>
-	/// <param name="Comp"></param>
-	public void JoinParty( PartyComponent Comp )
+	/// <param name="comp"></param>
+	public void JoinParty( PartyComponent comp )
 	{
-		if ( !Members.Contains( Comp.Client ) )
+		if ( !Members.Contains( comp.Client ) )
 		{
-			Members.Add( Comp.Client );
+			Members.Add( comp.Client );
 		}
 	}
 }

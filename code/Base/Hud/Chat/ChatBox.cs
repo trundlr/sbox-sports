@@ -6,12 +6,14 @@ namespace Sports.UI;
 [UseTemplate]
 public partial class SportsChatBox : Panel
 {
+
 	/// <summary>
 	/// disable chat using ClientVar
 	/// </summary>
 	/// <value></value>
 	[ClientVar]
 	public static bool ChatEnabled { get; set; } = true;
+
 	static SportsChatBox Current;
 
 	public Panel Canvas { get; protected set; }
@@ -41,25 +43,25 @@ public partial class SportsChatBox : Panel
 		{
 			GlobalChat = true;
 		}
-		SetClass( "global", GlobalChat );
+		SetClass( "Global", GlobalChat );
 	}
 
 	public void Open()
 	{
 		if ( !ChatEnabled )
 			return;
-		AddClass( "open" );
+		AddClass( "Open" );
 		if ( !Local.Client.Components.Get<PartyComponent>()?.Party.IsValid() ?? true )
 		{
 			GlobalChat = true;
-			SetClass( "global", GlobalChat );
+			SetClass( "Global", GlobalChat );
 		}
 		Input.Focus();
 	}
 
 	public void Close()
 	{
-		RemoveClass( "open" );
+		RemoveClass( "Open" );
 		Input.Blur();
 	}
 
@@ -76,31 +78,31 @@ public partial class SportsChatBox : Panel
 		Say( msg, GlobalChat );
 	}
 
-	public void AddEntry( string name, string message, string avatar, string chattype, string lobbyState = null )
+	public void AddEntry( string name, string message, string avatar, string chatType, string lobbyState = null )
 	{
 		if ( !ChatEnabled )
 			return;
 		var e = Canvas.AddChild<SportsChatEntry>();
-		e.ChatType.Text = $"[{chattype}]";
-		e.ChatType.AddClass( "chat-type-" + chattype.ToLower() );
+		e.ChatType.Text = $"[{chatType}]";
+		e.ChatType.AddClass( "ChatType" + chatType.ToTitleCase() );
 		e.Message.Text = message;
 		e.NameLabel.Text = name;
 		e.Avatar.SetTexture( avatar );
 
-		e.SetClass( "noname", string.IsNullOrEmpty( name ) );
-		e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+		e.SetClass( "NoName", string.IsNullOrEmpty( name ) );
+		e.SetClass( "NoAvatar", string.IsNullOrEmpty( avatar ) );
 
 		if ( lobbyState == "ready" || lobbyState == "staging" )
 		{
-			e.SetClass( "is-lobby", true );
+			e.SetClass( "IsLobby", true );
 		}
 	}
 
 
 	[ClientCmd( "chat_add", CanBeCalledFromServer = true )]
-	public static void AddChatEntry( string name, string message, string avatar = null, string chattype = "Global", string lobbyState = null )
+	public static void AddChatEntry( string name, string message, string avatar = null, string chatType = "Global", string lobbyState = null )
 	{
-		Current?.AddEntry( name, message, avatar, chattype, lobbyState );
+		Current?.AddEntry( name, message, avatar, chatType, lobbyState );
 
 		// Only log clientside if we're not the listen server host
 		if ( !Global.IsListenServer )

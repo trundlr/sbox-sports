@@ -12,16 +12,19 @@ public partial class PartyManager : Entity
 			return _instance;
 		}
 	}
+
 	public override void Spawn()
 	{
 		base.Spawn();
 		Transmit = TransmitType.Always;
 		_instance = this;
 	}
+
 	/// <summary>
 	/// List of all Parties
 	/// </summary>
 	[Net] public IList<Party> Parties { get; private set; }
+
 	/// <summary>
 	/// Create a Party for a PartyComponent
 	/// </summary>
@@ -38,6 +41,7 @@ public partial class PartyManager : Entity
 		comp.Party = party;
 		Log.Debug( "Created party " + party.NetworkIdent );
 	}
+
 	/// <summary>
 	/// List All Party Members into the Console
 	/// </summary>
@@ -59,14 +63,15 @@ public partial class PartyManager : Entity
 			Log.Debug( "  " + member.Name );
 		}
 	}
+
 	/// <summary>
 	/// Join the Party of another Player directly
 	/// </summary>
-	/// <param name="OtherPlayerNetID">The NetworkIdent of the Player Pawn</param>
+	/// <param name="otherPlayerNetID">The NetworkIdent of the Player Pawn</param>
 	[ServerCmd]
-	public static void JoinPlayer( int OtherPlayerNetID )
+	public static void JoinPlayer( int otherPlayerNetID )
 	{
-		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( OtherPlayerNetID )?.Client is not Client OtherPlayer )
+		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
 			return;
 		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
 		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
@@ -76,14 +81,15 @@ public partial class PartyManager : Entity
 		}
 		comp.Party = otherComp.Party;
 	}
+
 	/// <summary>
 	/// Send a Party Invite to another Player
 	/// </summary>
-	/// <param name="OtherPlayerNetID">The NetworkIdent of the Player Pawn</param>
+	/// <param name="otherPlayerNetID">The NetworkIdent of the Player Pawn</param>
 	[ServerCmd]
-	public static void InvitePlayer( int OtherPlayerNetID )
+	public static void InvitePlayer( int otherPlayerNetID )
 	{
-		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( OtherPlayerNetID )?.Client is not Client OtherPlayer )
+		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
 			return;
 		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
 		Log.Debug( $"{ConsoleSystem.Caller.Name} invited {OtherPlayer.Name} to a party" );
@@ -100,18 +106,20 @@ public partial class PartyManager : Entity
 		if ( !otherComp.Party.IsValid() )
 			RpcInvitePlayer( To.Single( OtherPlayer ), ConsoleSystem.Caller.NetworkIdent );
 	}
+
 	[ClientRpc]
-	public static void RpcInvitePlayer( int FromPlayerNetID )
+	public static void RpcInvitePlayer( int fromPlayerNetID )
 	{
-		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == FromPlayerNetID ) is not Client OtherPlayer )
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == fromPlayerNetID ) is not Client OtherPlayer )
 			return;
 		if ( Local.Client.IsBot )
 		{
-			JoinPlayer( FromPlayerNetID );
+			JoinPlayer( fromPlayerNetID );
 			return;
 		}
 		Local.Client.Components.Get<PartyComponent>().Invited( OtherPlayer );
 	}
+
 	/// <summary>
 	/// Leave your Current Party. TODO: Add a UI button for it instead of just a console command
 	/// </summary>

@@ -4,9 +4,12 @@ namespace Sports.PartySystem;
 
 public partial class PartyComponent : EntityComponent, ISingletonComponent
 {
+
 	[ClientVar( "allow_party_invites" )]
 	public static bool PartyEnabled { get; set; } = true;
+
 	public Client Client => Entity as Client;
+
 	[Net] private Party _party { get; set; }
 	public Party Party
 	{
@@ -27,18 +30,20 @@ public partial class PartyComponent : EntityComponent, ISingletonComponent
 			}
 		}
 	}
+
 	public IList<Client> Members => Party?.Members;
 
 	public void Leave()
 	{
 		Party = null;
 	}
+
 	/// <summary>
 	/// Got invited by another Client
 	/// </summary>
-	/// <param name="c"></param>
-	public void Invited( Client c )
+	/// <param name="cl"></param>
+	public void Invited( Client cl )
 	{
-		UI.PartyLobby.OnInviteReceived( c );
+		UI.PartyLobby.OnInviteReceived( cl );
 	}
 }

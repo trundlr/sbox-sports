@@ -8,7 +8,7 @@
 	font-family: Poppins;
 	font-size: 13px;
 
-	.party_chat {
+	.PartyChatEntry {
 		background-color: black;
 		opacity: 0;
 		color: white;
@@ -20,35 +20,35 @@
 		width: 100%;
 	}
 
-	.chat_canvas {
+	.ChatCanvas {
 		flex-direction: column;
 		align-items: flex-start;
 	}
 
-	&.open {
-		.party_chat {
+	&.Open {
+		.PartyChatEntry {
 			opacity: 1;
 			backdrop-filter: blur(10px);
 		}
 	}
-	&.global.open {
-		.globalChat {
+	&.Global.Open {
+		.GlobalChat {
 			display: flex;
 		}
-		.partyChat {
+		.PartyChat {
 			display: none;
 		}
 	}
-	&:not(.global).open {
-		.globalChat {
+	&:not(.Global).Open {
+		.GlobalChat {
 			display: none;
 		}
-		.partyChat {
+		.PartyChat {
 			display: flex;
 		}
 	}
-	.partyChat,
-	.globalChat {
+	.PartyChat,
+	.GlobalChat {
 		display: none;
 		width: 100px;
 		max-height: 100px;
@@ -63,7 +63,7 @@
 		text-align: center;
 		align-items: center;
 	}
-	.partyChat {
+	.PartyChat {
 		background-color: rgba(rgb(202, 62, 214), 0.5);
 	}
 }
@@ -108,7 +108,7 @@ SportsChatEntry {
 		top: 6px;
 	}
 
-	.name {
+	.Name {
 		padding-right: 20px;
 		font-weight: 600;
 		font-size: 14px;
@@ -116,34 +116,34 @@ SportsChatEntry {
 		flex-shrink: 0;
 	}
 
-	.message {
+	.Message {
 		color: #ccc;
 		font-size: 14px;
 		flex-grow: 1;
 	}
 
-	&.noname .name {
+	&.NoName .Name {
 		display: none;
 	}
 
-	&.noavatar image {
+	&.NoAvatar image {
 		display: none;
 	}
 
-	&.is-lobby {
+	&.IsLobby {
 		.name {
 			color: #ff80f5;
 		}
 	}
-	.chat-type {
+	.ChatType {
 		width: 60px;
 		height: 100%;
 		text-align: center;
 		align-items: center;
-		&.chat-type-party {
+		&.ChatTypeParty {
 			color: rgb(202, 62, 214);
 		}
-		&.chat-type-global {
+		&.ChatTypeGlobal {
 			color: rgb(190, 112, 39);
 		}
 	}
