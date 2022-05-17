@@ -5,6 +5,9 @@ public abstract partial class BaseGamemode : Entity
 	[Net]
 	public IList<Client> Clients { get; set; }
 
+	[Property]
+	public string GamemodeId { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();

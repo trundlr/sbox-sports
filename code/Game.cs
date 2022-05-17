@@ -16,6 +16,12 @@ namespace Sports;
 public partial class SportsGame : Game
 {
 	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
+
+	public BaseGamemode GetGamemodeFromId( string id )
+	{
+		return Gamemodes.FirstOrDefault( x => x.GamemodeId == id );
+	}
+
 	public static SportsGame Instance => Current as SportsGame;
 
 	// Clientside HUD
