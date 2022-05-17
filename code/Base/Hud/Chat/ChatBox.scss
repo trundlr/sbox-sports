@@ -131,18 +131,21 @@ SportsChatEntry {
 	}
 
 	&.IsLobby {
-		.name {
+		.Name {
 			color: #ff80f5;
 		}
 	}
+
 	.ChatType {
 		width: 60px;
 		height: 100%;
 		text-align: center;
 		align-items: center;
+
 		&.ChatTypeParty {
 			color: rgb(202, 62, 214);
 		}
+
 		&.ChatTypeGlobal {
 			color: rgb(190, 112, 39);
 		}

@@ -6,16 +6,16 @@ namespace Sports.UI;
 [UseTemplate]
 public class PartyInvite : Panel
 {
-	public Label InviteText { get; internal set; }
+	public Label InviteText { get; set; }
 	private Panel ProgressBar { get; set; }
-	public Client Client { get; internal set; }
+	public Client Client { get; set; }
 
-	TimeSince _received;
+	private TimeSince received;
 	public float TimeToAccept { get; set; } = 3;
 
 	public PartyInvite()
 	{
-		_received = 0;
+		received = 0;
 	}
 
 	public override void Tick()
@@ -29,7 +29,7 @@ public class PartyInvite : Panel
 		if ( !((PseudoClass & PseudoClass.FirstChild) != 0) )
 		{
 			ProgressBar.Parent?.AddClass( "Hide" );
-			_received = 0;
+			received = 0;
 			return;
 		}
 		else if ( Input.Pressed( InputButton.Use ) )
@@ -44,9 +44,9 @@ public class PartyInvite : Panel
 		}
 
 		ProgressBar.Parent?.RemoveClass( "Hide" );
-		ProgressBar.Style.Width = Length.Fraction( _received / TimeToAccept );
+		ProgressBar.Style.Width = Length.Fraction( received / TimeToAccept );
 
-		if ( _received > TimeToAccept )
+		if ( received > TimeToAccept )
 		{
 			Delete();
 		}

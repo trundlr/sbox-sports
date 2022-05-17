@@ -2,21 +2,20 @@ namespace Sports.PartySystem;
 
 public partial class Party : Entity // Use Entity for Parties since BaseNetworkables don't like Lists currently
 {
-	[Net] private Client _partyHost { get; set; }
+	[Net] private Client partyHost { get; set; }
 	public Client Host
 	{
-		get => _partyHost; set
+		get => partyHost; set
 		{
-			if ( _partyHost == null )
-				_partyHost = value;
+			if ( partyHost == null )
+				partyHost = value;
 		}
 	}
 	[Net] public IList<Client> Members { get; set; } // Can't store the PartyComponent Crashes game when adding to list directly after creation
 
 	/// <summary>
-	/// kick a Client from the Party
+	/// Kick a client from the party
 	/// </summary>
-	/// <param name="clientNetworkID"></param>
 	[ServerCmd]
 	public static void KickPlayer( int clientNetworkID )
 	{
@@ -36,9 +35,8 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	}
 
 	/// <summary>
-	/// Accept an Invite
+	/// Accept an invite
 	/// </summary>
-	/// <param name="clientNetworkID"></param>
 	[ServerCmd]
 	public static void AcceptInvite( int clientNetworkID )
 	{
@@ -62,9 +60,8 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	}
 
 	/// <summary>
-	/// Leave this Party
+	/// Leave this party
 	/// </summary>
-	/// <param name="comp"></param>
 	public void LeaveParty( PartyComponent comp )
 	{
 		if ( IsClient )
@@ -73,9 +70,9 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 		}
 		if ( Members.Contains( comp.Client ) )
 		{
-			if ( comp.Client == _partyHost )
+			if ( comp.Client == partyHost )
 			{
-				_partyHost = Members.FirstOrDefault( e => e != comp.Client );
+				partyHost = Members.FirstOrDefault( e => e != comp.Client );
 			}
 			Members.Remove( comp.Client );
 			if ( Members.Count <= 1 )
@@ -96,9 +93,8 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	}
 
 	/// <summary>
-	/// Join this Party
+	/// Join this party
 	/// </summary>
-	/// <param name="comp"></param>
 	public void JoinParty( PartyComponent comp )
 	{
 		if ( !Members.Contains( comp.Client ) )

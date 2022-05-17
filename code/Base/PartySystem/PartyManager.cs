@@ -4,12 +4,14 @@ namespace Sports.PartySystem;
 
 public partial class PartyManager : Entity
 {
-	private static PartyManager _instance;
+
+	private static PartyManager instance;
+
 	public static PartyManager Instance
 	{
 		get
 		{
-			return _instance;
+			return instance;
 		}
 	}
 
@@ -17,18 +19,17 @@ public partial class PartyManager : Entity
 	{
 		base.Spawn();
 		Transmit = TransmitType.Always;
-		_instance = this;
+		instance = this;
 	}
 
 	/// <summary>
-	/// List of all Parties
+	/// List of all parties
 	/// </summary>
 	[Net] public IList<Party> Parties { get; private set; }
 
 	/// <summary>
-	/// Create a Party for a PartyComponent
+	/// Create a party for a PartyComponent
 	/// </summary>
-	/// <param name="comp"></param>
 	public static void CreatePartyFor( PartyComponent comp )
 	{
 		if ( Host.IsClient )
@@ -43,7 +44,7 @@ public partial class PartyManager : Entity
 	}
 
 	/// <summary>
-	/// List All Party Members into the Console
+	/// List all party members into the console
 	/// </summary>
 	[ServerCmd]
 	public static void ListPartyMembers()
@@ -65,9 +66,9 @@ public partial class PartyManager : Entity
 	}
 
 	/// <summary>
-	/// Join the Party of another Player directly
+	/// Join the party of another player directly
 	/// </summary>
-	/// <param name="otherPlayerNetID">The NetworkIdent of the Player Pawn</param>
+	/// <param name="otherPlayerNetID">The networkIdent of the player pawn</param>
 	[ServerCmd]
 	public static void JoinPlayer( int otherPlayerNetID )
 	{
@@ -83,9 +84,9 @@ public partial class PartyManager : Entity
 	}
 
 	/// <summary>
-	/// Send a Party Invite to another Player
+	/// Send a party invite to another player
 	/// </summary>
-	/// <param name="otherPlayerNetID">The NetworkIdent of the Player Pawn</param>
+	/// <param name="otherPlayerNetID">The networkIdent of the player pawn</param>
 	[ServerCmd]
 	public static void InvitePlayer( int otherPlayerNetID )
 	{
@@ -121,7 +122,7 @@ public partial class PartyManager : Entity
 	}
 
 	/// <summary>
-	/// Leave your Current Party. TODO: Add a UI button for it instead of just a console command
+	/// Leave your current party
 	/// </summary>
 	[ServerCmd]
 	public static void LeaveParty()
@@ -133,7 +134,7 @@ public partial class PartyManager : Entity
 	}
 
 	/// <summary>
-	/// Notify that the Party members have changed
+	/// Notify that party members have changed
 	/// </summary>
 	[ClientRpc]
 	public static void PartyChanged()

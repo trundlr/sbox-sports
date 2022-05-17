@@ -3,18 +3,18 @@ using Sports.PartySystem;
 using System;
 
 namespace Sports.UI;
+
 [UseTemplate]
 public partial class SportsChatBox : Panel
 {
 
 	/// <summary>
-	/// disable chat using ClientVar
+	/// Disable chat using ClientVar
 	/// </summary>
-	/// <value></value>
 	[ClientVar]
 	public static bool ChatEnabled { get; set; } = true;
 
-	static SportsChatBox Current;
+	public static SportsChatBox Instance;
 
 	public Panel Canvas { get; protected set; }
 	public PartyChatTextEntry Input { get; protected set; }
@@ -23,9 +23,10 @@ public partial class SportsChatBox : Panel
 
 	public SportsChatBox()
 	{
-		Current = this;
+		Instance = this;
 		Sports.Hooks.Chat.OnOpenChat += Open;
 	}
+
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
@@ -98,11 +99,10 @@ public partial class SportsChatBox : Panel
 		}
 	}
 
-
 	[ClientCmd( "chat_add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string avatar = null, string chatType = "Global", string lobbyState = null )
 	{
-		Current?.AddEntry( name, message, avatar, chatType, lobbyState );
+		Instance?.AddEntry( name, message, avatar, chatType, lobbyState );
 
 		// Only log clientside if we're not the listen server host
 		if ( !Global.IsListenServer )
@@ -114,7 +114,7 @@ public partial class SportsChatBox : Panel
 	[ClientCmd( "chat_addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message, string avatar = null )
 	{
-		Current?.AddEntry( null, message, avatar, "System" );
+		Instance?.AddEntry( null, message, avatar, "System" );
 	}
 
 	[ServerCmd( "say" )]

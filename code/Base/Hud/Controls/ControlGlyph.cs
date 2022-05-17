@@ -1,26 +1,24 @@
 
 namespace Sports.UI;
-[UseTemplate, Library( "inputglyph", Alias = new[] { "buttonhint" } )]
+
+[UseTemplate, Library( "ControlGlyph", Alias = new[] { "ButtonHint" } )]
 public class ControlGlyph : Panel
 {
-
 
 	public Image Glyph { get; set; }
 	public Label Text { get; set; }
 	public InputButton Button { get; set; }
-
 	public InputGlyphSize Size { get; set; } = InputGlyphSize.Small;
 
 	GlyphStyle style = default;
-
-	bool solid = false;
-	bool neutral = false;
+	private bool solid = false;
+	private bool neutral = false;
 
 	private static Texture UnboundTexture = Texture.Load( FileSystem.Mounted, "/ui/unbound.png" );
 
 	public ControlGlyph()
 	{
-		AddClass( "controlglyph" );
+		AddClass( "ControlGlyph" );
 	}
 
 	protected override void PreTemplateApplied()
@@ -87,7 +85,7 @@ public class ControlGlyph : Panel
 		if ( glyphimage == null || string.IsNullOrEmpty( Input.GetButtonOrigin( btn ) ) )
 		{
 			glyphimage = UnboundTexture;
-			Text.SetClass( "hide", Text.TextLength == 0 );
+			Text.SetClass( "Hide", Text.TextLength == 0 );
 			Glyph.Texture = glyphimage;
 			Glyph.Style.Width = 32;
 			Glyph.Style.Height = 32;
@@ -95,7 +93,7 @@ public class ControlGlyph : Panel
 		}
 		Glyph.SetClass( "Medium", size == InputGlyphSize.Medium );
 		Glyph.SetClass( "Large", size == InputGlyphSize.Large );
-		Text.SetClass( "hide", Text.TextLength == 0 );
+		Text.SetClass( "Hide", Text.TextLength == 0 );
 		Glyph.Texture = glyphimage;
 		Glyph.Style.AspectRatio = (float)glyphimage.Width / glyphimage.Height;
 	}

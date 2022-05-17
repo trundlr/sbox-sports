@@ -24,10 +24,6 @@ public partial class PartyLobby : Panel
 			PartyCanvas.RemoveClass( "Control" );
 	}
 
-	/// <summary>
-	/// Enable Mouse when pressing tab. so you can control the Party.
-	/// </summary>
-	/// <param name="builder"></param>
 	[Event.BuildInput]
 	private void BuildInput( InputBuilder builder )
 	{
@@ -74,6 +70,7 @@ public partial class PartyLobby : Panel
 			AddPartyMember( member );
 		}
 	}
+
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();

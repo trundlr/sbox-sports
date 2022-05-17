@@ -10,7 +10,7 @@ public partial class SportsChatEntry : Panel
 	public Label Message { get; internal set; }
 	public Image Avatar { get; internal set; }
 
-	public RealTimeSince TimeSinceBorn = 0;
+	public RealTimeSince TimeSinceCreated = 0;
 
 	public SportsChatEntry()
 	{
@@ -24,7 +24,7 @@ public partial class SportsChatEntry : Panel
 	{
 		base.Tick();
 
-		if ( TimeSinceBorn > 10 )
+		if ( TimeSinceCreated > 10 )
 		{
 			Delete();
 		}
