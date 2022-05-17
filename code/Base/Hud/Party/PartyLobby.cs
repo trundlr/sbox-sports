@@ -36,6 +36,12 @@ public partial class PartyLobby : Panel
 
 	}
 
+	public static void AcceptedInvite( int networkIdent )
+	{
+		Instance.InviteList.DeleteChildren( false );
+		Party.AcceptInvite( networkIdent );
+	}
+
 	public static void AddPartyMember( Client client )
 	{
 		if ( Instance == null )
@@ -68,7 +74,7 @@ public partial class PartyLobby : Panel
 
 	public static void OnInviteReceived( Client client )
 	{
-		if ( Instance == null )
+		if ( Instance == null || Instance.InviteList.Children.Any( e => e is PartyInvite partyInvite && partyInvite.Client == client ) )
 			return;
 		var invite = Instance.InviteList.AddChild<PartyInvite>();
 		invite.Client = client;

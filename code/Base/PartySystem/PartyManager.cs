@@ -20,7 +20,7 @@ public partial class PartyManager : Entity
 	}
 
 	[Net] public IList<Party> Parties { get; private set; }
-	private static void CreatePartyFor( PartyComponent comp )
+	public static void CreatePartyFor( PartyComponent comp )
 	{
 		if ( Host.IsClient )
 			return;
@@ -67,24 +67,15 @@ public partial class PartyManager : Entity
 			return;
 		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
 		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
-		if ( comp.Party == null ) // TODO: Make this system better, and not let everyone just join everybody
-		{
-			CreatePartyFor( comp );
-		}
-		otherComp.Party = comp.Party;
-	}
-	[ServerCmd]
-	public static void SendTestInvite()
-	{
-		if ( ConsoleSystem.Caller == null )
-			return;
-		RpcInviteReceived( To.Single( ConsoleSystem.Caller ) );
+		if ( !otherComp.Party.IsValid() )
+			RpcInvitePlayer( To.Single( OtherPlayer ), ConsoleSystem.Caller.NetworkIdent );
 	}
 	[ClientRpc]
-	public static void RpcInviteReceived()
+	public static void RpcInvitePlayer( int FromPlayerNetID )
 	{
-		var comp = Local.Client.Components.Get<PartyComponent>();
-		comp?.Invite();
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == FromPlayerNetID ) is not Client OtherPlayer )
+			return;
+		Local.Client.Components.Get<PartyComponent>().Invite( OtherPlayer );
 	}
 	[ServerCmd]
 	public static void LeaveParty()

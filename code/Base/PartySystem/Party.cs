@@ -18,6 +18,21 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 			comp.Leave();
 		}
 	}
+	[ServerCmd]
+	public static void AcceptInvite( int ClientNetworkID )
+	{
+		if ( ConsoleSystem.Caller is not Client caller )
+			return;
+		var callerComp = caller.Components.Get<PartyComponent>();
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == ClientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
+		{
+			if ( comp.Party == null )
+			{
+				PartyManager.CreatePartyFor( comp );
+			}
+			callerComp.Party = comp.Party;
+		}
+	}
 
 	public override void Spawn()
 	{

@@ -34,8 +34,8 @@ public partial class PartyComponent : EntityComponent, ISingletonComponent
 		Party = null;
 	}
 
-	public void Invite()
+	public void Invite(Client c)
 	{
-		UI.PartyLobby.OnInviteReceived( Client );
+		UI.PartyLobby.OnInviteReceived( c );
 	}
 }
