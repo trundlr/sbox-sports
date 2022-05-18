@@ -9,6 +9,8 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.ComponentModel;
 global using System.Threading.Tasks;
+global using System.ComponentModel.DataAnnotations;
+
 using Sports.PartySystem;
 
 namespace Sports;
@@ -16,6 +18,12 @@ namespace Sports;
 public partial class SportsGame : Game
 {
 	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
+
+	public BaseGamemode GetGamemodeFromId( string id )
+	{
+		return Gamemodes.FirstOrDefault( x => x.GamemodeId == id );
+	}
+
 	public static SportsGame Instance => Current as SportsGame;
 
 	// Clientside HUD
@@ -30,9 +38,9 @@ public partial class SportsGame : Game
 	public void SetupDefaultPawn( Client cl )
 	{
 		cl.Pawn?.Delete();
-		var PlayerPawn = CreatePawn();
-		cl.Pawn = PlayerPawn;
-		PlayerPawn.InitialSpawn();
+		var pawn = CreatePawn();
+		cl.Pawn = pawn;
+		pawn.InitialSpawn();
 	}
 
 	public SportsGame()

@@ -5,6 +5,9 @@ public abstract partial class BaseGamemode : Entity
 	[Net]
 	public IList<Client> Clients { get; set; }
 
+	[Property]
+	public string GamemodeId { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -38,16 +41,25 @@ public abstract partial class BaseGamemode : Entity
 	{
 		if ( !CanAddClient( cl ) )
 		{
+			Log.Debug( $"Sports: {cl.Name}'s was refused to join gamemode: {GamemodeId}" );
+
 			return;
 		}
 
 		Clients.Add( cl );
 
+		Log.Debug( $"Sports: Adding {cl.Name} to gamemode: {GamemodeId}" );
+
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = this;
 
 		cl.Pawn?.Delete();
-		cl.Pawn = CreatePawn();
+
+		var pawn = CreatePawn();
+		cl.Pawn = pawn;
+		pawn.InitialSpawn();
+
+		Log.Debug( $"Sports: {cl.Name}'s pawn: {cl.Pawn}" );
 
 		OnClientAdded( cl );
 	}
@@ -55,6 +67,8 @@ public abstract partial class BaseGamemode : Entity
 	public void RemoveClient( Client cl, LeaveReason reason = LeaveReason.Leave )
 	{
 		Clients.Remove( cl );
+
+		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {GamemodeId} with reason: {reason}" );
 
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = null;
@@ -126,11 +140,25 @@ public abstract partial class BaseGamemode : Entity
 	/// Called to dictate where the player's pawn is moved to upon spawn
 	/// </summary>
 	/// <param name="pawn"></param>
-	public virtual void MovePawnToSpawnpoint( BasePlayer pawn ) { }
+	public virtual void MovePawnToSpawnpoint( BasePlayer pawn )
+	{
+		// Default gamemode behavior will move players to the gamemode entity's origin.
+		pawn.Position = Position;
+	}
+
 	/// <summary>
 	/// Called to dress the pawn with the client's selected clothing
 	/// </summary>
 	/// <param name="pawn"></param>
 	/// <param name="container"></param>
 	public virtual void DressPlayer( BasePlayer pawn, Clothing.Container container ) { }
+
+	[ServerCmd( "sports_gamemode_leave" )]
+	protected static void LeaveGamemode()
+	{
+		var caller = ConsoleSystem.Caller;
+		var component = GamemodeEntityComponent.GetOrCreate( caller );
+
+		component.Gamemode?.RemoveClient( caller, LeaveReason.Leave );
+	}
 }
