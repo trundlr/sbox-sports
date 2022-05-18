@@ -140,7 +140,12 @@ public abstract partial class BaseGamemode : Entity
 	/// Called to dictate where the player's pawn is moved to upon spawn
 	/// </summary>
 	/// <param name="pawn"></param>
-	public virtual void MovePawnToSpawnpoint( BasePlayer pawn ) { }
+	public virtual void MovePawnToSpawnpoint( BasePlayer pawn )
+	{
+		// Default gamemode behavior will move players to the gamemode entity's origin.
+		pawn.Position = Position;
+	}
+
 	/// <summary>
 	/// Called to dress the pawn with the client's selected clothing
 	/// </summary>
