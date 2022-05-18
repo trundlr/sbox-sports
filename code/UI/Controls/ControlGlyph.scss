@@ -1,0 +1,29 @@
+.ControlGlyph {
+    align-items: center;
+
+    .Glyph {
+        height: 32px;
+
+        &.Medium {
+            height: 64px;
+        }
+
+        &.Large {
+            height: 128px;
+        }
+    }
+
+    .Text {
+        margin-left: 8px;
+        font-family: $primary-font;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        color: white;
+        text-shadow: -1px 3px 5px rgba(black, #343434);
+
+        &.Hide {
+            display: none;
+        }
+    }
+}
