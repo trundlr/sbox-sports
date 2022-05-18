@@ -54,7 +54,10 @@ public abstract partial class BaseGamemode : Entity
 		component.Gamemode = this;
 
 		cl.Pawn?.Delete();
-		cl.Pawn = CreatePawn();
+
+		var pawn = CreatePawn();
+		cl.Pawn = pawn;
+		pawn.InitialSpawn();
 
 		Log.Info( $"Sports: {cl.Name}'s pawn: {cl.Pawn}" );
 

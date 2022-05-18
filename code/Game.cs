@@ -36,9 +36,9 @@ public partial class SportsGame : Game
 	public void SetupDefaultPawn( Client cl )
 	{
 		cl.Pawn?.Delete();
-		var PlayerPawn = CreatePawn();
-		cl.Pawn = PlayerPawn;
-		PlayerPawn.InitialSpawn();
+		var pawn = CreatePawn();
+		cl.Pawn = pawn;
+		pawn.InitialSpawn();
 	}
 
 	public SportsGame()
