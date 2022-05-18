@@ -131,8 +131,8 @@ public partial class SportsChatBox : Panel
 
 		if ( global )
 			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Global" );
-		else if ( ConsoleSystem.Caller.GetPartyComponent() is PartyComponent comp && comp.Party.IsValid() )
-			AddChatEntry( To.Multiple( comp.Party.Members ), ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Party" );
+		else if ( ConsoleSystem.Caller.GetParty() is Party party )
+			AddChatEntry( To.Multiple( party.Members ), ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Party" );
 	}
 }
 
