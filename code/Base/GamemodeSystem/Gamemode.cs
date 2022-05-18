@@ -147,4 +147,13 @@ public abstract partial class BaseGamemode : Entity
 	/// <param name="pawn"></param>
 	/// <param name="container"></param>
 	public virtual void DressPlayer( BasePlayer pawn, Clothing.Container container ) { }
+
+	[ServerCmd( "sports_gamemode_leave" )]
+	protected static void LeaveGamemode()
+	{
+		var caller = ConsoleSystem.Caller;
+		var component = GamemodeEntityComponent.GetOrCreate( caller );
+
+		component.Gamemode?.RemoveClient( caller, LeaveReason.Leave );
+	}
 }
