@@ -61,15 +61,18 @@ public partial class PartyLobby : Panel
 
 	public static void OnPartyChanged()
 	{
-		//if ( Instance == null )
-		//	return;
+		if ( Instance is null )
+			return;
 
-		//Instance.PartyCanvas.DeleteChildren();
+		Instance.PartyCanvas?.DeleteChildren();
 
-		//foreach ( var member in Instance.Party?.Members )
-		//{
-		//	AddPartyMember( member );
-		//}
+		if ( Instance.Party?.Members is null )
+			return;
+
+		foreach ( var member in Instance.Party?.Members )
+		{
+			AddPartyMember( member );
+		}
 	}
 
 	protected override void PostTemplateApplied()
