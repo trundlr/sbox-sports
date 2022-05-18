@@ -89,6 +89,6 @@ public partial class SportsGame : Game
 		{
 			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
 		}
-		cl.Components.Get<PartyComponent>( true )?.Leave();
+		cl.GetPartyComponent()?.Leave();
 	}
 }

@@ -33,7 +33,7 @@ public partial class SportsChatBox : Panel
 
 	public void SwitchChat()
 	{
-		if ( Local.Client.Components.Get<PartyComponent>()?.Party.IsValid() ?? false )
+		if ( Local.Client.GetParty().IsValid() )
 		{
 			GlobalChat = !GlobalChat;
 		}
@@ -51,7 +51,7 @@ public partial class SportsChatBox : Panel
 
 		AddClass( "Open" );
 
-		if ( !Local.Client.Components.Get<PartyComponent>()?.Party.IsValid() ?? true )
+		if ( !Local.Client.GetParty().IsValid() )
 		{
 			GlobalChat = true;
 			SetClass( "Global", GlobalChat );
@@ -131,7 +131,7 @@ public partial class SportsChatBox : Panel
 
 		if ( global )
 			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Global" );
-		else if ( ConsoleSystem.Caller.Components.Get<PartyComponent>() is PartyComponent comp && comp.Party.IsValid() )
+		else if ( ConsoleSystem.Caller.GetPartyComponent() is PartyComponent comp && comp.Party.IsValid() )
 			AddChatEntry( To.Multiple( comp.Party.Members ), ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Party" );
 	}
 }

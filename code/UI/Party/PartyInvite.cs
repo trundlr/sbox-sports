@@ -21,7 +21,7 @@ public class PartyInvite : Panel
 	public override void Tick()
 	{
 		base.Tick();
-		if ( Local.Client.Components.Get<PartyComponent>()?.Party is Party p && p == Client.Components.Get<PartyComponent>()?.Party )
+		if ( Local.Client.IsSameParty( Client ) )
 		{
 			Delete();
 			return;
