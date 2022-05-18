@@ -19,7 +19,9 @@ public partial class PartyLobby : Panel
 	public override void Tick()
 	{
 		base.Tick();
+
 		PartyCanvas.SetClass( "InParty", Party.IsValid() );
+
 		if ( !Party.IsValid() )
 			PartyCanvas.RemoveClass( "Control" );
 	}
@@ -28,15 +30,7 @@ public partial class PartyLobby : Panel
 	private void BuildInput( InputBuilder builder )
 	{
 		PartyCanvas.SetClass( "IsHost", Local.Client == Party?.Host );
-		if ( builder.Down( InputButton.Score ) )
-		{
-			PartyCanvas.AddClass( "Control" );
-		}
-		if ( builder.Released( InputButton.Score ) )
-		{
-			PartyCanvas.RemoveClass( "Control" );
-		}
-
+		PartyCanvas.SetClass( "Control", Input.Down( InputButton.Score ) );
 	}
 
 	public static void AcceptedInvite( int networkIdent )
@@ -47,16 +41,16 @@ public partial class PartyLobby : Panel
 
 	public static void AddPartyMember( Client client )
 	{
-		if ( Instance == null )
+		if ( Instance is null )
 			return;
+
 		var member = Instance.PartyCanvas.AddChild<PartyMember>();
 		member.Client = client;
 		member.Avatar.SetTexture( $"avatar:{client.PlayerId}" );
 		member.Name.SetText( client.Name );
+
 		if ( client == Local.Client )
-		{
 			member.AddClass( "LocalMember" );
-		}
 	}
 
 	public static void OnPartyChanged()
@@ -85,6 +79,7 @@ public partial class PartyLobby : Panel
 	{
 		if ( Instance == null || Instance.InviteList.Children.Any( e => e is PartyInvite partyInvite && partyInvite.Client == cl ) )
 			return;
+
 		var invite = Instance.InviteList.AddChild<PartyInvite>();
 		invite.Client = cl;
 		invite.InviteText.Text = $"{cl.Name} invited you to their party!";
