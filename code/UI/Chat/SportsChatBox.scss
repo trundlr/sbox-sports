@@ -2,8 +2,8 @@
 
 SportsChatBox {
     position: absolute;
-    bottom: 200px;
-    left: 100px;
+    left: $safe-area-x;
+    bottom: $safe-area-y;
     z-index: 100;
     flex-direction: column;
     width: 500px;
