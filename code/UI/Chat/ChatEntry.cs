@@ -1,7 +1,4 @@
-﻿using Sandbox.UI.Construct;
-
-
-namespace Sports.UI;
+﻿namespace Sports.UI;
 
 public partial class SportsChatEntry : Panel
 {

@@ -1,6 +1,4 @@
-﻿using Sandbox.UI.Construct;
-using Sports.PartySystem;
-using System;
+﻿using Sports.PartySystem;
 
 namespace Sports.UI;
 
@@ -19,7 +17,6 @@ public partial class SportsChatBox : Panel
 	public Panel Canvas { get; protected set; }
 	public PartyChatTextEntry Input { get; protected set; }
 	public bool GlobalChat { get; protected set; } = true;
-
 
 	public SportsChatBox()
 	{
@@ -51,12 +48,15 @@ public partial class SportsChatBox : Panel
 	{
 		if ( !ChatEnabled )
 			return;
+
 		AddClass( "Open" );
+
 		if ( !Local.Client.Components.Get<PartyComponent>()?.Party.IsValid() ?? true )
 		{
 			GlobalChat = true;
 			SetClass( "Global", GlobalChat );
 		}
+
 		Input.Focus();
 	}
 
@@ -83,6 +83,7 @@ public partial class SportsChatBox : Panel
 	{
 		if ( !ChatEnabled )
 			return;
+
 		var e = Canvas.AddChild<SportsChatEntry>();
 		e.ChatType.Text = $"[{chatType}]";
 		e.ChatType.AddClass( "ChatType" + chatType.ToTitleCase() );
@@ -127,6 +128,7 @@ public partial class SportsChatBox : Panel
 			return;
 
 		Log.Debug( $"{ConsoleSystem.Caller}: {message}" );
+
 		if ( global )
 			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}", "Global" );
 		else if ( ConsoleSystem.Caller.Components.Get<PartyComponent>() is PartyComponent comp && comp.Party.IsValid() )

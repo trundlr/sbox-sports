@@ -14,7 +14,7 @@ public partial class PartyLobby : Panel
 
 	public Panel PartyCanvas { get; protected set; }
 	public Panel InviteList { get; protected set; }
-	public Party Party => Local.Client.Components.Get<PartyComponent>()?.Party ?? null;
+	public Party Party => Local.Client?.Components.Get<PartyComponent>()?.Party ?? null;
 
 	public override void Tick()
 	{
@@ -61,14 +61,15 @@ public partial class PartyLobby : Panel
 
 	public static void OnPartyChanged()
 	{
-		if ( Instance == null )
-			return;
+		//if ( Instance == null )
+		//	return;
 
-		Instance.PartyCanvas.DeleteChildren();
-		foreach ( var member in Instance.Party?.Members )
-		{
-			AddPartyMember( member );
-		}
+		//Instance.PartyCanvas.DeleteChildren();
+
+		//foreach ( var member in Instance.Party?.Members )
+		//{
+		//	AddPartyMember( member );
+		//}
 	}
 
 	protected override void PostTemplateApplied()
