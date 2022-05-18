@@ -21,14 +21,14 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
-		var callerComp = caller.Components.Get<PartyComponent>();
-		if ( callerComp?.Party?.Host != caller )
+		var callerParty = caller.GetParty();
+		if ( callerParty?.Host != caller )
 		{
 			Log.Debug( "Only the party host can kick players" );
-			Log.Debug( "Party host: " + callerComp?.Party?.Host?.Name );
+			Log.Debug( "Party host: " + callerParty?.Host?.Name );
 			return;
 		}
-		if ( callerComp?.Party?.Members.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
+		if ( caller.GetPartyMember( clientNetworkID ) is PartyComponent comp )
 		{
 			comp.Leave();
 		}
@@ -42,8 +42,8 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
-		var callerComp = caller.Components.Get<PartyComponent>();
-		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.Components.Get<PartyComponent>( true ) is PartyComponent comp )
+		var callerComp = caller.GetPartyComponent();
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.GetPartyComponent() is PartyComponent comp )
 		{
 			if ( comp.Party == null )
 			{
@@ -88,8 +88,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
 			return;
-		var callerComp = caller.Components.Get<PartyComponent>();
-		callerComp?.Party?.LeaveParty( callerComp );
+		caller.GetPartyComponent()?.Leave();
 	}
 
 	/// <summary>

@@ -51,7 +51,7 @@ public partial class PartyManager : Entity
 	{
 		if ( ConsoleSystem.Caller == null )
 			return;
-		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
+		var comp = ConsoleSystem.Caller.GetPartyComponent();
 		if ( comp.Party == null )
 		{
 			Log.Debug( "Party not found" );
@@ -74,8 +74,8 @@ public partial class PartyManager : Entity
 	{
 		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
 			return;
-		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
-		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
+		var comp = ConsoleSystem.Caller.GetPartyComponent();
+		var otherComp = OtherPlayer.GetPartyComponent();
 		if ( otherComp.Party == null ) // TODO: Make this system better, and not let everyone just join everybody
 		{
 			CreatePartyFor( otherComp );
@@ -92,11 +92,11 @@ public partial class PartyManager : Entity
 	{
 		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
 			return;
-		var otherComp = OtherPlayer.Components.GetOrCreate<PartyComponent>();
+		var otherComp = OtherPlayer.GetPartyComponent();
 		Log.Debug( $"{ConsoleSystem.Caller.Name} invited {OtherPlayer.Name} to a party" );
 		if ( OtherPlayer.IsBot ) // no need to Invite Bots they should always accept
 		{
-			var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
+			var comp = ConsoleSystem.Caller.GetPartyComponent();
 			if ( !comp.Party.IsValid() )
 			{
 				CreatePartyFor( comp );
@@ -118,7 +118,7 @@ public partial class PartyManager : Entity
 			JoinPlayer( fromPlayerNetID );
 			return;
 		}
-		Local.Client.Components.Get<PartyComponent>().Invited( OtherPlayer );
+		Local.Client.GetPartyComponent()?.Invited( OtherPlayer );
 	}
 
 	/// <summary>
@@ -129,7 +129,7 @@ public partial class PartyManager : Entity
 	{
 		if ( ConsoleSystem.Caller == null )
 			return;
-		var comp = ConsoleSystem.Caller.Components.GetOrCreate<PartyComponent>();
+		var comp = ConsoleSystem.Caller.GetPartyComponent();
 		comp.Party = null;
 	}
 

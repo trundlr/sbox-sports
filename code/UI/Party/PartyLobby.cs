@@ -14,7 +14,7 @@ public partial class PartyLobby : Panel
 
 	public Panel PartyCanvas { get; protected set; }
 	public Panel InviteList { get; protected set; }
-	public Party Party => Local.Client?.Components.Get<PartyComponent>()?.Party ?? null;
+	public Party Party => Local.Client?.GetParty();
 
 	public override void Tick()
 	{
