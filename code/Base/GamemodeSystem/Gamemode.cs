@@ -41,14 +41,14 @@ public abstract partial class BaseGamemode : Entity
 	{
 		if ( !CanAddClient( cl ) )
 		{
-			Log.Info( $"Sports: {cl.Name}'s was refused to join gamemode: {GamemodeId}" );
+			Log.Debug( $"Sports: {cl.Name}'s was refused to join gamemode: {GamemodeId}" );
 
 			return;
 		}
 
 		Clients.Add( cl );
 
-		Log.Info( $"Sports: Adding {cl.Name} to gamemode: {GamemodeId}" );
+		Log.Debug( $"Sports: Adding {cl.Name} to gamemode: {GamemodeId}" );
 
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = this;
@@ -59,7 +59,7 @@ public abstract partial class BaseGamemode : Entity
 		cl.Pawn = pawn;
 		pawn.InitialSpawn();
 
-		Log.Info( $"Sports: {cl.Name}'s pawn: {cl.Pawn}" );
+		Log.Debug( $"Sports: {cl.Name}'s pawn: {cl.Pawn}" );
 
 		OnClientAdded( cl );
 	}
@@ -68,7 +68,7 @@ public abstract partial class BaseGamemode : Entity
 	{
 		Clients.Remove( cl );
 
-		Log.Info( $"Sports: {cl.Name}' was removed from gamemode: {GamemodeId} with reason: {reason}" );
+		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {GamemodeId} with reason: {reason}" );
 
 		var component = GamemodeEntityComponent.GetOrCreate( cl );
 		component.Gamemode = null;

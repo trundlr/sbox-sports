@@ -22,7 +22,7 @@ public partial class GamemodeOrb : AnimEntity
 	protected void PostEntitiesSpawned()
 	{
 		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( GamemodeId );
-		Log.Info( "Orb: Linked to gamemode." );
+		Log.Debug( "Orb: Linked to gamemode." );
 	}
 
 	public override void Spawn()
