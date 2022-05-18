@@ -11,6 +11,8 @@ global using System.ComponentModel;
 global using System.Threading.Tasks;
 global using System.ComponentModel.DataAnnotations;
 
+using Sports.PartySystem;
+
 namespace Sports;
 
 public partial class SportsGame : Game
@@ -48,6 +50,11 @@ public partial class SportsGame : Game
 		{
 			Hud = new();
 		}
+		if ( Host.IsServer )
+		{
+			var partyManager = new PartySystem.PartyManager();
+			partyManager.Transmit = TransmitType.Always;
+		}
 	}
 
 	public override void Simulate( Client cl )
@@ -82,5 +89,6 @@ public partial class SportsGame : Game
 		{
 			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
 		}
+		cl.Components.Get<PartyComponent>( true )?.Leave();
 	}
 }
