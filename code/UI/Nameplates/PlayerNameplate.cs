@@ -20,9 +20,8 @@ public class PlayerNameplate : WorldPanel
 	public virtual void UpdateFromPlayer( BasePlayer player )
 	{
 		var localPlayer = Local.Pawn as BasePlayer;
-		var camera = localPlayer.Camera;
 
-		var angles = camera.Rotation.Angles();
+		var angles = CurrentView.Rotation.Angles();
 		angles.yaw += 180;
 		angles.pitch = 0;
 
@@ -31,7 +30,7 @@ public class PlayerNameplate : WorldPanel
 		//
 		// Where we putting the label, in world coords
 		//
-		var head = player.GetAttachment( "hat" ) ?? new Transform( player.EyePosition );
+		var head = player.GetAttachment( "hat" ) ?? new Transform( CurrentView.Position );
 		var labelPos = head.Position;
 
 		var dist = 25f;
