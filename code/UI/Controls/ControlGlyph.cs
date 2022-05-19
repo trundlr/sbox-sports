@@ -18,7 +18,7 @@ public class ControlGlyph : Panel
 
 	public ControlGlyph()
 	{
-		AddClass( "ControlGlyph" );
+		AddClass( "control-glyph" );
 	}
 
 	protected override void PreTemplateApplied()
@@ -85,15 +85,15 @@ public class ControlGlyph : Panel
 		if ( glyphimage == null || string.IsNullOrEmpty( Input.GetButtonOrigin( btn ) ) )
 		{
 			glyphimage = UnboundTexture;
-			Text.SetClass( "Hide", Text.TextLength == 0 );
+			Text.SetClass( "hide", Text.TextLength == 0 );
 			Glyph.Texture = glyphimage;
 			Glyph.Style.Width = 32;
 			Glyph.Style.Height = 32;
 			return;
 		}
-		Glyph.SetClass( "Medium", size == InputGlyphSize.Medium );
-		Glyph.SetClass( "Large", size == InputGlyphSize.Large );
-		Text.SetClass( "Hide", Text.TextLength == 0 );
+		Glyph.SetClass( "medium", size == InputGlyphSize.Medium );
+		Glyph.SetClass( "large", size == InputGlyphSize.Large );
+		Text.SetClass( "hide", Text.TextLength == 0 );
 		Glyph.Texture = glyphimage;
 		Glyph.Style.AspectRatio = (float)glyphimage.Width / glyphimage.Height;
 	}

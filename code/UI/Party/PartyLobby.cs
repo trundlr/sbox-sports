@@ -20,17 +20,17 @@ public partial class PartyLobby : Panel
 	{
 		base.Tick();
 
-		PartyCanvas.SetClass( "InParty", Party.IsValid() );
+		PartyCanvas.SetClass( "in-party", Party.IsValid() );
 
 		if ( !Party.IsValid() )
-			PartyCanvas.RemoveClass( "Control" );
+			PartyCanvas.RemoveClass( "control" );
 	}
 
 	[Event.BuildInput]
 	private void BuildInput( InputBuilder builder )
 	{
-		PartyCanvas.SetClass( "IsHost", Local.Client == Party?.Host );
-		PartyCanvas.SetClass( "Control", Input.Down( InputButton.Score ) );
+		PartyCanvas.SetClass( "is-host", Local.Client == Party?.Host );
+		PartyCanvas.SetClass( "control", Input.Down( InputButton.Score ) );
 	}
 
 	public static void AcceptedInvite( int networkIdent )
@@ -50,7 +50,7 @@ public partial class PartyLobby : Panel
 		member.Name.SetText( client.Name );
 
 		if ( client == Local.Client )
-			member.AddClass( "LocalMember" );
+			member.AddClass( "local-member" );
 	}
 
 	public static void OnPartyChanged()

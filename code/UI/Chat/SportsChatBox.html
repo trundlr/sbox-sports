@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="SportsChatBox.scss" />
 
-<div class="Global">
-    <div class="ChatCanvas" @ref="Canvas">
+<div class="global">
+    <div class="chat-canvas" @ref="Canvas">
     </div>
     <div>
-        <PartyChatTextEntry class="PartyChatEntry" @ref="Input" onsubmit="Submit()" onblur="Close()" onchatswitch="SwitchChat()"></PartyChatTextEntry>
-        <text class="GlobalChat">Global </text>
-        <text class="PartyChat">Party </text>
+        <PartyChatTextEntry class="party-chat-entry" @ref="Input" onsubmit="Submit()" onblur="Close()"
+            onchatswitch="SwitchChat()"></PartyChatTextEntry>
+        <text class="global-chat">Global </text>
+        <text class="party-chat">Party </text>
     </div>
 </div>

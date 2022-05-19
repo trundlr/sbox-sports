@@ -108,6 +108,17 @@ public partial class PartyManager : Entity
 			RpcInvitePlayer( To.Single( OtherPlayer ), ConsoleSystem.Caller.NetworkIdent );
 	}
 
+	/// <summary>
+	/// Test invite yourself to a party of a bot. Doesn't work if no bots are present.
+	/// </summary>
+	[ServerCmd]
+	public static void TestInvitePlayer()
+	{
+		if ( ConsoleSystem.Caller == null || Client.All.FirstOrDefault( e => e.IsBot ) is not Client OtherPlayer )
+			return;
+		RpcInvitePlayer( To.Single( ConsoleSystem.Caller ), OtherPlayer.NetworkIdent );
+	}
+
 	[ClientRpc]
 	public static void RpcInvitePlayer( int fromPlayerNetID )
 	{

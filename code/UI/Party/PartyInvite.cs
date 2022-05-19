@@ -28,7 +28,7 @@ public class PartyInvite : Panel
 		}
 		if ( !((PseudoClass & PseudoClass.FirstChild) != 0) )
 		{
-			ProgressBar.Parent?.AddClass( "Hide" );
+			ProgressBar.Parent?.AddClass( "hide" );
 			received = 0;
 			return;
 		}
@@ -43,7 +43,7 @@ public class PartyInvite : Panel
 			return;
 		}
 
-		ProgressBar.Parent?.RemoveClass( "Hide" );
+		ProgressBar.Parent?.RemoveClass( "hide" );
 		ProgressBar.Style.Width = Length.Fraction( received / TimeToAccept );
 
 		if ( received > TimeToAccept )
