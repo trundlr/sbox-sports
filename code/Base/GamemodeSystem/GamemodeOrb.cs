@@ -1,15 +1,20 @@
 namespace Sports;
 
 [Library( "sports_gamemode_orb" )]
-[EditorModel( "models/dev/gamemode_orb.vmdl" )]
 [Display( Name = "Gamemode Orb" )]
 [Category( "Map Setup" )]
-[Sphere( 128f, 0, 125, 255 )]
-public partial class GamemodeOrb : AnimEntity
+[Hammer.Particle( "orbparticlepath" )]
+public partial class GamemodeOrb : BaseTrigger
 {
 	public static HashSet<GamemodeOrb> Orbs { get; set; } = new();
 
-	public static Model OrbModel = Model.Load( "models/dev/gamemode_orb.vmdl" );
+	[Property, ResourceType( "vpcf" )]
+	private string orbParticlePath { get; set; } = "particles/gamemode_orb/orb.vpcf";
+	private ParticleSystemEntity orbParticle { get; set; }
+	[Property( "snapshot_file" ), ResourceType( "vsnap" )]
+	public string SnapshotFile { get; set; }
+	[Property( "snapshot_mesh" ), FGDType( "node_id" )]
+	private string SnapshotMesh { get; set; }
 
 	[Property]
 	public string GamemodeId { get; set; }
@@ -30,11 +35,18 @@ public partial class GamemodeOrb : AnimEntity
 		base.Spawn();
 		Orbs.Add( this );
 
-		Model = OrbModel;
 		Transmit = TransmitType.Always;
 
 		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 64f );
 		CollisionGroup = CollisionGroup.Trigger;
+
+		orbParticle = new ParticleSystemEntity
+		{
+			Transform = Transform,
+			SnapshotFile = SnapshotFile,
+			ParticleSystemName = orbParticlePath,
+			Parent = this,
+		};
 	}
 
 	protected override void OnDestroy()
