@@ -1,177 +1,177 @@
 @import "/UI/Theme.scss";
 
 PartyLobby {
-    position: absolute;
-    left: $safe-area-x;
-    top: $safe-area-x;
-    width: 100%;
+	position: absolute;
+	left: $safe-area-x;
+	top: $safe-area-x;
+	width: 100%;
 
-    .PartyList {
-        width: 256px;
-        flex-direction: column;
-        opacity: 0;
-        transform: scale(0);
-        position: absolute;
+	.party-list {
+		width: 256px;
+		flex-direction: column;
+		opacity: 0;
+		transform: scale(0);
+		position: absolute;
 
-        &.InParty {
-            opacity: 1;
-            transform: scale(1);
-            position: relative;
-        }
+		&.in-party {
+			opacity: 1;
+			transform: scale(1);
+			position: relative;
+		}
 
-        &.Control {
-            pointer-events: all;
+		&.control {
+			pointer-events: all;
 
-            &.IsHost :not(.LocalMember) .KickButton.OnlyHost {
-                display: flex;
-            }
-        }
+			&.is-host :not(.local-member) .kick-button.only-host {
+				display: flex;
+			}
+		}
 
-        &:not(.Control) {
-            .KickButton {
-                display: none;
-            }
+		&:not(.control) {
+			.kick-button {
+				display: none;
+			}
 
-            .leave {
-                display: none;
-            }
-        }
-    }
+			.leave {
+				display: none;
+			}
+		}
+	}
 }
 
 PartyMember {
-    width: 100%;
-    height: 50px;
-    margin-bottom: 8px;
-    background-color: rgba( $theme-color, 0.5 );
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba( $theme-color, 0.5 );
-    border-radius: 10px;
-    align-items: center;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 8px;
+	background-color: rgba($theme-color, 0.5);
+	backdrop-filter: blur(20px);
+	border: 2px solid rgba($theme-color, 0.5);
+	border-radius: 10px;
+	align-items: center;
 
-    .Avatar {
-        width: 32px;
-        height: 32px;
-        min-height: 32px;
-        border-radius: 100px;
-        margin: 5px;
-        border: 1px solid rgba( black, 0.5 );
-    }
+	.avatar {
+		width: 32px;
+		height: 32px;
+		min-height: 32px;
+		border-radius: 100px;
+		margin: 5px;
+		border: 1px solid rgba(black, 0.5);
+	}
 
-    .Name {
-        color: rgb(255, 255, 255);
-        font-size: 21px;
-        flex-grow: 1;
-        font-weight: 500;
-        text-shadow: 0px 0px 2px 20px rgba(black, 0.5);
-        font-family: $primary-font;
-        align-items: center;
-    }
+	.name {
+		color: rgb(255, 255, 255);
+		font-size: 21px;
+		flex-grow: 1;
+		font-weight: 500;
+		text-shadow: 0px 0px 2px 20px rgba(black, 0.5);
+		font-family: $primary-font;
+		align-items: center;
+	}
 
-    .KickButton {
-        width: 30px;
-        height: 30px;
-        color: rgb(255, 0, 0);
-        border-radius: 100px;
-        background-color: rgba(255, 255, 255, 0.247);
-        margin: 5px;
-        align-items: center;
-        justify-content: center;
-        font-size: 25px;
-        font-family: MaterialIcons;
-        display: none;
-    }
+	.kick-button {
+		width: 30px;
+		height: 30px;
+		color: rgb(255, 0, 0);
+		border-radius: 100px;
+		background-color: rgba(255, 255, 255, 0.247);
+		margin: 5px;
+		align-items: center;
+		justify-content: center;
+		font-size: 25px;
+		font-family: MaterialIcons;
+		display: none;
+	}
 
-    &.LocalMember .Leave {
-        width: 30px;
-        height: 30px;
-        color: rgb(255, 0, 0);
-        border-radius: 100px;
-        background-color: rgba(255, 255, 255, 0.247);
-        margin: 5px;
-        align-items: center;
-        justify-content: center;
-        font-size: 25px;
-        font-family: MaterialIcons;
-        display: flex;
-    }
+	&.local-member .leave {
+		width: 30px;
+		height: 30px;
+		color: rgb(255, 0, 0);
+		border-radius: 100px;
+		background-color: rgba(255, 255, 255, 0.247);
+		margin: 5px;
+		align-items: center;
+		justify-content: center;
+		font-size: 25px;
+		font-family: MaterialIcons;
+		display: flex;
+	}
 }
 
-.InviteList {
-    flex-direction: column;
+.invite-list {
+	flex-direction: column;
 
-    .InviteScreen {
-        transition: all 0.1s ease-out;
-        transform: scale(1) translateX(0);
+	.invite-screen {
+		transition: all 0.1s ease-out;
+		transform: scale(1) translateX(0);
 
-        &:intro {
-            max-height: 0px;
-            padding-top: 0;
-            padding-bottom: 0;
-            margin-bottom: 0;
-            opacity: 0;
-            transform: scale(0) translateX(100%);
-        }
+		&:intro {
+			max-height: 0px;
+			padding-top: 0;
+			padding-bottom: 0;
+			margin-bottom: 0;
+			opacity: 0;
+			transform: scale(0) translateX(100%);
+		}
 
-        &:outro {
-            opacity: 0;
-            transition: all 0.5s ease-out;
-            transform: scale(0) translateX(100%);
-            position: absolute;
-        }
+		&:outro {
+			opacity: 0;
+			transition: all 0.5s ease-out;
+			transform: scale(0) translateX(100%);
+			position: absolute;
+		}
 
-        margin: 10px;
-        margin-left: 20px;
-        border-radius: 10px;
-        width: 400px;
-        height: 50px;
-        background-color: rgb(55, 133, 185);
-        align-items: center;
-        justify-content: center;
+		margin: 10px;
+		margin-left: 20px;
+		border-radius: 10px;
+		width: 400px;
+		height: 50px;
+		background-color: rgb(55, 133, 185);
+		align-items: center;
+		justify-content: center;
 
-        .Buttons {
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            flex-grow: 0;
-            margin: 10px;
-            color: white;
-        }
+		.buttons {
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			flex-grow: 0;
+			margin: 10px;
+			color: white;
+		}
 
-        .InviteMiddle {
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            flex-grow: 1;
+		.invite-middle {
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			flex-grow: 1;
 
-            .InviteText {
-                width: 100%;
-                height: 20px;
-                font-size: 15px;
-                color: white;
-                text-align: center;
-                margin: 5px;
-            }
+			.invite-text {
+				width: 100%;
+				height: 20px;
+				font-size: 15px;
+				color: white;
+				text-align: center;
+				margin: 5px;
+			}
 
-            .InviteBar {
-                width: 60%;
-                height: 15px;
-                margin-bottom: 5px;
-                background-color: rgb(47, 114, 158);
-                border-radius: 10px;
-                opacity: 1;
-                transition: all 0.1s ease-out;
+			.invite-bar {
+				width: 60%;
+				height: 15px;
+				margin-bottom: 5px;
+				background-color: rgb(47, 114, 158);
+				border-radius: 10px;
+				opacity: 1;
+				transition: all 0.1s ease-out;
 
-                .Bar {
-                    height: 100%;
-                    border-radius: 10px;
-                    background-color: rgb(111, 221, 255);
-                }
+				.bar {
+					height: 100%;
+					border-radius: 10px;
+					background-color: rgb(111, 221, 255);
+				}
 
-                &.Hide {
-                    opacity: 0;
-                }
-            }
-        }
-    }
+				&.hide {
+					opacity: 0;
+				}
+			}
+		}
+	}
 }

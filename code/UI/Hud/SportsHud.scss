@@ -1,11 +1,11 @@
 @import "/UI/Theme.scss";
 
 SportsHud {
-    // Empty for now
+	pointer-events: none;
 }
 
 NameplateRootPanel {
-    width: 100%;
-    height: 100%;
-    position: absolute;
+	width: 100%;
+	height: 100%;
+	position: absolute;
 }

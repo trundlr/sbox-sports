@@ -1,6 +1,16 @@
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
+# scss files
+[*.scss]
+indent_style = space
+indent_size = 2
+
+# html files
+[*.html]
+indent_style = space
+indent_size = 4
+
 # C# files
 [*.cs]
 indent_style = tab

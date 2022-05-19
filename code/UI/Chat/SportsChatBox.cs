@@ -41,7 +41,7 @@ public partial class SportsChatBox : Panel
 		{
 			GlobalChat = true;
 		}
-		SetClass( "Global", GlobalChat );
+		SetClass( "global", GlobalChat );
 	}
 
 	public void Open()
@@ -49,12 +49,12 @@ public partial class SportsChatBox : Panel
 		if ( !ChatEnabled )
 			return;
 
-		AddClass( "Open" );
+		AddClass( "open" );
 
 		if ( !Local.Client.GetParty().IsValid() )
 		{
 			GlobalChat = true;
-			SetClass( "Global", GlobalChat );
+			SetClass( "global", GlobalChat );
 		}
 
 		Input.Focus();
@@ -62,7 +62,7 @@ public partial class SportsChatBox : Panel
 
 	public void Close()
 	{
-		RemoveClass( "Open" );
+		RemoveClass( "open" );
 		Input.Blur();
 	}
 
@@ -86,17 +86,17 @@ public partial class SportsChatBox : Panel
 
 		var e = Canvas.AddChild<SportsChatEntry>();
 		e.ChatType.Text = $"[{chatType}]";
-		e.ChatType.AddClass( "ChatType" + chatType.ToTitleCase() );
+		e.ChatType.AddClass( "chat-type" + chatType.ToLower() );
 		e.Message.Text = message;
 		e.NameLabel.Text = name;
 		e.Avatar.SetTexture( avatar );
 
-		e.SetClass( "NoName", string.IsNullOrEmpty( name ) );
-		e.SetClass( "NoAvatar", string.IsNullOrEmpty( avatar ) );
+		e.SetClass( "no-name", string.IsNullOrEmpty( name ) );
+		e.SetClass( "no-avatar", string.IsNullOrEmpty( avatar ) );
 
 		if ( lobbyState == "ready" || lobbyState == "staging" )
 		{
-			e.SetClass( "IsLobby", true );
+			e.SetClass( "is-lobby", true );
 		}
 	}
 
