@@ -14,7 +14,7 @@ public class BowlingBall : ModelEntity
 		Scale = 0.25f;
 	}
 
-	public void Simulate()
+	public override void Simulate( Client cl )
 	{
 		Move();
 	}

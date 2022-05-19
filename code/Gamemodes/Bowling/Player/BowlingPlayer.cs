@@ -7,25 +7,18 @@ public class BowlingPlayer : BasePlayer
 		base.Respawn();
 
 		Camera = new ThirdPersonCamera();
+
+		ActiveChild = new BowlingBallCarriable();
+		ActiveChild.OnCarryStart( this );
 	}
 
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
 
-		Entity.All.Where( x => x.Owner == this ).OfType<BowlingBall>().ToList().ForEach( x => x.Simulate() );
+		SimulateActiveChild( cl, ActiveChild );
 
-		if ( !IsServer )
-			return;
-
-		if ( Input.Pressed( InputButton.Attack1 ) )
-		{
-			var bowlingBall = new BowlingBall();
-			var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 64 ).Ignore( this ).Run();
-
-			bowlingBall.Position = tr.EndPosition + tr.Normal * 32;
-			bowlingBall.Velocity = EyeRotation.Forward * 512;
-			bowlingBall.Owner = this;
-		}
+		DebugOverlay.ScreenText( 4, "[BOWLING PAWN]\n" +
+			$"ActiveChild:                    {ActiveChild}" );
 	}
 }
