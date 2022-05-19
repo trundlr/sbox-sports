@@ -3093,5 +3093,6 @@
 	[
 		"models/sportscitizen/clothes/bowling/bowlinggloves.vmdl",
 		"models/sportscitizen/clothes/bowling/bowlingshoes.vmdl",
+		"models/bowling/bowlingball.vmdl",
 	]
 }
