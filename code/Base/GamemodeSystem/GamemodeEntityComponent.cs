@@ -2,11 +2,6 @@ namespace Sports;
 
 public partial class GamemodeEntityComponent : EntityComponent
 {
-	public static GamemodeEntityComponent GetOrCreate( Client cl )
-	{
-		return cl?.Components.GetOrCreate<GamemodeEntityComponent>();
-	}
-
 	[Net, Change( nameof( OnGamemodeChanged ) )]
 	public BaseGamemode Gamemode { get; set; }
 

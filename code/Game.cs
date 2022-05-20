@@ -1,17 +1,13 @@
 global using Sandbox;
 global using Sandbox.UI;
 global using Sandbox.UI.Construct;
-global using Sandbox.Component;
 global using SandboxEditor;
-
 global using System;
 global using System.Collections.Generic;
-global using System.Linq;
 global using System.ComponentModel;
-global using System.Threading.Tasks;
-global using System.ComponentModel.DataAnnotations;
+global using System.Linq;
 
-using Sports.PartySystem;
+using Sports.UI;
 
 namespace Sports;
 
@@ -19,9 +15,9 @@ public partial class SportsGame : Game
 {
 	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
 
-	public BaseGamemode GetGamemodeFromId( string id )
+	public BaseGamemode GetGamemodeFromId( string name )
 	{
-		return Gamemodes.FirstOrDefault( x => x.GamemodeId == id );
+		return Gamemodes.FirstOrDefault( x => x.Name.ToLower() == name.ToLower() );
 	}
 
 	public static SportsGame Instance => Current as SportsGame;
@@ -69,10 +65,14 @@ public partial class SportsGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
-		base.ClientJoined( cl );
+		Log.Info( $"{cl.Name} has joined the session" );
+		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} joined the session", $"avatar:{cl.PlayerId}" );
 
 		// Give the client the ability to be referenced to a specific gamemode
-		GamemodeEntityComponent.GetOrCreate( cl );
+		cl.GetGamemodeComponent();
+
+		// Give the client the PartyComponent
+		cl.GetPartyComponent();
 
 		// Set up the default pawn
 		SetupDefaultPawn( cl );
@@ -80,15 +80,21 @@ public partial class SportsGame : Game
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
-		base.ClientDisconnect( cl, reason );
+		Log.Info( $"{cl.Name} has left the session ({reason})" );
+		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} left the session", $"avatar:{cl.PlayerId}" );
 
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
-		var gamemode = component.Gamemode;
+		if ( cl.Pawn.IsValid() )
+		{
+			cl.Pawn.Delete();
+			cl.Pawn = null;
+		}
 
+		var gamemode = cl.GetGamemode();
 		if ( gamemode.IsValid() )
 		{
 			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
 		}
+
 		cl.GetPartyComponent()?.Leave();
 	}
 }
