@@ -41,6 +41,8 @@ public class BowlingBallCarriable : BaseCarriable
 
 	private void Throw()
 	{
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_bowling_throw", true );
+
 		if ( !IsServer )
 			return;
 
