@@ -4,7 +4,6 @@ namespace Sports;
 [Library( "sports_gamemode_orb" )]
 [Title( "Gamemode Orb" )]
 [Category( "Map Setup" )]
-[EditorModel( "models/editor/cone_helper.vmdl" )]
 [Particle]
 public partial class GamemodeOrb : BaseTrigger
 {
@@ -23,19 +22,17 @@ public partial class GamemodeOrb : BaseTrigger
 	protected void PostEntitiesSpawned()
 	{
 		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( Gamemode );
+
 		if ( LinkedGamemode.IsValid() )
-			Log.Debug( "Orb: Linked to gamemode." );
+			Log.Debug( $"Orb: Linked to gamemode: {Gamemode}" );
+		else
+			Log.Debug( $"Orb: Couldn't link gamemode: {Gamemode}" );
 	}
 
 	public override void Spawn()
 	{
 		base.Spawn();
 		Orbs.Add( this );
-
-		Transmit = TransmitType.Always;
-
-		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 16f );
-		CollisionGroup = CollisionGroup.Trigger;
 
 		_ = new ParticleSystemEntity
 		{
@@ -72,6 +69,5 @@ public partial class GamemodeOrb : BaseTrigger
 			return;
 
 		DebugOverlay.Text( $"Gamemode Orb: {Gamemode}", Position );
-		DebugOverlay.Sphere( Position, 16, Color.White );
 	}
 }
