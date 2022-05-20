@@ -23,11 +23,11 @@
 					},
 					{
 						_class = "MaterialGroup"
-						name = "gloveskin"
+						name = "altskin"
 						remaps = 
 						[
 							{
-								from = "models/sportscitizen/clothes/bowling/bowlinggloves_apetavern.vmat"
+								from = "models/sportscitizen/clothes/bowling/materials/bowlinggloves_apetavern.vmat"
 								to = "models/sportscitizen/clothes/bowling/materials/bowlinggloves_eagleone.vmat"
 							},
 						]
@@ -40,6 +40,7 @@
 				[
 					{
 						_class = "RenderMeshFile"
+						disabled = true
 						filename = "models/sportscitizen/clothes/bowling/bowlingglove_left.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
@@ -51,7 +52,10 @@
 						import_filter = 
 						{
 							exclude_by_default = true
-							exception_list = [  ]
+							exception_list = 
+							[
+								"polySurface1",
+							]
 						}
 					},
 					{
