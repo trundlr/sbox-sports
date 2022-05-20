@@ -8,11 +8,15 @@ public partial class ThirdPersonCamera : CameraMode
 	[ConVar.Replicated( "sports_thirdperson_collision_enabled" )]
 	public static bool ShouldCollide { get; set; } = true;
 
-	public float FOVOffset { get; set; } = -10f;
+	public float BaseFOVOffset { get; set; } = -10f;
+	public float FocusFOVOffset { get; set; } = -20f;
 
 	protected float BaseFOV { get; set; } = 70f;
-	protected Angles OrbitAngles;
+	protected float FOVAdjustSpeed { get; set; } = 10f;
 	protected float OrbitDistance { get; set; } = 150f;
+	protected float InternalFOVOffset { get; set; } = 0f;
+
+	protected Angles OrbitAngles;
 
 	public override void Update()
 	{
@@ -58,7 +62,7 @@ public partial class ThirdPersonCamera : CameraMode
 
 		Viewer = null;
 
-		FieldOfView = BaseFOV + FOVOffset;
+		FieldOfView = FieldOfView.LerpTo( BaseFOV + InternalFOVOffset, Time.Delta * FOVAdjustSpeed );
 	}
 
 	public override void Build( ref CameraSetup camSetup )
@@ -90,6 +94,8 @@ public partial class ThirdPersonCamera : CameraMode
 			input.Clear();
 			input.StopProcessing = true;
 		}
+
+		InternalFOVOffset = input.Down( InputButton.SecondaryAttack ) ? FocusFOVOffset : BaseFOVOffset;
 
 		base.BuildInput( input );
 	}
