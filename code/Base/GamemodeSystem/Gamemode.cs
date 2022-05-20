@@ -13,7 +13,7 @@ public abstract partial class BaseGamemode : Entity
 		base.Spawn();
 
 		// for the inspector
-		Name = ClassInfo.Name;
+		Name = ClassName;
 
 		Transmit = TransmitType.Always;
 
@@ -151,9 +151,9 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <param name="pawn"></param>
 	/// <param name="container"></param>
-	public virtual void DressPlayer( BasePlayer pawn, Clothing.Container container ) { }
+	public virtual void DressPlayer( BasePlayer pawn, ClothingContainer container ) { }
 
-	[ServerCmd( "sports_gamemode_leave" )]
+	[ConCmd.Server( "sports_gamemode_leave" )]
 	protected static void LeaveGamemode()
 	{
 		var caller = ConsoleSystem.Caller;

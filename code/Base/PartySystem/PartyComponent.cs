@@ -7,7 +7,7 @@ public partial class PartyComponent : EntityComponent, ISingletonComponent
 	/// <summary>
 	/// Allow receiving party invites
 	/// </summary>
-	[ClientVar]
+	[ConVar.Client]
 	public static bool PartyEnabled { get; set; } = true;
 
 	public Client Client => Entity as Client;

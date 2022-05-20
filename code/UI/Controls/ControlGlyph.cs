@@ -1,7 +1,7 @@
 
 namespace Sports.UI;
 
-[UseTemplate, Library( "ControlGlyph", Alias = new[] { "ButtonHint" } )]
+[UseTemplate]
 public class ControlGlyph : Panel
 {
 

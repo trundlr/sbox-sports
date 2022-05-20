@@ -1,6 +1,6 @@
 ﻿namespace Sports;
 
-public partial class BasePlayer : AnimEntity
+public partial class BasePlayer : AnimatedEntity
 {
 	public virtual float RespawnTime => 1;
 	public virtual float MaxHealth => 100;
@@ -12,7 +12,7 @@ public partial class BasePlayer : AnimEntity
 
 	public BaseGamemode CurrentGamemode => GamemodeEntityComponent.GetOrCreate( Client )?.Gamemode;
 
-	public Clothing.Container ClothingContainer { get; protected set; }
+	public ClothingContainer ClothingContainer { get; protected set; }
 
 	public override void Simulate( Client cl )
 	{
