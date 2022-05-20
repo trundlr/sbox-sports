@@ -1,10 +1,10 @@
 ﻿namespace Sports;
 
-public class BowlingBallCarriable : BaseCarriable
+public partial class BowlingBallCarriable : BaseCarriable
 {
 	public BowlingBall BowlingBall { get; set; }
 
-	TimeSince timeSinceLastThrow = 0;
+	[Net, Predicted] TimeSince timeSinceLastThrow { get; set; }
 
 	public override void Spawn()
 	{
@@ -28,10 +28,38 @@ public class BowlingBallCarriable : BaseCarriable
 			Throw();
 	}
 
+	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
+	{
+		if ( !IsServer )
+			return;
+		if ( name == "release" )//String compare is pretty rough tbh
+		{
+			BowlingBall?.Delete();
+			BowlingBall = new();
+
+			BowlingBall.Position = Position;//Set it to the position in your hand (might need tweaking though, bit shit to rely on animated position for this?)
+			BowlingBall.Velocity = Parent.Rotation.Forward * 512;//Use player rotation not eye rotation
+			BowlingBall.Owner = this;
+
+			EnableDrawing = false;
+
+			timeSinceLastThrow = 0;
+		}
+	}
+
 	private bool CanThrow()
 	{
-		if ( timeSinceLastThrow < 1 )
+		if ( timeSinceLastThrow > 3f )//Just a dumb trigger positive hit after 3 seconds thing
+			(Owner as AnimatedEntity)?.SetAnimParameter( "b_bowling_positive_hit", true );
+
+
+		if ( IsServer && timeSinceLastThrow > 4.5f )//Turn yourself back on after 1.5 seconds
+			EnableDrawing = true;
+
+
+		if ( timeSinceLastThrow < 5 )
 			return false;
+
 
 		if ( !Input.Pressed( InputButton.PrimaryAttack ) )
 			return false;
@@ -46,17 +74,5 @@ public class BowlingBallCarriable : BaseCarriable
 		if ( !IsServer )
 			return;
 
-		BowlingBall?.Delete();
-		BowlingBall = new();
-
-		var tr = Trace.Ray( Parent.EyePosition, Parent.EyePosition + Parent.EyeRotation.Forward * 64 )
-					  .Ignore( Parent )
-					  .Run();
-
-		BowlingBall.Position = tr.EndPosition + tr.Normal * 32;
-		BowlingBall.Velocity = Parent.EyeRotation.Forward * 512;
-		BowlingBall.Owner = this;
-
-		timeSinceLastThrow = 0;
 	}
 }
