@@ -21,6 +21,14 @@ public abstract partial class BaseGamemode : Entity
 		SportsGame.Instance?.Gamemodes.Remove( this );
 	}
 
+	public override void Simulate( Client cl )
+	{
+	}
+
+	public override void FrameSimulate( Client cl )
+	{
+	}
+
 	public void Start()
 	{
 		OnStart();
@@ -88,19 +96,25 @@ public abstract partial class BaseGamemode : Entity
 	/// <summary>
 	/// Called when the gamemode starts, normally by having enough players
 	/// </summary>
-	public virtual void OnStart() { }
+	public virtual void OnStart()
+	{
+	}
 
 	/// <summary>
 	/// Called when the gamemode is "finished"
 	/// normally when the flow of the gamemode has ended for any reason
 	/// </summary>
-	public virtual void OnFinish() { }
+	public virtual void OnFinish()
+	{
+	}
 
 	/// <summary>
 	/// Called when a client has joined the gamemode
 	/// </summary>
 	/// <param name="cl"></param>
-	public virtual void OnClientAdded( Client cl ) { }
+	public virtual void OnClientAdded( Client cl )
+	{
+	}
 
 	/// <summary>
 	/// Can we add a client to the gamemode? I.e it's full, or it's in progress (maybe we can delete this)
@@ -114,21 +128,27 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <param name="cl"></param>
 	/// <param name="reason"></param>
-	public virtual void OnClientRemoved( Client cl, LeaveReason reason = LeaveReason.Leave ) { }
+	public virtual void OnClientRemoved( Client cl, LeaveReason reason = LeaveReason.Leave )
+	{
+	}
 
 	/// <summary>
 	/// Called when a pawn is damaged while in a gamemode
 	/// </summary>
 	/// <param name="pawn"></param>
 	/// <param name="dmg"></param>
-	public virtual void OnPawnDamaged( BasePlayer pawn, DamageInfo dmg ) { }
+	public virtual void OnPawnDamaged( BasePlayer pawn, DamageInfo dmg )
+	{
+	}
 
 	/// <summary>
 	/// Called when a pawn is killed while in a gamemode
 	/// </summary>
 	/// <param name="pawn"></param>
 	/// <param name="lastdmg"></param>
-	public virtual void OnPawnKilled( BasePlayer pawn, DamageInfo lastdmg ) { }
+	public virtual void OnPawnKilled( BasePlayer pawn, DamageInfo lastdmg )
+	{
+	}
 
 	/// <summary>
 	/// Called to dictate where the player's pawn is moved to upon spawn

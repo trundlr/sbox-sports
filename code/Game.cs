@@ -63,6 +63,16 @@ public partial class SportsGame : Game
 		}
 	}
 
+	public override void FrameSimulate( Client cl )
+	{
+		base.FrameSimulate( cl );
+
+		foreach ( var gamemode in Gamemodes )
+		{
+			gamemode.FrameSimulate( cl );
+		}
+	}
+
 	public override void ClientJoined( Client cl )
 	{
 		Log.Info( $"{cl.Name} has joined the session" );
