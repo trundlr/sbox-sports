@@ -15,7 +15,7 @@ public partial class SportsChatBox : Panel
 	public static SportsChatBox Instance;
 
 	public Panel Canvas { get; protected set; }
-	public PartyChatTextEntry Input { get; protected set; }
+	public ChatTextEntry Input { get; protected set; }
 	public bool GlobalChat { get; protected set; } = true;
 
 	public SportsChatBox()
@@ -79,14 +79,24 @@ public partial class SportsChatBox : Panel
 		Say( msg, GlobalChat );
 	}
 
+	protected string GetChatTypeIcon( string chatType )
+	{
+		return chatType switch
+		{
+			"Global" => "public",
+			"Party" => "group",
+			_ => "public"
+		};
+	}
+
 	public void AddEntry( string name, string message, string avatar, string chatType, string lobbyState = null )
 	{
 		if ( !ChatEnabled )
 			return;
 
 		var e = Canvas.AddChild<SportsChatEntry>();
-		e.ChatType.Text = $"[{chatType}]";
-		e.ChatType.AddClass( "chat-type" + chatType.ToLower() );
+		e.ChatType.Text = $"{GetChatTypeIcon( chatType )}";
+		e.AddClass( "type-" + chatType.ToLower() );
 		e.Message.Text = message;
 		e.NameLabel.Text = name;
 		e.Avatar.SetTexture( avatar );
