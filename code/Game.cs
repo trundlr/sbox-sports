@@ -1,17 +1,11 @@
 global using Sandbox;
 global using Sandbox.UI;
 global using Sandbox.UI.Construct;
-global using Sandbox.Component;
 global using SandboxEditor;
-
 global using System;
 global using System.Collections.Generic;
-global using System.Linq;
 global using System.ComponentModel;
-global using System.Threading.Tasks;
-global using System.ComponentModel.DataAnnotations;
-
-using Sports.PartySystem;
+global using System.Linq;
 
 namespace Sports;
 
@@ -19,9 +13,9 @@ public partial class SportsGame : Game
 {
 	[Net] public IList<BaseGamemode> Gamemodes { get; set; }
 
-	public BaseGamemode GetGamemodeFromId( string id )
+	public BaseGamemode GetGamemodeFromId( string name )
 	{
-		return Gamemodes.FirstOrDefault( x => x.GamemodeId == id );
+		return Gamemodes.FirstOrDefault( x => x.Name.ToLower() == name.ToLower() );
 	}
 
 	public static SportsGame Instance => Current as SportsGame;

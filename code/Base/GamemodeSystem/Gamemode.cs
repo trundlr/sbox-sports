@@ -5,15 +5,9 @@ public abstract partial class BaseGamemode : Entity
 	[Net]
 	public IList<Client> Clients { get; set; }
 
-	[Property]
-	public string GamemodeId { get; set; }
-
 	public override void Spawn()
 	{
 		base.Spawn();
-
-		// for the inspector
-		Name = ClassName;
 
 		Transmit = TransmitType.Always;
 
@@ -41,14 +35,14 @@ public abstract partial class BaseGamemode : Entity
 	{
 		if ( !CanAddClient( cl ) )
 		{
-			Log.Debug( $"Sports: {cl.Name}'s was refused to join gamemode: {GamemodeId}" );
+			Log.Debug( $"Sports: {cl.Name}'s was refused to join gamemode: {Name}" );
 
 			return;
 		}
 
 		Clients.Add( cl );
 
-		Log.Debug( $"Sports: Adding {cl.Name} to gamemode: {GamemodeId}" );
+		Log.Debug( $"Sports: Adding {cl.Name} to gamemode: {Name}" );
 
 		var component = cl.GetGamemodeComponent();
 		component.Gamemode = this;
@@ -68,7 +62,7 @@ public abstract partial class BaseGamemode : Entity
 	{
 		Clients.Remove( cl );
 
-		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {GamemodeId} with reason: {reason}" );
+		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {Name} with reason: {reason}" );
 
 		var component = cl.GetGamemodeComponent();
 		component.Gamemode = null;
