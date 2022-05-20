@@ -1,8 +1,9 @@
 ﻿namespace Sports;
 
+[HammerEntity]
 [Library( "sports_bowling_gamemode" )]
 [EditorModel( "models/Bowling/bpin.vmdl" )]
-[Display( Name = "Bowling Gamemode" )]
+[Title( "Bowling Gamemode" )]
 [Category( "Gamemodes" )]
 [Sphere( 128f, 0, 125, 255 )]
 public partial class Bowling : BaseGamemode

@@ -16,7 +16,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// Kick a client from the party
 	/// </summary>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void KickPlayer( int clientNetworkID )
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
@@ -37,7 +37,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 	/// <summary>
 	/// Accept an invite
 	/// </summary>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void AcceptInvite( int clientNetworkID )
 	{
 		if ( ConsoleSystem.Caller is not Client caller )
@@ -83,7 +83,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 		}
 	}
 
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void LeaveParty()
 	{
 		if ( ConsoleSystem.Caller is not Client caller )

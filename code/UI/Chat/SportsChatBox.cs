@@ -9,7 +9,7 @@ public partial class SportsChatBox : Panel
 	/// <summary>
 	/// Disable chat using ClientVar
 	/// </summary>
-	[ClientVar]
+	[ConVar.Client]
 	public static bool ChatEnabled { get; set; } = true;
 
 	public static SportsChatBox Instance;
@@ -100,7 +100,7 @@ public partial class SportsChatBox : Panel
 		}
 	}
 
-	[ClientCmd( "chat_add", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "chat_add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string avatar = null, string chatType = "Global", string lobbyState = null )
 	{
 		Instance?.AddEntry( name, message, avatar, chatType, lobbyState );
@@ -112,13 +112,13 @@ public partial class SportsChatBox : Panel
 		}
 	}
 
-	[ClientCmd( "chat_addinfo", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "chat_addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message, string avatar = null )
 	{
 		Instance?.AddEntry( null, message, avatar, "System" );
 	}
 
-	[ServerCmd( "say" )]
+	[ConCmd.Server( "say" )]
 	public static void Say( string message, bool global = true )
 	{
 		Assert.NotNull( ConsoleSystem.Caller );
