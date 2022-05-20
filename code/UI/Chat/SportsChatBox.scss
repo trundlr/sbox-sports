@@ -29,6 +29,8 @@ SportsChatBox {
   }
 
   &.open {
+    pointer-events: all;
+
     .party-chat-entry {
       opacity: 1;
       backdrop-filter: blur(10px);
