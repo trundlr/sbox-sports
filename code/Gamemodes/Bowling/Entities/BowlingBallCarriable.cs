@@ -10,7 +10,7 @@ public class BowlingBallCarriable : BaseCarriable
 	{
 		base.Spawn();
 
-		SetModel( "models/dev/sphere.vmdl" );
+		SetModel( "models/bowling/bowlingball.vmdl" );
 	}
 
 	public override void Simulate( Client cl )

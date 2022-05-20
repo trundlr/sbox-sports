@@ -10,8 +10,7 @@ public class BowlingBall : ModelEntity
 	{
 		base.Spawn();
 
-		SetModel( "models/dev/sphere.vmdl" );
-		Scale = 0.25f;
+		SetModel( "models/bowling/bowlingball.vmdl" );
 	}
 
 	public override void Simulate( Client cl )
