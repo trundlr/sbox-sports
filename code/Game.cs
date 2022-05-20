@@ -72,7 +72,7 @@ public partial class SportsGame : Game
 		base.ClientJoined( cl );
 
 		// Give the client the ability to be referenced to a specific gamemode
-		GamemodeEntityComponent.GetOrCreate( cl );
+		cl.GetGamemodeComponent();
 
 		// Give the client the PartyComponent
 		cl.GetPartyComponent();
@@ -85,13 +85,12 @@ public partial class SportsGame : Game
 	{
 		base.ClientDisconnect( cl, reason );
 
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
-		var gamemode = component.Gamemode;
-
+		var gamemode = cl.GetGamemode();
 		if ( gamemode.IsValid() )
 		{
 			gamemode.RemoveClient( cl, reason.ToLeaveReason() );
 		}
+
 		cl.GetPartyComponent()?.Leave();
 	}
 }

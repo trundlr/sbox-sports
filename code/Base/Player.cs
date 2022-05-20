@@ -10,7 +10,7 @@ public partial class BasePlayer : AnimatedEntity
 
 	public DamageInfo LastDamageInfo { get; protected set; }
 
-	public BaseGamemode CurrentGamemode => GamemodeEntityComponent.GetOrCreate( Client )?.Gamemode;
+	public BaseGamemode CurrentGamemode => Client.GetGamemode();
 
 	public ClothingContainer ClothingContainer { get; protected set; }
 
