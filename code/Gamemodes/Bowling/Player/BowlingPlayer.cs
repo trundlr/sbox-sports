@@ -6,6 +6,7 @@ public class BowlingPlayer : BasePlayer
 	{
 		base.Respawn();
 
+		SetModel( "models/sportscitizen/citizen_bowling.vmdl" );
 		Camera = new ThirdPersonCamera();
 
 		ActiveChild = new BowlingBallCarriable();
