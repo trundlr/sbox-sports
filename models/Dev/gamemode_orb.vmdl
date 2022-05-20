@@ -10,20 +10,17 @@
 				children = 
 				[
 					{
-						_class = "RenderMeshFile"
-						filename = "models\\Dev\\dmx\\mesh\\gamemode_orb.dmx"
-						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
+						_class = "RenderPrimitiveSphere"
+						name = "orb"
 						parent_bone = ""
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
+						material_name = "dev/helper/testgrid.vmat"
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						max_u = 1.0
+						max_v = 1.0
+						radius = 16.0
+						segments_u = 16
+						segments_v = 16
 					},
 				]
 			},
@@ -33,13 +30,7 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = 
-						[
-							{
-								from = "materials/dev/reflectivity_30.vmat"
-								to = "debug/debugempty.vmat"
-							},
-						]
+						remaps = [  ]
 						use_global_default = false
 						global_default_material = ""
 					},
@@ -57,7 +48,7 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						radius = 30.0
+						radius = 16.0
 						center = [ 0.0, 0.0, 0.0 ]
 					},
 				]
