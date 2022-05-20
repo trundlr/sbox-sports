@@ -74,6 +74,9 @@ public partial class SportsGame : Game
 		// Give the client the ability to be referenced to a specific gamemode
 		GamemodeEntityComponent.GetOrCreate( cl );
 
+		// Give the client the PartyComponent
+		cl.GetPartyComponent();
+
 		// Set up the default pawn
 		SetupDefaultPawn( cl );
 	}
