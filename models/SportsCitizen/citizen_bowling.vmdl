@@ -38,7 +38,7 @@
 						anim_markup_ordered = false
 						disable_compression = false
 						source_filename = "models/SportsCitizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
-						start_frame = 15
+						start_frame = 14
 						end_frame = -1
 						framerate = 25.0
 						take = 0
@@ -59,8 +59,8 @@
 						anim_markup_ordered = false
 						disable_compression = false
 						source_filename = "models/SportsCitizen/Animations/Bowling/Citizen_Bowling_Poses.fbx"
-						start_frame = 15
-						end_frame = 15
+						start_frame = 14
+						end_frame = 14
 						framerate = 25.0
 						take = 0
 						reverse = false
