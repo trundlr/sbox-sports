@@ -17,10 +17,10 @@ public class BowlingBallCarriable : BaseCarriable
 	{
 		base.Simulate( cl );
 
-		DebugOverlay.ScreenText( 24, "[BOWLING CARRIABLE]\n" +
+		DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
 			$"TimeSinceLastThrow:             {timeSinceLastThrow}\n" +
 			$"Active ball:                    {BowlingBall}\n" +
-			$"Active ball pos:                {BowlingBall?.Position}" );
+			$"Active ball pos:                {BowlingBall?.Position}", 24 );
 
 		BowlingBall?.Simulate( cl );
 
@@ -33,7 +33,7 @@ public class BowlingBallCarriable : BaseCarriable
 		if ( timeSinceLastThrow < 1 )
 			return false;
 
-		if ( !Input.Pressed( InputButton.Attack1 ) )
+		if ( !Input.Pressed( InputButton.PrimaryAttack ) )
 			return false;
 
 		return true;

@@ -46,7 +46,7 @@ public partial class PartyManager : Entity
 	/// <summary>
 	/// List all party members into the console
 	/// </summary>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void ListPartyMembers()
 	{
 		if ( ConsoleSystem.Caller == null )
@@ -69,7 +69,7 @@ public partial class PartyManager : Entity
 	/// Join the party of another player directly
 	/// </summary>
 	/// <param name="otherPlayerNetID">The networkIdent of the player pawn</param>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void JoinPlayer( int otherPlayerNetID )
 	{
 		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
@@ -87,7 +87,7 @@ public partial class PartyManager : Entity
 	/// Send a party invite to another player
 	/// </summary>
 	/// <param name="otherPlayerNetID">The networkIdent of the player pawn</param>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void InvitePlayer( int otherPlayerNetID )
 	{
 		if ( ConsoleSystem.Caller == null || Entity.FindByIndex( otherPlayerNetID )?.Client is not Client OtherPlayer )
@@ -111,7 +111,7 @@ public partial class PartyManager : Entity
 	/// <summary>
 	/// Test invite yourself to a party of a bot. Doesn't work if no bots are present.
 	/// </summary>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void TestInvitePlayer()
 	{
 		if ( ConsoleSystem.Caller == null || Client.All.FirstOrDefault( e => e.IsBot ) is not Client OtherPlayer )
@@ -135,7 +135,7 @@ public partial class PartyManager : Entity
 	/// <summary>
 	/// Leave your current party
 	/// </summary>
-	[ServerCmd]
+	[ConCmd.Server]
 	public static void LeaveParty()
 	{
 		if ( ConsoleSystem.Caller == null )

@@ -3,7 +3,7 @@ namespace Sports;
 [Library( "sports_gamemode_orb" )]
 [Display( Name = "Gamemode Orb" )]
 [Category( "Map Setup" )]
-[Hammer.Particle( "orbparticlepath" )]
+[Particle( "orbparticlepath" )]
 public partial class GamemodeOrb : BaseTrigger
 {
 	public static HashSet<GamemodeOrb> Orbs { get; set; } = new();
