@@ -23,7 +23,7 @@ public partial class GamemodeOrb : BaseTrigger
 	protected void PostEntitiesSpawned()
 	{
 		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( Gamemode );
-		if ( LinkedGamemode is not null )
+		if ( LinkedGamemode.IsValid )
 			Log.Debug( "Orb: Linked to gamemode." );
 	}
 
@@ -65,8 +65,8 @@ public partial class GamemodeOrb : BaseTrigger
 		}
 	}
 
-	[Event.Tick]
-	private void Tick()
+	[Event.Tick.Server]
+	private void ServerTick()
 	{
 		if ( !Debug.Enabled )
 			return;
