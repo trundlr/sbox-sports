@@ -7,6 +7,8 @@ global using System.Collections.Generic;
 global using System.ComponentModel;
 global using System.Linq;
 
+using Sports.UI;
+
 namespace Sports;
 
 public partial class SportsGame : Game
@@ -63,7 +65,8 @@ public partial class SportsGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
-		base.ClientJoined( cl );
+		Log.Info( $"{cl.Name} has joined the session" );
+		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} joined the session", $"avatar:{cl.PlayerId}" );
 
 		// Give the client the ability to be referenced to a specific gamemode
 		cl.GetGamemodeComponent();
@@ -77,7 +80,14 @@ public partial class SportsGame : Game
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
-		base.ClientDisconnect( cl, reason );
+		Log.Info( $"{cl.Name} has left the session ({reason})" );
+		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} left the session", $"avatar:{cl.PlayerId}" );
+
+		if ( cl.Pawn.IsValid() )
+		{
+			cl.Pawn.Delete();
+			cl.Pawn = null;
+		}
 
 		var gamemode = cl.GetGamemode();
 		if ( gamemode.IsValid() )

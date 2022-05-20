@@ -1,6 +1,6 @@
 namespace Sports.UI;
 
-public class PartyChatTextEntry : TextEntry
+public class ChatTextEntry : TextEntry
 {
 	public override void OnButtonTyped( string button, KeyModifiers km )
 	{
