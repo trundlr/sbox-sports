@@ -4,6 +4,7 @@ public static class GamemodeExtensions
 {
 	/// <summary>
 	/// Get the gamemode component of the client
+	/// (Serverside Only) This will create a new component if it doesn't find one.
 	/// </summary>
 	public static GamemodeEntityComponent GetGamemodeComponent( this Client cl )
 	{
@@ -14,6 +15,7 @@ public static class GamemodeExtensions
 
 	/// <summary>
 	/// Get the gamemode of the client
+	/// (Serverside Only) This will create a new component if it doesn't find one.
 	/// </summary>
 	public static BaseGamemode GetGamemode( this Client cl )
 	{
