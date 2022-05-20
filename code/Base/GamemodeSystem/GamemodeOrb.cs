@@ -4,31 +4,27 @@ namespace Sports;
 [Library( "sports_gamemode_orb" )]
 [Title( "Gamemode Orb" )]
 [Category( "Map Setup" )]
-[Particle( "orbparticlepath" )]
+[EditorModel( "models/editor/cone_helper.vmdl" )]
+[Particle]
 public partial class GamemodeOrb : BaseTrigger
 {
 	public static HashSet<GamemodeOrb> Orbs { get; set; } = new();
 
-	[Property, ResourceType( "vpcf" )]
-	private string orbParticlePath { get; set; } = "particles/gamemode_orb/orb.vpcf";
-	private ParticleSystemEntity orbParticle { get; set; }
-	[Property( "snapshot_file" ), ResourceType( "vsnap" )]
-	public string SnapshotFile { get; set; }
-	[Property( "snapshot_mesh" ), FGDType( "node_id" )]
-	private string SnapshotMesh { get; set; }
-
-	[Property]
-	public string GamemodeId { get; set; }
-
+	[Property( "effect_name", Title = "Particle System Name" ), ResourceType( "vpcf" )]
+	public string ParticleSystemName { get; set; }
 	public BaseGamemode LinkedGamemode { get; set; }
+
+	[Property( "gamemode_name", Title = "Gamemode Name" ), FGDType( "target_destination" )]
+	public string Gamemode { get; set; }
 
 	protected TimeSince LastTouch = 1f;
 
 	[Event.Entity.PostSpawn]
 	protected void PostEntitiesSpawned()
 	{
-		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( GamemodeId );
-		Log.Debug( "Orb: Linked to gamemode." );
+		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( Gamemode );
+		if ( LinkedGamemode is not null )
+			Log.Debug( "Orb: Linked to gamemode." );
 	}
 
 	public override void Spawn()
@@ -38,16 +34,11 @@ public partial class GamemodeOrb : BaseTrigger
 
 		Transmit = TransmitType.Always;
 
-		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 64f );
+		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 16f );
 		CollisionGroup = CollisionGroup.Trigger;
 
-		orbParticle = new ParticleSystemEntity
-		{
-			Transform = Transform,
-			SnapshotFile = SnapshotFile,
-			ParticleSystemName = orbParticlePath,
-			Parent = this,
-		};
+		if ( ParticleSystemName is not null )
+			Particles.Create( ParticleSystemName, this );
 	}
 
 	protected override void OnDestroy()
@@ -64,8 +55,19 @@ public partial class GamemodeOrb : BaseTrigger
 
 		if ( other is PlazaPlayer player )
 		{
+			Log.Debug( $"Orb trying to add player: {player.Client.Name} to gamemode: {Gamemode}" );
 			LinkedGamemode?.AddClient( player.Client );
 			LastTouch = 0;
 		}
+	}
+
+	[Event.Tick]
+	private void Tick()
+	{
+		if ( !Debug.Enabled )
+			return;
+
+		DebugOverlay.Text( $"Gamemode Orb: {Gamemode}", Position );
+		DebugOverlay.Sphere( Position, 16, Color.White );
 	}
 }
