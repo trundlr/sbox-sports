@@ -15,7 +15,7 @@ public partial class SportsGame : Game
 
 	public BaseGamemode GetGamemodeFromId( string name )
 	{
-		return Gamemodes.FirstOrDefault( x => x.Name.ToLower() == name );
+		return Gamemodes.FirstOrDefault( x => x.Name.ToLower() == name.ToLower() );
 	}
 
 	public static SportsGame Instance => Current as SportsGame;
