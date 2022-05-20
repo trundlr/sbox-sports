@@ -37,8 +37,12 @@ public partial class GamemodeOrb : BaseTrigger
 		SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 16f );
 		CollisionGroup = CollisionGroup.Trigger;
 
-		if ( ParticleSystemName is not null )
-			Particles.Create( ParticleSystemName, this );
+		_ = new ParticleSystemEntity
+		{
+			Position = Position,
+			ParticleSystemName = ParticleSystemName,
+			StartActive = true
+		};
 	}
 
 	protected override void OnDestroy()
