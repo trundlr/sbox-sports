@@ -1,7 +1,8 @@
 namespace Sports;
 
+[HammerEntity]
 [Library( "sports_gamemode_orb" )]
-[Display( Name = "Gamemode Orb" )]
+[Title( "Gamemode Orb" )]
 [Category( "Map Setup" )]
 [Particle( "orbparticlepath" )]
 public partial class GamemodeOrb : BaseTrigger
