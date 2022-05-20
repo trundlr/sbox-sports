@@ -50,7 +50,7 @@ public abstract partial class BaseGamemode : Entity
 
 		Log.Debug( $"Sports: Adding {cl.Name} to gamemode: {GamemodeId}" );
 
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		var component = cl.GetGamemodeComponent();
 		component.Gamemode = this;
 
 		cl.Pawn?.Delete();
@@ -70,7 +70,7 @@ public abstract partial class BaseGamemode : Entity
 
 		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {GamemodeId} with reason: {reason}" );
 
-		var component = GamemodeEntityComponent.GetOrCreate( cl );
+		var component = cl.GetGamemodeComponent();
 		component.Gamemode = null;
 
 		// Go back to default pawn
@@ -156,9 +156,8 @@ public abstract partial class BaseGamemode : Entity
 	[ConCmd.Server( "sports_gamemode_leave" )]
 	protected static void LeaveGamemode()
 	{
-		var caller = ConsoleSystem.Caller;
-		var component = GamemodeEntityComponent.GetOrCreate( caller );
+		var cl = ConsoleSystem.Caller;
 
-		component.Gamemode?.RemoveClient( caller, LeaveReason.Leave );
+		cl?.GetGamemode()?.RemoveClient( cl, LeaveReason.Leave );
 	}
 }
