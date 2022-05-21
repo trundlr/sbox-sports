@@ -3,7 +3,8 @@ namespace Sports.StateSystem;
 
 public partial class BaseState : Entity
 {
-	[Net] public StateMachine StateMachine { get; set; }
+	[Net]
+	public StateMachine StateMachine { get; set; }
 
 	public override void Spawn()
 	{

@@ -5,8 +5,11 @@ namespace Sports;
 public partial class TurnStateMachine : StateMachine
 {
 
-	[Net] public List<Client> TurnOrder { get; set; } = new();
-	[Net, Predicted] public bool TurnFinished { get; set; } = false;
+	[Net]
+	public List<Client> TurnOrder { get; set; } = new();
+
+	[Net, Predicted]
+	public bool TurnFinished { get; set; } = false;
 	public Client CurrentTurn
 	{
 		get
@@ -28,6 +31,7 @@ public partial class TurnStateMachine : StateMachine
 		base.Spawn();
 		PreSpawnEntities( nameof( LobbyState ) );
 	}
+
 	public virtual void StartGame()
 	{
 		TurnOrder.Clear();
@@ -38,10 +42,12 @@ public partial class TurnStateMachine : StateMachine
 		TurnIndex = 0;
 		SetState( nameof( TurnState ) );
 	}
+
 	public virtual void EndGame()
 	{
 		SetState( nameof( LobbyState ) );
 	}
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );

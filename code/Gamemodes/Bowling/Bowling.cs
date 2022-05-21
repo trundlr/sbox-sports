@@ -10,7 +10,8 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 {
-	[Net] public TurnStateMachine StateMachine { get; set; }
+	[Net]
+	public TurnStateMachine StateMachine { get; set; }
 
 	public override BasePlayer CreatePawn()
 	{

@@ -4,12 +4,14 @@ namespace Sports.StateSystem;
 [PredictStates( nameof( TurnState ) )]
 public partial class WaitState : BaseState<TurnStateMachine>
 {
-	[Net, Predicted] public TimeSince CreationTime { get; set; }
+	[Net, Predicted]
+	public TimeSince CreationTime { get; set; }
 
 	public override void OnEnter()
 	{
 		CreationTime = 0;
 	}
+
 	public override void CheckSwitchState()
 	{
 		if ( CreationTime > 5 )
@@ -19,6 +21,7 @@ public partial class WaitState : BaseState<TurnStateMachine>
 			StateMachine.SetState( nameof( TurnState ) );
 		}
 	}
+
 	public override void OnTick()
 	{
 		if ( !Debug.Enabled )
