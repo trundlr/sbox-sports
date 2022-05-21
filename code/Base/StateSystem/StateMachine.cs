@@ -12,7 +12,7 @@ public partial class StateMachine : Entity
 		{
 			return currentState;
 		}
-		set
+		private set
 		{
 			if ( currentState.IsValid() )
 			{
@@ -42,7 +42,7 @@ public partial class StateMachine : Entity
 		base.FrameSimulate( cl );
 	}
 
-	public void SetState( string name )
+	public virtual void SetState( string name )
 	{
 		if ( States.ContainsKey( name ) )
 		{
@@ -56,7 +56,7 @@ public partial class StateMachine : Entity
 		}
 	}
 
-	protected void PreSpawnEntities( string StartState )
+	protected virtual void PreSpawnEntities( string StartState )
 	{
 		if ( Host.IsClient )
 			return;
