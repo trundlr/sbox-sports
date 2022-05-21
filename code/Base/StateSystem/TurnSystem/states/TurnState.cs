@@ -1,7 +1,7 @@
 namespace Sports.StateSystem;
 
 [Library]
-[PredictionState( nameof( WaitState ) )]
+[PredictStates( nameof( WaitState ) )]
 public class TurnState : BaseState<TurnStateMachine>
 {
 	public override void CheckSwitchState()

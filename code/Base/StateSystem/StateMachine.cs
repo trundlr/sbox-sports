@@ -60,7 +60,7 @@ public partial class StateMachine : Entity
 	{
 		if ( Host.IsClient )
 			return;
-		var FirstPredictionState = TypeLibrary.GetAttribute<PredictionStateAttribute>( TypeLibrary.GetTypeByName( StartState ) );
+		var FirstPredictionState = TypeLibrary.GetAttribute<PredictStatesAttribute>( TypeLibrary.GetTypeByName( StartState ) );
 		if ( !States.ContainsKey( StartState ) )
 			CacheState( StartState );
 		foreach ( var item in FirstPredictionState.PredictedStates )
@@ -78,7 +78,7 @@ public partial class StateMachine : Entity
 		entity.StateMachine = this;
 		States.Add( name, entity );
 
-		var predictionState = TypeLibrary.GetAttribute<PredictionStateAttribute>( entity.GetType() );
+		var predictionState = TypeLibrary.GetAttribute<PredictStatesAttribute>( entity.GetType() );
 		if ( predictionState != null )
 		{
 			foreach ( var item in predictionState.PredictedStates )

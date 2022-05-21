@@ -1,10 +1,10 @@
 namespace Sports.StateSystem;
 
 [AttributeUsage( AttributeTargets.Class )]
-public class PredictionStateAttribute : Attribute
+public class PredictStatesAttribute : Attribute
 {
 	public List<string> PredictedStates { get; private set; }
-	public PredictionStateAttribute( params string[] states )
+	public PredictStatesAttribute( params string[] states )
 	{
 		PredictedStates = new List<string>( states );
 	}
