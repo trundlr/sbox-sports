@@ -63,6 +63,8 @@ public abstract partial class BaseGamemode : Entity
 
 		Log.Debug( $"Sports: {cl.Name}'s pawn: {cl.Pawn}" );
 
+		UI.SportsChatBox.AddInformation( To.Single( cl ), $"You joined {Name}" );
+
 		OnClientAdded( cl );
 	}
 
@@ -71,6 +73,8 @@ public abstract partial class BaseGamemode : Entity
 		Clients.Remove( cl );
 
 		Log.Debug( $"Sports: {cl.Name}' was removed from gamemode: {Name} with reason: {reason}" );
+
+		UI.SportsChatBox.AddInformation( To.Single( cl ), $"You left {Name} with reason: {reason}" );
 
 		var component = cl.GetGamemodeComponent();
 		component.Gamemode = null;
