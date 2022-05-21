@@ -8,6 +8,7 @@ public partial class BaseGamemode
 	{
 		return Entities.Where( x => x.Tags.Has( tag ) );
 	}
+
 	public IEnumerable<T> GetEntitiesOfType<T>( string tag = null )
 	{
 		if ( tag is null )
@@ -26,13 +27,13 @@ public partial class BaseGamemode
 	{
 		var ents = All.OfType<GamemodePointEntity>();
 
-		Log.Info( $"[{Name}] Finding gamemode entities, count: {ents.Count()}" );
+		Log.Debug( $"[{Name}] Finding gamemode entities, count: {ents.Count()}" );
 
 		foreach ( var gamemodeEntity in ents )
 		{
 			if ( gamemodeEntity.GamemodeId.ToLower() == Name.ToLower() )
 			{
-				Log.Info( $"	> Matched GamemodePointEntity for {Name}" );
+				Log.Debug( $"	> Matched GamemodePointEntity for {Name}" );
 
 				Entities.Add( gamemodeEntity );
 				gamemodeEntity.Gamemode = this;
