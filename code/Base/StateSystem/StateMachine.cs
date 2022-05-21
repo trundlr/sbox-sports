@@ -2,7 +2,6 @@ namespace Sports.StateSystem;
 
 public partial class StateMachine : Entity
 {
-
 	[Net]
 	public Dictionary<string, BaseState> States { get; set; }
 
