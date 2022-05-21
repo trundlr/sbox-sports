@@ -83,7 +83,6 @@ public partial class StateMachine : Entity
 
 	private void CacheState( string name )
 	{
-
 		if ( States.ContainsKey( name ) )
 			return;
 
