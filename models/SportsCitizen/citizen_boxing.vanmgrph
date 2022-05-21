@@ -2327,6 +2327,28 @@
 			{
 				key = 
 				{
+					m_id = 506496287
+				}
+				value = 
+				{
+					_class = "CSequenceAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -4272.0, -2096.0 ]
+					m_nNodeID = 
+					{
+						m_id = 506496287
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_tagSpans = [  ]
+					m_sequenceName = "HoldItem_LH_Pose_Crouching_01"
+					m_playbackSpeed = 1.0
+					m_bLoop = true
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 509286395
 				}
 				value = 
@@ -7271,7 +7293,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -4096.0, -2192.0 ]
+					m_vecPosition = [ -3984.0, -2176.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1297895059
@@ -7411,7 +7433,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1752900163
+									m_id = 2142891173
 								}
 								m_outputID = 
 								{
@@ -7426,7 +7448,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1752900163
+									m_id = 2142891173
 								}
 								m_outputID = 
 								{
@@ -10941,7 +10963,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -4096.0, -2128.0 ]
+					m_vecPosition = [ -4272.0, -2048.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1752900163
@@ -13659,6 +13681,60 @@
 					m_bLoop = true
 				}
 			},
+			{
+				key = 
+				{
+					m_id = 2142891173
+				}
+				value = 
+				{
+					_class = "CBoneMaskAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -3984.0, -2080.0 ]
+					m_nNodeID = 
+					{
+						m_id = 2142891173
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_weightListName = "Only_UpperBody"
+					m_inputConnection1 = 
+					{
+						m_nodeID = 
+						{
+							m_id = 506496287
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_inputConnection2 = 
+					{
+						m_nodeID = 
+						{
+							m_id = 1752900163
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_blendSpace = "BlendSpace_Parent"
+					m_bUseBlendScale = false
+					m_blendValueSource = "Parameter"
+					m_blendParameter = 
+					{
+						m_id = 4294967295
+					}
+					m_timingBehavior = "UseChild2"
+					m_flTimingBlend = 0.5
+					m_flRootMotionBlend = 0.0
+					m_footMotionTiming = "Child1"
+					m_bResetChild1 = true
+					m_bResetChild2 = true
+				}
+			},
 		]
 	}
 	m_pParameterList = 
@@ -14689,5 +14765,6 @@
 	m_boneMergeModels = 
 	[
 		"models/sportscitizen/clothes/boxing/boxinggloves.vmdl",
+		"models/sportscitizen/clothes/boxing/boxingshorts.vmdl",
 	]
 }
