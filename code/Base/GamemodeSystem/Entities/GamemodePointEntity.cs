@@ -5,6 +5,7 @@ namespace Sports;
 [Title( "Gamemode Point" )]
 [Category( "Gamemode Setup" )]
 [Icon( "transform" )]
+[EditorModel( "models/editor/camera.vmdl" )]
 public partial class GamemodePointEntity : Entity, IGamemodeEntity
 {
 	[Net]
