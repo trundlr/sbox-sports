@@ -3,8 +3,8 @@
 public partial class BowlingBallCarriable : BaseCarriable
 {
 	public BowlingBall BowlingBall { get; set; }
-
 	[Net, Predicted] TimeSince timeSinceLastThrow { get; set; }
+	BowlingPlayer bowlingPlayer => Owner as BowlingPlayer;
 
 	public override void Spawn()
 	{
@@ -26,40 +26,47 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 		if ( CanThrow() )
 			Throw();
+
+		// TODO: Remove this later once we determine bowl success criteria.
+		if ( timeSinceLastThrow > 3f )
+			bowlingPlayer.OnTurnEnded();
+
+		// TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
+		if ( timeSinceLastThrow > 4.5f )
+			EnableDrawing = true;
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
 	{
-		if ( !IsServer )
-			return;
-		if ( name == "release" )//String compare is pretty rough tbh
+		if ( name == "release" )
+			ReleaseBall();
+	}
+
+	/// <summary>
+	/// What should happen when the ball is released from the players hand.
+	/// </summary>
+	private void ReleaseBall()
+	{
+		if ( IsServer )
 		{
 			BowlingBall?.Delete();
 			BowlingBall = new();
-
-			BowlingBall.Position = Position;//Set it to the position in your hand (might need tweaking though, bit shit to rely on animated position for this?)
-			BowlingBall.Velocity = Parent.Rotation.Forward * 512;//Use player rotation not eye rotation
-			BowlingBall.Owner = this;
-
-			EnableDrawing = false;
-
-			timeSinceLastThrow = 0;
 		}
+
+		if ( BowlingBall is null )
+			return;
+
+		BowlingBall.Position = Position;
+		BowlingBall.Velocity = Parent.Rotation.Forward * 512;
+		BowlingBall.Owner = this;
+
+		EnableDrawing = false;
 	}
 
 	private bool CanThrow()
 	{
-		if ( timeSinceLastThrow > 3f )//Just a dumb trigger positive hit after 3 seconds thing
-			(Owner as AnimatedEntity)?.SetAnimParameter( "b_bowling_positive_hit", true );
-
-
-		if ( IsServer && timeSinceLastThrow > 4.5f )//Turn yourself back on after 1.5 seconds
-			EnableDrawing = true;
-
-
 		if ( timeSinceLastThrow < 5 )
 			return false;
-
 
 		if ( !Input.Pressed( InputButton.PrimaryAttack ) )
 			return false;
@@ -69,10 +76,9 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 	private void Throw()
 	{
-		(Owner as AnimatedEntity)?.SetAnimParameter( "b_bowling_throw", true );
+		// Tell the animator that we want to throw our ball.
+		bowlingPlayer.PlayerAnimator.DoThrow();
 
-		if ( !IsServer )
-			return;
-
+		timeSinceLastThrow = 0;
 	}
 }

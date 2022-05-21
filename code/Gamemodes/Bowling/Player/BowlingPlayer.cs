@@ -1,25 +1,48 @@
-﻿namespace Sports;
+﻿using Sandbox;
+
+namespace Sports;
 
 public class BowlingPlayer : BasePlayer
 {
+	public BowlingPlayerAnimator PlayerAnimator => GetActiveAnimator() as BowlingPlayerAnimator;
+
 	public override void Respawn()
 	{
 		base.Respawn();
 
 		SetModel( "models/sportscitizen/citizen_bowling.vmdl" );
+
 		Camera = new ThirdPersonCamera();
+		Animator = new BowlingPlayerAnimator();
+		Controller = new PawnController();
 
-		Controller = null;//Disable the controller since this player has very limited movement
+		// This should be fired from the state handler once implemented.
+		OnTurnStarted();
+	}
 
-		Rotation = Rotation.FromYaw( 90 );//This is just the rotation I found works for facing the test course - it's shit, should be handled in custom animator probably.
+	/// <summary>
+	/// Called when this players turn has started.
+	/// </summary>
+	public void OnTurnStarted()
+	{
+		// TODO: Face your assigned alley once your turn begins. This is needs to be replaced later when we have alley entities.
+		Rotation = Rotation.FromYaw( 90 );
 
 		ActiveChild = new BowlingBallCarriable();
 		ActiveChild.OnCarryStart( this );
 	}
 
+	/// <summary>
+	/// Called when this players turn has ended.
+	/// </summary>
+	public void OnTurnEnded()
+	{
+		PlayerAnimator.DoResultAnimation( true );
+	}
+
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
 	{
-		ActiveChild.OnAnimEventGeneric( name, intData, floatData, vectorData, stringData );
+		ActiveChild?.OnAnimEventGeneric( name, intData, floatData, vectorData, stringData );
 	}
 
 	public override void Simulate( Client cl )
@@ -27,10 +50,6 @@ public class BowlingPlayer : BasePlayer
 		base.Simulate( cl );
 
 		SimulateActiveChild( cl, ActiveChild );
-
-		SetAnimParameter( "move_x", MathX.LerpTo( GetAnimParameterFloat( "move_x" ), Input.Left * -50f, Time.Delta * 10f ) );//Left/right side step
-
-		Position += Rotation * RootMotion * Time.Delta * 1.5f;//Apply root motion to position, should be in controller or animator class instead
 
 		DebugOverlay.ScreenText( "[BOWLING PAWN]\n" +
 			$"ActiveChild:                    {ActiveChild}", 4 );
