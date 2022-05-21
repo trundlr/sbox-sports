@@ -9,31 +9,17 @@ public static class TurnManagerExtensions
 
 	public static bool HasTurn( this BaseGamemode gm, Client cl )
 	{
-		return gm is ITurnStateMachine gamemode && gamemode.TurnStateMachine?.CurrentTurn == cl;
+		return gm?.GetStateMachine<TurnStateMachine>()?.CurrentTurn == cl;
 	}
 
 	public static TurnStateMachine GetTurnStateMachine( this Client cl )
 	{
-		return cl.GetGamemode()?.GetTurnStateMachine<TurnStateMachine>();
+		return cl.GetGamemode()?.GetStateMachine<TurnStateMachine>();
 	}
 
 	public static TurnStateMachine GetTurnStateMachine( this BaseGamemode gm )
 	{
-		return gm.GetTurnStateMachine<TurnStateMachine>();
-	}
-
-	public static T GetTurnStateMachine<T>( this Client cl ) where T : TurnStateMachine
-	{
-		return cl.GetGamemode()?.GetTurnStateMachine<T>();
-	}
-
-	public static T GetTurnStateMachine<T>( this BaseGamemode gm ) where T : TurnStateMachine
-	{
-		if ( gm is ITurnStateMachine gamemode )
-		{
-			return gamemode.TurnStateMachine as T;
-		}
-		return null;
+		return gm.GetStateMachine<TurnStateMachine>();
 	}
 
 	public static void EndTurn( this Client cl )

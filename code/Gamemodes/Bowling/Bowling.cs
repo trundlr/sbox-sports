@@ -8,9 +8,10 @@ namespace Sports;
 [Title( "Bowling Gamemode" )]
 [Category( "Gamemodes" )]
 [Sphere( 128f, 0, 125, 255 )]
-public partial class Bowling : BaseGamemode, ITurnStateMachine
+public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 {
-	[Net] public TurnStateMachine TurnStateMachine { get; set; }
+	[Net] public TurnStateMachine StateMachine { get; set; }
+
 	public override BasePlayer CreatePawn()
 	{
 		return new BowlingPlayer();
@@ -18,23 +19,23 @@ public partial class Bowling : BaseGamemode, ITurnStateMachine
 	public override void Spawn()
 	{
 		base.Spawn();
-		TurnStateMachine = new()
+		StateMachine = new()
 		{
 			Gamemode = this,
 		};
-		TurnStateMachine.SetState( nameof( LobbyState ) );
+		StateMachine.SetState( nameof( LobbyState ) );
 	}
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
 		if ( Host.IsServer )
-			TurnStateMachine?.Delete();
+			StateMachine?.Delete();
 	}
 
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
-		TurnStateMachine?.Simulate( cl );
+		StateMachine?.Simulate( cl );
 
 
 		if ( !Debug.Enabled )
@@ -47,7 +48,7 @@ public partial class Bowling : BaseGamemode, ITurnStateMachine
 		//End any player's turn
 		if ( Input.Pressed( InputButton.View ) )
 		{
-			TurnStateMachine?.EndTurn();
+			StateMachine?.EndTurn();
 		}
 
 	}
@@ -56,12 +57,12 @@ public partial class Bowling : BaseGamemode, ITurnStateMachine
 	{
 		base.OnStart();
 
-		TurnStateMachine?.StartGame();
+		StateMachine?.StartGame();
 	}
 	public override void OnFinish()
 	{
 		base.OnFinish();
-		TurnStateMachine?.EndGame();
+		StateMachine?.EndGame();
 	}
 
 	[ConCmd.Server]
