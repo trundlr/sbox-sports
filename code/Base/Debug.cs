@@ -5,7 +5,8 @@ public static class Debug
 	[ConVar.Replicated( "debug" )]
 	public static int Level { get; set; }
 
-	public static bool Enabled => Level > 0;
+	// @TODO: revert when ConVar.Replicated is fixed
+	public static bool Enabled => true;
 }
 
 public static class LoggerExtension
