@@ -3,18 +3,17 @@ namespace Sports.UI;
 [UseTemplate]
 public class PlayerNameplate : WorldPanel
 {
-	// @ref
-	public Label NameLabel;
-	// @ref
-	public Image AvatarImage;
+	public Label NameLabel { get; set; }
+	public Image AvatarImage { get; set; }
+	public ControlGlyph InteractionInputHint { get; set; }
 
 	public PlayerNameplate( Entity entity )
 	{
 		PanelBounds = new Rect( -250, -200, 800, 200 );
 		StyleSheet.Load( "UI/Nameplates/PlayerNameplate.scss" );
 
-		NameLabel = Add.Label( $"{entity.Client.Name}", "name" );
-		AvatarImage = Add.Image( $"avatarbig:{entity.Client.PlayerId}", "avatar" );
+		NameLabel.Text = entity.Client.Name;
+		AvatarImage.SetTexture( $"avatarbig:{entity.Client.PlayerId}" );
 	}
 
 	public virtual void UpdateFromPlayer( BasePlayer player )
@@ -45,6 +44,15 @@ public class PlayerNameplate : WorldPanel
 			startPosRight = rot.Right * 40f;
 
 		SetClass( "flipped", tr.Hit );
+
+		//
+		// Check if we are looking straight at the player, for interaction hint
+		//
+		tr = Trace.Ray( localPlayer.EyePosition, localPlayer.EyePosition + localPlayer.EyeRotation.Forward * 200 )
+			.Ignore( localPlayer )
+			.Run();
+
+		InteractionInputHint.SetClass( "show", tr.Hit && ((tr.Entity as BasePlayer) == player) );
 
 		Position = labelPos + rot.Up * -12.5f + startPosRight;
 		Rotation = rot;

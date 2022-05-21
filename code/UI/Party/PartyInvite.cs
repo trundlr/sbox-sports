@@ -1,6 +1,3 @@
-using System;
-using Sports.PartySystem;
-
 namespace Sports.UI;
 
 [UseTemplate]
@@ -26,6 +23,7 @@ public class PartyInvite : Panel
 			Delete();
 			return;
 		}
+
 		if ( !((PseudoClass & PseudoClass.FirstChild) != 0) )
 		{
 			ProgressBar.Parent?.AddClass( "hide" );
