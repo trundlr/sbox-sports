@@ -10,7 +10,7 @@ public partial class BaseGamemode
 	}
 	public IEnumerable<T> GetEntitiesOfType<T>( string tag = null )
 	{
-		if ( tag is not null )
+		if ( tag is null )
 		{
 			return Entities.OfType<T>();
 		}
