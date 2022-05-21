@@ -12,14 +12,9 @@ public static class TurnManagerExtensions
 		return gm?.GetStateMachine<TurnStateMachine>()?.CurrentTurn == cl;
 	}
 
-	public static TurnStateMachine GetTurnStateMachine( this Client cl )
+	private static TurnStateMachine GetTurnStateMachine( this Client cl )
 	{
 		return cl.GetGamemode()?.GetStateMachine<TurnStateMachine>();
-	}
-
-	public static TurnStateMachine GetTurnStateMachine( this BaseGamemode gm )
-	{
-		return gm.GetStateMachine<TurnStateMachine>();
 	}
 
 	public static void EndTurn( this Client cl )
