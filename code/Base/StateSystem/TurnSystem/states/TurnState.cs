@@ -1,22 +1,15 @@
 namespace Sports.StateSystem;
 
+[Library]
+[PredictionState( nameof( WaitState ) )]
 public class TurnState : BaseState<TurnStateMachine>
 {
 	public override void CheckSwitchState()
 	{
-		Log.Debug( $"PlayerTurnFinished: {StateMachine.CurrentTurn.TurnFinished}" );
-		if ( StateMachine.CurrentTurn.TurnFinished )
+		if ( StateMachine.TurnFinished )
 		{
-			StateMachine.CurrentTurn.TurnFinished = false;
-			StateMachine.CurrentState = new WaitState();
-		}
-	}
-	public override void OnEnter()
-	{
-		base.OnEnter();
-		foreach ( var player in StateMachine.TurnOrder )
-		{
-			player.HasTurn = player == StateMachine.CurrentTurn;
+			StateMachine.TurnFinished = false;
+			StateMachine.SetState( nameof( WaitState ) );
 		}
 	}
 }

@@ -2,10 +2,10 @@
 
 public static class Debug
 {
-	[ConVar.Replicated( "debug" )]
-	public static int Level { get; set; }
+	public static int Level { get; set; } = 10;
 
 	public static bool Enabled => Level > 0;
+	public static bool EnabledClient => Level > 0;
 }
 
 public static class LoggerExtension

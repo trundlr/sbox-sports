@@ -1,8 +1,15 @@
 namespace Sports.StateSystem;
 
-public class BaseState : BaseNetworkable
+
+public partial class BaseState : Entity
 {
-	public StateMachine StateMachine { get; set; } 
+	[Net] public StateMachine StateMachine { get; set; }
+
+	public override void Spawn()
+	{
+		base.Spawn();
+		Transmit = TransmitType.Always;
+	}
 
 	public virtual void CheckSwitchState() { }
 

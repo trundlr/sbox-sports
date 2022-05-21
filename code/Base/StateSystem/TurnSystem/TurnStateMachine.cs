@@ -4,13 +4,14 @@ namespace Sports;
 
 public partial class TurnStateMachine : StateMachine
 {
-	public List<TurnComponent> TurnOrder { get; set; } = new(); // TODO: possibly make this a list of entities instead of components, so it doesn't complain when Networked
+	[Net] public List<Client> TurnOrder { get; set; } = new(); // TODO: possibly make this a list of entities instead of components, so it doesn't complain when Networked
 
-	public TurnComponent CurrentTurn
+	[Net, Predicted] public bool TurnFinished { get; set; } = false;
+	public Client CurrentTurn
 	{
 		get
 		{
-			if ( Host.IsClient || TurnOrder == null || TurnOrder.Count == 0 )
+			if ( TurnOrder == null || TurnOrder.Count == 0 )
 				return null;
 			if ( TurnIndex >= TurnOrder.Count )
 			{
@@ -20,31 +21,40 @@ public partial class TurnStateMachine : StateMachine
 		}
 	}
 
-	[Net] public int TurnIndex { get; set; }
-
+	[Net, Predicted] public int TurnIndex { get; set; }
+	public override void Spawn()
+	{
+		base.Spawn();
+		PreSpawnEntities( nameof( WaitState ) );
+	}
 	public void StartGame()
 	{
 		TurnOrder.Clear();
-		foreach ( var item in Entity.Clients )
+		foreach ( var item in Gamemode.Clients )
 		{
-			var TurnComponent = item.Components.GetOrCreate<TurnComponent>();
-			TurnComponent.HasTurn = false;
-			TurnOrder.Add( TurnComponent );
+			TurnOrder.Add( item );
 		}
 		TurnIndex = 0;
-		CurrentTurn.HasTurn = true; // give the first player a turn
-		CurrentState = new TurnState();
+		SetState( nameof( TurnState ) );
 	}
 	public void EndGame()
 	{
-		CurrentState = new LobbyState();
+		SetState( nameof( LobbyState ) );
 	}
-	public override void Update()
+	public override void Simulate( Client cl )
 	{
-		base.Update();
+		if ( Input.Pressed( InputButton.Duck ) )
+		{
+			TurnFinished = true;
+		}
+		base.Simulate( cl );
 		if ( !Debug.Enabled )
 			return;
 
-		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Entity?.Name}, State: {CurrentState}", 8 );
+
+		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Name}, State: {CurrentState}", 8 );
 	}
+
+
+
 }

@@ -1,8 +1,11 @@
 namespace Sports.StateSystem;
 
-public partial class StateMachine : EntityComponent<BaseGamemode>
+public partial class StateMachine : Entity
 {
-	[Net] private BaseState currentState { get; set; }
+
+	[Net] public Dictionary<string, BaseState> States { get; set; }
+	[Net] public BaseGamemode Gamemode { get; set; }
+	[Net, Predicted] private BaseState currentState { get; set; }
 	public BaseState CurrentState
 	{
 		get
@@ -12,7 +15,9 @@ public partial class StateMachine : EntityComponent<BaseGamemode>
 		set
 		{
 			if ( currentState != null )
+			{
 				currentState.OnExit();
+			}
 			currentState = value;
 			if ( currentState != null )
 			{
@@ -21,17 +26,56 @@ public partial class StateMachine : EntityComponent<BaseGamemode>
 			}
 		}
 	}
-
-	public override bool CanAddToEntity( Entity entity ) // on hotload it errors for somereason.
+	public override void Spawn()
 	{
-		return true;
+		base.Spawn();
+		Transmit = TransmitType.Always;
 	}
-
-	[Event.Tick.Server]
-	public virtual void Update()
+	public override void Simulate( Client cl )
 	{
-		CurrentState?.CheckSwitchState();
+		base.Simulate( cl );
 		CurrentState?.OnTick();
+		CurrentState?.CheckSwitchState();
+	}
+	public override void FrameSimulate( Client cl )
+	{
+		base.FrameSimulate( cl );
 	}
 
+	public void SetState( string name )
+	{
+		if ( States.ContainsKey( name ) )
+		{
+			CurrentState = States[name];
+		}
+		else if ( Host.IsServer )
+		{
+			CurrentState = TypeLibrary.Create<BaseState>( name );
+			CurrentState.Parent = this;
+			States.Add( name, CurrentState );
+		}
+	}
+
+	protected void PreSpawnEntities( string StartState )
+	{
+		if ( Host.IsClient )
+			return;
+		var FirstPredictionState = TypeLibrary.GetAttribute<PredictionStateAttribute>( TypeLibrary.GetTypeByName( StartState ) );
+		if ( !States.ContainsKey( StartState ) )
+			CacheState( StartState );
+		foreach ( var item in FirstPredictionState.PredictedStates )
+		{
+			CacheState( item );
+		}
+	}
+
+	private void CacheState( string name )
+	{
+		if ( States.ContainsKey( name ) )
+			return;
+		var entity = TypeLibrary.Create<BaseState>( name );
+		entity.Parent = this;
+		entity.StateMachine = this;
+		States.Add( name, entity );
+	}
 }

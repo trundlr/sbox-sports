@@ -10,7 +10,7 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class Bowling : BaseGamemode
 {
-	public TurnStateMachine TurnStateMachine => Components.Get<TurnStateMachine>();
+	[Net] public TurnStateMachine TurnStateMachine { get; set; }
 	public override BasePlayer CreatePawn()
 	{
 		return new BowlingPlayer();
@@ -18,8 +18,17 @@ public partial class Bowling : BaseGamemode
 	public override void Spawn()
 	{
 		base.Spawn();
-		Components.GetOrCreate<TurnStateMachine>();
-		TurnStateMachine.CurrentState = new LobbyState(); // this can be turned into a specific Game State to allow different States.
+		TurnStateMachine = new()
+		{
+			Gamemode = this,
+		};
+		TurnStateMachine.SetState( nameof( LobbyState ) );
+	}
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		if ( Host.IsServer )
+			TurnStateMachine?.Delete();
 	}
 
 	[ConCmd.Server]
@@ -38,16 +47,21 @@ public partial class Bowling : BaseGamemode
 
 		game.Finish();
 	}
+	public override void Simulate( Client cl )
+	{
+		base.Simulate( cl );
+		TurnStateMachine?.Simulate( cl );
+	}
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
-		TurnStateMachine.StartGame();
+		TurnStateMachine?.StartGame();
 	}
 	public override void OnFinish()
 	{
 		base.OnFinish();
-		TurnStateMachine.EndGame();
+		TurnStateMachine?.EndGame();
 	}
 }
