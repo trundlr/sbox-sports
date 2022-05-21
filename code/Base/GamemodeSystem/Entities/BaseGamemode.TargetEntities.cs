@@ -35,7 +35,7 @@ public partial class BaseGamemode
 
 			if ( entity is IGamemodeEntity gamemodeEntity )
 			{
-				Entities.Add( gamemodeEntity );
+				Entities.Add( entity );
 				gamemodeEntity.Gamemode = this;
 				entity.Parent = this;
 			}
