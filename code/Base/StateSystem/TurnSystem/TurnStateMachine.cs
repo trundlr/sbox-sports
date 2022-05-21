@@ -4,8 +4,8 @@ namespace Sports;
 
 public partial class TurnStateMachine : StateMachine
 {
-	[Net] public List<Client> TurnOrder { get; set; } = new(); // TODO: possibly make this a list of entities instead of components, so it doesn't complain when Networked
 
+	[Net] public List<Client> TurnOrder { get; set; } = new();
 	[Net, Predicted] public bool TurnFinished { get; set; } = false;
 	public Client CurrentTurn
 	{
@@ -22,12 +22,13 @@ public partial class TurnStateMachine : StateMachine
 	}
 
 	[Net, Predicted] public int TurnIndex { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();
 		PreSpawnEntities( nameof( LobbyState ) );
 	}
-	public void StartGame()
+	public virtual void StartGame()
 	{
 		TurnOrder.Clear();
 		foreach ( var item in Gamemode.Clients )
@@ -37,24 +38,21 @@ public partial class TurnStateMachine : StateMachine
 		TurnIndex = 0;
 		SetState( nameof( TurnState ) );
 	}
-	public void EndGame()
+	public virtual void EndGame()
 	{
 		SetState( nameof( LobbyState ) );
 	}
 	public override void Simulate( Client cl )
 	{
-		if ( Input.Pressed( InputButton.Duck ) )
-		{
-			TurnFinished = true;
-		}
 		base.Simulate( cl );
 		if ( !Debug.Enabled )
 			return;
-
-
 		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Name}, State: {CurrentState}", 8 );
 	}
 
-
+	public virtual void EndTurn()
+	{
+		TurnFinished = true;
+	}
 
 }

@@ -8,7 +8,7 @@ namespace Sports;
 [Title( "Bowling Gamemode" )]
 [Category( "Gamemodes" )]
 [Sphere( 128f, 0, 125, 255 )]
-public partial class Bowling : BaseGamemode
+public partial class Bowling : BaseGamemode, ITurnStateMachine
 {
 	[Net] public TurnStateMachine TurnStateMachine { get; set; }
 	public override BasePlayer CreatePawn()
@@ -31,6 +31,39 @@ public partial class Bowling : BaseGamemode
 			TurnStateMachine?.Delete();
 	}
 
+	public override void Simulate( Client cl )
+	{
+		base.Simulate( cl );
+		TurnStateMachine?.Simulate( cl );
+
+
+		if ( !Debug.Enabled )
+			return;
+		//End turn of yourself
+		if ( Input.Pressed( InputButton.Duck ) )
+		{
+			cl.EndTurn();
+		}
+		//End any player's turn
+		if ( Input.Pressed( InputButton.View ) )
+		{
+			TurnStateMachine?.EndTurn();
+		}
+
+	}
+
+	public override void OnStart()
+	{
+		base.OnStart();
+
+		TurnStateMachine?.StartGame();
+	}
+	public override void OnFinish()
+	{
+		base.OnFinish();
+		TurnStateMachine?.EndGame();
+	}
+
 	[ConCmd.Server]
 	public static void StartBowling()
 	{
@@ -46,22 +79,5 @@ public partial class Bowling : BaseGamemode
 			return;
 
 		game.Finish();
-	}
-	public override void Simulate( Client cl )
-	{
-		base.Simulate( cl );
-		TurnStateMachine?.Simulate( cl );
-	}
-
-	public override void OnStart()
-	{
-		base.OnStart();
-
-		TurnStateMachine?.StartGame();
-	}
-	public override void OnFinish()
-	{
-		base.OnFinish();
-		TurnStateMachine?.EndGame();
 	}
 }
