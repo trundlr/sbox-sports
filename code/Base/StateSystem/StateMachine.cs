@@ -77,5 +77,14 @@ public partial class StateMachine : Entity
 		entity.Parent = this;
 		entity.StateMachine = this;
 		States.Add( name, entity );
+
+		var predictionState = TypeLibrary.GetAttribute<PredictionStateAttribute>( entity.GetType() );
+		if ( predictionState != null )
+		{
+			foreach ( var item in predictionState.PredictedStates )
+			{
+				CacheState( item );
+			}
+		}
 	}
 }
