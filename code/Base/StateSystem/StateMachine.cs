@@ -14,12 +14,12 @@ public partial class StateMachine : Entity
 		}
 		set
 		{
-			if ( currentState != null )
+			if ( currentState.IsValid() )
 			{
 				currentState.OnExit();
 			}
 			currentState = value;
-			if ( currentState != null )
+			if ( currentState.IsValid() )
 			{
 				CurrentState.StateMachine = this;
 				currentState.OnEnter();
