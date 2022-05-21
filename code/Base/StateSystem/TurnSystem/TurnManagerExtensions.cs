@@ -29,13 +29,17 @@ public static class TurnManagerExtensions
 
 	public static T GetTurnStateMachine<T>( this BaseGamemode gm ) where T : TurnStateMachine
 	{
-		return gm as T;
+		if ( gm is ITurnStateMachine gamemode )
+		{
+			return gamemode.TurnStateMachine as T;
+		}
+		return null;
 	}
 
 	public static void EndTurn( this Client cl )
 	{
 		if ( !cl.HasTurn() )
 			return;
-		cl.GetTurnStateMachine()?.EndTurn();
+		cl.GetTurnStateMachine().EndTurn();
 	}
 }

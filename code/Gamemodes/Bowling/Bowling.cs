@@ -40,7 +40,7 @@ public partial class Bowling : BaseGamemode, ITurnStateMachine
 		if ( !Debug.Enabled )
 			return;
 		//End turn of yourself
-		if ( Input.Pressed( InputButton.Duck ) )
+		if ( Input.Pressed( InputButton.Duck ) && !cl.IsBot )
 		{
 			cl.EndTurn();
 		}

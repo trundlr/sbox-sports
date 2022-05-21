@@ -15,6 +15,7 @@ public partial class WaitState : BaseState<TurnStateMachine>
 		if ( CreationTime > 5 )
 		{
 			StateMachine.TurnIndex += 1 % StateMachine.TurnOrder.Count;
+			StateMachine.TurnFinished = false;
 			StateMachine.SetState( nameof( TurnState ) );
 		}
 	}
