@@ -2,7 +2,7 @@ namespace Sports;
 
 public partial class BaseGamemode
 {
-	public List<Entity> Entities { get; protected set; }
+	public List<Entity> Entities { get; protected set; } = new();
 
 	public IEnumerable<Entity> GetEntitiesWithTag( string tag )
 	{
