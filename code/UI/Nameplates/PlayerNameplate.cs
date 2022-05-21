@@ -54,6 +54,8 @@ public class PlayerNameplate : WorldPanel
 
 		InteractionInputHint.SetClass( "show", tr.Hit && ((tr.Entity as BasePlayer) == player) );
 
+		SetClass( "party", Local.Client.IsSameParty( player.Client ) );
+
 		Position = labelPos + rot.Up * -12.5f + startPosRight;
 		Rotation = rot;
 	}

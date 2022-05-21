@@ -41,6 +41,14 @@ PlayerNameplate {
     }
   }
 
+  &.party {
+    background-image: linear-gradient( to left, rgba($party-color, 0.01), rgba($party-color, 0.7) 100% );
+
+    &.flipped {
+      background-image: linear-gradient( to right, rgba($party-color, 0.01), rgba($party-color, 0.7) 100% );
+    }
+  }
+
   &.flipped {
     background-image: linear-gradient( to right, rgba($theme-color, 0.01), rgba($theme-color, 0.7) 100% );
     flex-direction: row-reverse;
