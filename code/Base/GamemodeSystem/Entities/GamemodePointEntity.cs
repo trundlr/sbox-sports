@@ -1,6 +1,5 @@
 namespace Sports;
 
-
 [HammerEntity]
 [Title( "Gamemode Point" )]
 [Category( "Gamemode Setup" )]
