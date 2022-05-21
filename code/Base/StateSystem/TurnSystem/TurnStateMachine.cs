@@ -25,7 +25,7 @@ public partial class TurnStateMachine : StateMachine
 	public override void Spawn()
 	{
 		base.Spawn();
-		PreSpawnEntities( nameof( WaitState ) );
+		PreSpawnEntities( nameof( LobbyState ) );
 	}
 	public void StartGame()
 	{
