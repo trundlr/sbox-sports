@@ -1,6 +1,6 @@
 ﻿namespace Sports;
 
-public partial class BasePlayer : AnimatedEntity
+public partial class BasePlayer : AnimatedEntity, IInteractable
 {
 	public virtual float RespawnTime => 1;
 	public virtual float MaxHealth => 100;
@@ -136,6 +136,14 @@ public partial class BasePlayer : AnimatedEntity
 			return;
 
 		GetActiveAnimator()?.BuildInput( input );
+	}
+
+	public List<Interaction> GetInteractions()
+	{
+		return new()
+		{
+			new PartyAddInteraction(this)
+		};
 	}
 
 	//

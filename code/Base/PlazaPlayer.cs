@@ -1,4 +1,4 @@
-using Sports.PartySystem;
+using Sports.UI;
 
 namespace Sports;
 
@@ -14,7 +14,7 @@ public class PlazaPlayer : BasePlayer
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
-		//TODO: Remove once proper worldspace ui is implemented. This is only for testing purposes.
+
 		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 200 ).Ignore( this ).Run();
 
 		if ( Debug.Enabled )
@@ -24,7 +24,9 @@ public class PlazaPlayer : BasePlayer
 		{
 			if ( Input.Pressed( InputButton.Use ) )
 			{
-				PartyManager.InvitePlayer( player.NetworkIdent );
+				var menu = new InteractionMenu();
+				menu.SetEntity( player );
+				SportsGame.Instance.Hud.AddChild( menu );
 			}
 		}
 	}
