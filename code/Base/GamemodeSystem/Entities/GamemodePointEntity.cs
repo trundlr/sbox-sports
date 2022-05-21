@@ -6,14 +6,17 @@ namespace Sports;
 [Category( "Gamemode Setup" )]
 [Icon( "transform" )]
 [EditorModel( "models/editor/camera.vmdl" )]
-public partial class GamemodePointEntity : Entity, IGamemodeEntity
+public partial class GamemodePointEntity : Entity
 {
 	[Net]
-	BaseGamemode IGamemodeEntity.Gamemode { get; set; }
+	public BaseGamemode Gamemode { get; set; }
+
+	[Property, Title( "Gamemode ID" )]
+	public string GamemodeId { get; set; }
 
 	public override string ToString()
 	{
-		return $"Gamemode Point ({string.Join( ", ", Tags.List )})";
+		return $"Gamemode Point [{GamemodeId}] ({string.Join( ", ", Tags.List )})";
 	}
 
 	public override void Spawn()
