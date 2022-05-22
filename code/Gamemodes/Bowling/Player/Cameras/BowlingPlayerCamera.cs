@@ -106,6 +106,7 @@ public partial class BowlingPlayerCamera : BaseCamera
         if ( !player.IsValid() )
             return;
 
+        // @TODO: better way to dictate camera state. probably match a game state instead
         if ( player.HasThrown && player.Ball.BowlingBall.IsValid() )
             CameraState = BowlingCameraState.Thrown;
         else if ( player.HasThrown )
