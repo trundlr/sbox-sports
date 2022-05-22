@@ -9,25 +9,25 @@ public partial class StateMachine : Entity
 	public BaseGamemode Gamemode { get; set; }
 
 	[Net, Predicted]
-	private BaseState currentState { get; set; }
+	private BaseState _CurrentState { get; set; }
 
 	public BaseState CurrentState
 	{
 		get
 		{
-			return currentState;
+			return _CurrentState;
 		}
 		private set
 		{
-			if ( currentState.IsValid() )
+			if ( _CurrentState.IsValid() )
 			{
-				currentState.OnExit();
+				_CurrentState.OnExit();
 			}
-			currentState = value;
-			if ( currentState.IsValid() )
+			_CurrentState = value;
+			if ( _CurrentState.IsValid() )
 			{
 				CurrentState.StateMachine = this;
-				currentState.OnEnter();
+				_CurrentState.OnEnter();
 			}
 		}
 	}
