@@ -4,6 +4,8 @@ public class InteractionMenu : Panel
 {
 	private List<Interaction> InteractionList { get; set; } = new();
 
+	private List<Panel> PanelList { get; set; } = new();
+
 	public Label NameLabel { get; set; }
 
 	public InteractionMenu()
@@ -15,6 +17,9 @@ public class InteractionMenu : Panel
 
 	public void SetEntity( Entity entity )
 	{
+		InteractionList.Clear();
+		PanelList.Clear();
+
 		NameLabel.Text = entity.Client.Name;
 
 		// Populate the InteractionMenu with the Entity's Interactions.
@@ -35,6 +40,9 @@ public class InteractionMenu : Panel
 	{
 		foreach ( Interaction interaction in InteractionList )
 			AddInteractionOption( interaction );
+
+		if ( PanelList.Count == 0 )
+			Delete();
 	}
 
 	private Panel AddInteractionOption( Interaction interaction )
@@ -55,6 +63,8 @@ public class InteractionMenu : Panel
 			DeleteChildren();
 			Delete();
 		} );
+
+		PanelList.Add( label );
 
 		return label;
 	}
