@@ -43,7 +43,7 @@ public partial class BowlingPlayerCamera : BaseCamera
         var center = BowlingBallEntity.Position + Vector3.Up * 16 + Rotation.Backward * 60f;
 
         TargetPosition = center;
-        PositionLerpSpeed = 12f;
+        PositionLerpSpeed = 25f;
     }
 
     protected void UpdateCameraThrowing( BowlingPlayer player )
