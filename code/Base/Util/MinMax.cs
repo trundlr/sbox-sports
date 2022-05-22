@@ -1,4 +1,5 @@
 namespace Sports;
+
 public struct MinMax<T> where T : unmanaged
 {
     public T Min;
