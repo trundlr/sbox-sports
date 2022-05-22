@@ -6,7 +6,7 @@ namespace Sports
 	/// <summary>
 	/// Holds a collection of clothing items. Won't let you add items that aren't compatible.
 	/// </summary>
-	public class ClothesContainer
+	public class SportsClothingContainer
 	{
 		public List<Clothing> Clothing = new();
 		public List<Clothing.ClothingCategory> RestrictedClothingCategories = new();

@@ -71,7 +71,7 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 		StateMachine?.EndGame();
 	}
 
-	public override void DressPlayer( BasePlayer pawn, ClothesContainer container )
+	public override void DressPlayer( BasePlayer pawn, SportsClothingContainer container )
 	{
 		// TODO: Get the clothing files from our own clothing collection later on - players will want to be able to select which variant they use.
 		container.AddRange( new Clothing[] {

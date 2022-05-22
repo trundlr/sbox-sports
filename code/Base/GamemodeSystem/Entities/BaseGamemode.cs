@@ -169,7 +169,7 @@ public abstract partial class BaseGamemode : Entity
 	/// </summary>
 	/// <param name="pawn"></param>
 	/// <param name="container"></param>
-	public virtual void DressPlayer( BasePlayer pawn, ClothesContainer container ) { }
+	public virtual void DressPlayer( BasePlayer pawn, SportsClothingContainer container ) { }
 
 	[ConCmd.Server( "sports_gamemode_leave" )]
 	protected static void LeaveGamemode()
