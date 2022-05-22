@@ -29,7 +29,7 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 		// TODO: Remove this later once we determine bowl success criteria.
 		if ( timeSinceLastThrow > 3f )
-			bowlingPlayer.OnTurnEnded();
+			bowlingPlayer.OnTurnEnded( true );
 
 		// TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
 		if ( timeSinceLastThrow > 4.5f )

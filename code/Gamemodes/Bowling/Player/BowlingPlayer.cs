@@ -35,9 +35,9 @@ public class BowlingPlayer : BasePlayer
 	/// <summary>
 	/// Called when this players turn has ended.
 	/// </summary>
-	public void OnTurnEnded()
+	public void OnTurnEnded( bool wasGoodBowl )
 	{
-		PlayerAnimator.DoResultAnimation( true );
+		PlayerAnimator.DoResultAnimation( wasGoodBowl );
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
