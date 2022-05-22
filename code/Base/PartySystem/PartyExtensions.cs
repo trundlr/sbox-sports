@@ -4,7 +4,6 @@ namespace Sports;
 
 public static class PartyExtensions
 {
-
 	/// <summary>
 	/// Get the party of the client
 	/// </summary>

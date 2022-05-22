@@ -3,10 +3,17 @@
 public partial class BasePlayer : AnimatedEntity
 {
 	public virtual float RespawnTime => 1;
+
 	public virtual float MaxHealth => 100;
-	[Net] public TimeSince TimeSinceDied { get; set; }
-	[Net, Predicted] public BaseCarriable LastActiveChild { get; set; }
-	[Net, Predicted] public BaseCarriable ActiveChild { get; set; }
+
+	[Net]
+	public TimeSince TimeSinceDied { get; set; }
+
+	[Net, Predicted]
+	public BaseCarriable LastActiveChild { get; set; }
+
+	[Net, Predicted]
+	public BaseCarriable ActiveChild { get; set; }
 
 	public DamageInfo LastDamageInfo { get; protected set; }
 

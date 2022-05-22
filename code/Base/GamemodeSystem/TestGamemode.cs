@@ -8,8 +8,5 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class TestGamemode : BaseGamemode
 {
-	public override BasePlayer CreatePawn()
-	{
-		return new PlazaPlayer();
-	}
+	public override BasePlayer CreatePawn() => new PlazaPlayer();
 }
