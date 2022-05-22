@@ -14,6 +14,7 @@ SportsChatBox {
     border-radius: 8px;
     background-color: black;
     opacity: 0;
+    display: none;
     color: white;
     padding: 15px;
     background-color: rgba(black, 0.5);
@@ -21,6 +22,7 @@ SportsChatBox {
     flex-shrink: 0;
     flex-grow: 0;
     width: 100%;
+    transition: opacity 0.2s ease;
   }
 
   .chat-canvas {
@@ -32,6 +34,7 @@ SportsChatBox {
     pointer-events: all;
 
     .party-chat-entry {
+      display: flex;
       opacity: 1;
       backdrop-filter: blur(10px);
     }
