@@ -20,7 +20,7 @@ public partial class BowlingBallCarriable : BaseCarriable
 		if ( Debug.Enabled )
 		{
 			DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
-						$"TimeSinceLastThrow:             {timeSinceLastThrow}\n" +
+						$"TimeSinceLastThrow:             {TimeSinceLastThrow}\n" +
 						$"Active ball:                    {BowlingBall}\n" +
 						$"Active ball pos:                {BowlingBall?.Position}", 24 );
 		}
