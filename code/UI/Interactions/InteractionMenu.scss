@@ -15,7 +15,41 @@ InteractionMenu {
   }
 
   .glyph {
+    padding-top: 8px;
+    padding-bottom: 8px;
     margin-right: 8px;
+  }
+
+  .control-area {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .control-up {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 16px;
+    background-image: url( /ui/interaction/option_up.png );
+    background-image-tint: rgb(128, 128, 128);
+
+    &.active {
+      background-image-tint: #ffffff;
+    }
+  }
+
+  .control-down {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 16px;
+    background-image: url( /ui/interaction/option_down.png );
+    background-image-tint: rgb(128, 128, 128);
+
+
+    &.active {
+      background-image-tint: #ffffff;
+    }
   }
 
   .canvas {

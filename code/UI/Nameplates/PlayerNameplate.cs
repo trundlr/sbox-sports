@@ -5,7 +5,6 @@ public class PlayerNameplate : WorldPanel
 {
 	public Label NameLabel { get; set; }
 	public Image AvatarImage { get; set; }
-	public ControlGlyph InteractionInputHint { get; set; }
 
 	public PlayerNameplate( Entity entity )
 	{
@@ -44,16 +43,6 @@ public class PlayerNameplate : WorldPanel
 			startPosRight = rot.Right * 40f;
 
 		SetClass( "flipped", tr.Hit );
-
-		//
-		// Check if we are looking straight at the player, for interaction hint
-		//
-		tr = Trace.Ray( localPlayer.EyePosition, localPlayer.EyePosition + localPlayer.EyeRotation.Forward * 200 )
-			.Ignore( localPlayer )
-			.Run();
-
-		InteractionInputHint.SetClass( "show", tr.Hit && ((tr.Entity as BasePlayer) == player) );
-
 		SetClass( "party", Local.Client.IsSameParty( player.Client ) );
 
 		Position = labelPos + rot.Up * -12.5f + startPosRight;

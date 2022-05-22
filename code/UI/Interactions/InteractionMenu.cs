@@ -8,8 +8,30 @@ public class InteractionMenu : Panel
 
 	// @ref
 	public Panel Options { get; set; }
+	// @ref
+	public Panel UpArrow { get; set; }
+	// @ref
+	public Panel DownArrow { get; set; }
 
 	public int CurrentInteractionIndex = 0;
+
+	public InteractionMenu()
+	{
+		UpArrow.BindClass( "active", () => ShouldShowArrow( false ) );
+		DownArrow.BindClass( "active", () => ShouldShowArrow( true ) );
+	}
+
+	protected bool ShouldShowArrow( bool ascending )
+	{
+		if ( ascending )
+		{
+			return CurrentInteractionIndex + 1 < InteractionList.Count;
+		}
+		else
+		{
+			return CurrentInteractionIndex - 1 >= 0;
+		}
+	}
 
 	public void SetEntity( Entity entity )
 	{
