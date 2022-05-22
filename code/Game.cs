@@ -56,7 +56,6 @@ public partial class SportsGame : Game
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
-
 		foreach ( var gamemode in Gamemodes )
 		{
 			gamemode.Simulate( cl );

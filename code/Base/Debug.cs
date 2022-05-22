@@ -2,8 +2,7 @@
 
 public static class Debug
 {
-	[ConVar.Replicated( "debug" )]
-	public static int Level { get; set; }
+	public static int Level { get; set; } = 10;
 
 	// @TODO: revert when ConVar.Replicated is fixed
 	public static bool Enabled => true;
