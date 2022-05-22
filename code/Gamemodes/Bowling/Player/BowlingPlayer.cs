@@ -51,7 +51,10 @@ public class BowlingPlayer : BasePlayer
 
 		SimulateActiveChild( cl, ActiveChild );
 
-		DebugOverlay.ScreenText( "[BOWLING PAWN]\n" +
+		if ( Debug.Enabled )
+		{
+			DebugOverlay.ScreenText( "[BOWLING PAWN]\n" +
 			$"ActiveChild:                    {ActiveChild}", 4 );
+		}
 	}
 }

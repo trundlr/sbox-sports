@@ -17,10 +17,13 @@ public partial class BowlingBallCarriable : BaseCarriable
 	{
 		base.Simulate( cl );
 
-		DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
-			$"TimeSinceLastThrow:             {timeSinceLastThrow}\n" +
-			$"Active ball:                    {BowlingBall}\n" +
-			$"Active ball pos:                {BowlingBall?.Position}", 24 );
+		if ( Debug.Enabled )
+		{
+			DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
+						$"TimeSinceLastThrow:             {timeSinceLastThrow}\n" +
+						$"Active ball:                    {BowlingBall}\n" +
+						$"Active ball pos:                {BowlingBall?.Position}", 24 );
+		}
 
 		BowlingBall?.Simulate( cl );
 
