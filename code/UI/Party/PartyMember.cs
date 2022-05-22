@@ -12,12 +12,12 @@ public class PartyMember : Panel
 
 	public void Kick()
 	{
-		Party.KickPlayer( Client.NetworkIdent );
+		PartyManager.KickPlayer( Client.NetworkIdent );
 	}
 
 	public void Leave()
 	{
-		Party.LeaveParty();
+		PartyManager.LeaveParty();
 	}
 
 }

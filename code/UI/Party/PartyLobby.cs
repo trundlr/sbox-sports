@@ -36,7 +36,7 @@ public partial class PartyLobby : Panel
 	public static void AcceptedInvite( int networkIdent )
 	{
 		Instance.InviteList.DeleteChildren( false );
-		Party.AcceptInvite( networkIdent );
+		PartyManager.AcceptInvite( networkIdent );
 	}
 
 	public static void AddPartyMember( Client client )

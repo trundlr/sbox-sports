@@ -37,4 +37,12 @@ public static class PartyExtensions
 	{
 		return cl.GetParty()?.Members.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.GetPartyComponent();
 	}
+
+	/// <summary>
+	/// Check if Client is Party Host
+	/// </summary>
+	public static bool IsPartyHost( this Client cl )
+	{
+		return cl.GetParty()?.Host == cl;
+	}
 }
