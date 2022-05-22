@@ -4,7 +4,7 @@ namespace Sports;
 
 public class BowlingPlayerAnimator : PawnAnimator
 {
-	private BowlingMoveType currentMoveType = BowlingMoveType.Move;
+	private BowlingMoveType CurrentMoveType = BowlingMoveType.Move;
 
 	public override void Simulate()
 	{
@@ -12,12 +12,12 @@ public class BowlingPlayerAnimator : PawnAnimator
 
 		// Switch between move types
 		if ( Input.Released( InputButton.Reload ) )
-			currentMoveType = currentMoveType == BowlingMoveType.Move ? BowlingMoveType.Rotate : BowlingMoveType.Move;
+			CurrentMoveType = CurrentMoveType == BowlingMoveType.Move ? BowlingMoveType.Rotate : BowlingMoveType.Move;
 
-		if ( currentMoveType == BowlingMoveType.Move )
+		if ( CurrentMoveType == BowlingMoveType.Move )
 			inputLeft = Input.Left;
 
-		if ( currentMoveType == BowlingMoveType.Rotate )
+		if ( CurrentMoveType == BowlingMoveType.Rotate )
 			Rotation *= Rotation.FromYaw( Input.Left * 2 );
 
 		SetAnimParameter( "move_x", MathX.LerpTo( AnimPawn.GetAnimParameterFloat( "move_x" ), inputLeft * -50f, Time.Delta * 10f ) );
@@ -25,7 +25,7 @@ public class BowlingPlayerAnimator : PawnAnimator
 
 		if ( Debug.Enabled )
 			DebugOverlay.ScreenText( "[BOWLING MOVEMENT]\n" +
-				$"Move type: {currentMoveType}"
+				$"Move type: {CurrentMoveType}"
 				);
 	}
 
