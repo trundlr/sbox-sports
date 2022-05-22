@@ -20,7 +20,7 @@ public partial class PartyLobby : Panel
 	{
 		base.Tick();
 
-		PartyCanvas.SetClass( "in-party", Party.IsValid() );
+		SetClass( "in-party", Party.IsValid() );
 
 		if ( !Party.IsValid() )
 			PartyCanvas.RemoveClass( "control" );
