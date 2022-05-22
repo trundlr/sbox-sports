@@ -24,6 +24,8 @@ public class SportsClothingContainer
 	/// </summary>
 	public void Add( Clothing clothing )
 	{
+		if ( clothing is null ) return;
+
 		Clothing.RemoveAll( x => !x.CanBeWornWith( clothing ) );
 		Clothing.Add( clothing );
 	}
