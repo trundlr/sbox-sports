@@ -41,6 +41,8 @@ public class BowlingBall : ModelEntity
 
 		Position = moveHelper.Position;
 		Velocity = moveHelper.Velocity;
+
+		Rotation *= Rotation.FromRoll( Velocity.Length );
 	}
 
 	private void CheckGroundEntity()
