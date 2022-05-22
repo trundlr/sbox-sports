@@ -49,7 +49,7 @@ public class InteractionMenu : Panel
 		{
 			interaction.ClientResolve();
 
-			if ( interaction.ShouldResolveOnServer() )
+			if ( interaction.ResolveOnServer )
 				Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
 
 			DeleteChildren();
