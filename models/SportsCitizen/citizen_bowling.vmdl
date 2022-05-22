@@ -25,6 +25,19 @@
 								root_bone_name = ""
 								motion_type = "Uniform"
 							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_GENERIC_EVENT"
+								event_frame = 20
+								event_keys = 
+								{
+									TypeName = "release"
+									Int = 0
+									Float = 0.0
+									Vector = [ 0.0, 0.0, 0.0 ]
+									StringData = ""
+								}
+							},
 						]
 						activity_name = ""
 						activity_weight = 1
