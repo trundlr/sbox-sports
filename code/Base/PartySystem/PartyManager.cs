@@ -118,6 +118,57 @@ public partial class PartyManager : Entity
 		RpcInvitePlayer( To.Single( ConsoleSystem.Caller ), OtherPlayer.NetworkIdent );
 	}
 
+	/// <summary>
+	/// Kick a client from the party
+	/// </summary>
+	[ConCmd.Server]
+	public static void KickPlayer( int clientNetworkID )
+	{
+		if ( ConsoleSystem.Caller is not Client caller )
+			return;
+		var callerParty = caller.GetParty();
+		if ( callerParty?.Host != caller )
+		{
+			Log.Debug( "Only the party host can kick players" );
+			Log.Debug( "Party host: " + callerParty?.Host?.Name );
+			return;
+		}
+		if ( caller.GetPartyMember( clientNetworkID ) is PartyComponent comp )
+		{
+			comp.Leave();
+		}
+	}
+
+	/// <summary>
+	/// Leave your current party
+	/// </summary>
+	[ConCmd.Server]
+	public static void LeaveParty()
+	{
+		if ( ConsoleSystem.Caller is not Client caller )
+			return;
+		caller.GetPartyComponent()?.Leave();
+	}
+
+	/// <summary>
+	/// Accept an invite
+	/// </summary>
+	[ConCmd.Server]
+	public static void AcceptInvite( int clientNetworkID )
+	{
+		if ( ConsoleSystem.Caller is not Client caller )
+			return;
+		var callerComp = caller.GetPartyComponent();
+		if ( Client.All.FirstOrDefault( e => e.NetworkIdent == clientNetworkID )?.GetPartyComponent() is PartyComponent comp )
+		{
+			if ( comp.Party == null )
+			{
+				PartyManager.CreatePartyFor( comp );
+			}
+			callerComp.Party = comp.Party;
+		}
+	}
+
 	[ClientRpc]
 	public static void RpcInvitePlayer( int fromPlayerNetID )
 	{
@@ -133,18 +184,7 @@ public partial class PartyManager : Entity
 		Local.Client.GetPartyComponent()?.Invited( OtherPlayer );
 	}
 
-	/// <summary>
-	/// Leave your current party
-	/// </summary>
-	[ConCmd.Server]
-	public static void LeaveParty()
-	{
-		if ( ConsoleSystem.Caller == null )
-			return;
 
-		var comp = ConsoleSystem.Caller.GetPartyComponent();
-		comp.Party = null;
-	}
 
 	/// <summary>
 	/// Notify that party members have changed
