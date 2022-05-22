@@ -2,6 +2,11 @@ namespace Sports;
 
 public partial class ThirdPersonCamera : CameraMode
 {
+	public ThirdPersonCamera()
+	{
+		FieldOfView = 70f;
+	}
+
 	[ConVar.Replicated( "sports_thirdperson_orbit_enabled" )]
 	public static bool ShouldOrbit { get; set; } = false;
 
