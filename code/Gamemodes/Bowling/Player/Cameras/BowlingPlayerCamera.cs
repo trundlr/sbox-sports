@@ -15,7 +15,7 @@ public partial class BowlingPlayerCamera : BaseCamera
 
     protected MinMax<int> BackwardsBounds = new( 0, 30 );
 
-    public Vector3 TargetPosition { get; set; }
+    public Vector3 TargetPosition { get; set; } = Vector3.Zero;
 
     public BowlingCameraState CameraState { get; set; } = BowlingCameraState.Default;
 
@@ -50,6 +50,9 @@ public partial class BowlingPlayerCamera : BaseCamera
         var player = Player;
         if ( !player.IsValid() )
             return;
+
+        if ( Position.IsNearlyZero() )
+            Position = player.Position;
 
         Rotation = player.Rotation;
 
