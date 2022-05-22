@@ -2,8 +2,9 @@
 
 namespace Sports;
 
-public class BowlingPlayer : BasePlayer
+public partial class BowlingPlayer : BasePlayer
 {
+	[Net] public bool HasThrown { get; set; }
 	public BowlingPlayerAnimator PlayerAnimator => GetActiveAnimator() as BowlingPlayerAnimator;
 
 	public override void Respawn()
@@ -30,6 +31,8 @@ public class BowlingPlayer : BasePlayer
 
 		ActiveChild = new BowlingBallCarriable();
 		ActiveChild.OnCarryStart( this );
+
+		HasThrown = false;
 	}
 
 	/// <summary>
@@ -38,6 +41,8 @@ public class BowlingPlayer : BasePlayer
 	public void OnTurnEnded( bool wasGoodBowl )
 	{
 		PlayerAnimator.DoResultAnimation( wasGoodBowl );
+
+		HasThrown = false;
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
