@@ -19,7 +19,7 @@ public partial class BasePlayer : AnimatedEntity, IInteractable
 
 	public BaseGamemode CurrentGamemode => Client.GetGamemode();
 
-	public ClothingContainer ClothingContainer { get; protected set; }
+	public SportsClothingContainer SportsClothingContainer { get; protected set; }
 
 	public override void Simulate( Client cl )
 	{
@@ -37,11 +37,11 @@ public partial class BasePlayer : AnimatedEntity, IInteractable
 
 	public virtual void InitialSpawn()
 	{
-		ClothingContainer = new();
-		ClothingContainer.LoadFromClient( Client );
+		SportsClothingContainer = new();
+		SportsClothingContainer.LoadFromClient( Client );
 		Respawn();
-		CurrentGamemode?.DressPlayer( this, ClothingContainer );
-		ClothingContainer.DressEntity( this );
+		CurrentGamemode?.DressPlayer( this, SportsClothingContainer );
+		SportsClothingContainer.DressEntity( this );
 	}
 
 	public virtual void Respawn()
