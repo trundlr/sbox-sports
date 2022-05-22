@@ -21,7 +21,13 @@ public abstract partial class Interaction
 	/// Called before requesting the interaction serverside, so we can onmit it entirely.
 	/// </summary>
 	/// <returns></returns>
-	public bool ShouldResolveOnServer() => true;
+	public virtual bool ShouldResolveOnServer() => true;
+
+	/// <summary>
+	/// Decides if we can even resolve in the first place. Omitted in UI if false.
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool CanResolve() => true;
 
 	public void ClientResolve()
 	{

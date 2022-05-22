@@ -39,6 +39,9 @@ public class InteractionMenu : Panel
 
 	private Panel AddInteractionOption( Interaction interaction )
 	{
+		if ( !interaction.CanResolve() )
+			return null;
+
 		Label label = AddChild<Label>( "interaction-entry" );
 		label.Text = interaction.NiceName;
 
