@@ -22,6 +22,8 @@ public partial class BowlingPlayerCamera : BaseCamera
 
     protected BowlingCameraState CameraState { get; set; } = BowlingCameraState.Default;
 
+    public BowlingGuideEntity BowlingGuide { get; set; }
+
     protected void UpdateCameraDefault( BowlingPlayer player )
     {
         var center = player.Position + Vector3.Up * 58 + Rotation.Backward * 60f + Rotation.Right * 25f;
@@ -52,6 +54,25 @@ public partial class BowlingPlayerCamera : BaseCamera
 
         TargetPosition = center.WithZ( BowlingBallEntity.Position.z );
         PositionLerpSpeed = 5f;
+    }
+    protected void UpdateGuide( BowlingPlayer player )
+    {
+        if ( CameraState == BowlingCameraState.Focus )
+        {
+            if ( !BowlingGuide.IsValid() )
+            {
+                BowlingGuide = new();
+                BowlingGuide.SetParent( player );
+            }
+
+            // @TODO: use an attachment to dictate this guide's position
+            BowlingGuide.Position = player.Position + player.Rotation.Right * 20f + Vector3.Up * 2f;
+        }
+        else
+        {
+            if ( BowlingGuide.IsValid() )
+                BowlingGuide.Delete();
+        }
     }
 
     public override void Update()
@@ -84,6 +105,8 @@ public partial class BowlingPlayerCamera : BaseCamera
             default:
                 break;
         }
+
+        UpdateGuide( player );
 
         Position = Position.LerpTo( TargetPosition, Time.Delta * PositionLerpSpeed );
     }
