@@ -1,0 +1,32 @@
+﻿@import "/UI/Theme.scss";
+
+InteractionMenu {
+  left: $safe-area-x;
+  position: absolute;
+  align-self: center;
+  border-radius: $secondary-rounding;
+  background-image: linear-gradient( to left, rgba($theme-color, 0) 0%, rgba($theme-color, 0.1) 10%, rgba($theme-color, 1) 100% );
+  opacity: 1;
+  pointer-events: all;
+  flex-direction: column;
+  padding: 16px;
+
+  label {
+    font-family: $primary-font;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0px 0px 2px 20px rgba(black,1);
+  }
+
+  .name {
+    font-size: 32px;
+  }
+
+  .interaction-entry {
+    font-size: 22px;
+
+    &:hover {
+      color: lightgray;
+    }
+  }
+}
