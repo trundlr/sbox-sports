@@ -2,94 +2,95 @@
 
 public partial class BowlingBallCarriable : BaseCarriable
 {
-	public BowlingBall BowlingBall { get; set; }
+    [Net]
+    public BowlingBall BowlingBall { get; set; }
 
-	[Net]
-	public bool HasThrown { get; set; }
+    [Net]
+    public bool HasThrown { get; set; }
 
-	[Net, Predicted]
-	private TimeSince TimeSinceLastThrow { get; set; }
+    [Net, Predicted]
+    private TimeSince TimeSinceLastThrow { get; set; }
 
-	private BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
+    private BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
 
-	public override void Spawn()
-	{
-		base.Spawn();
+    public override void Spawn()
+    {
+        base.Spawn();
 
-		SetModel( "models/bowling/bowlingball.vmdl" );
-	}
+        SetModel( "models/bowling/bowlingball.vmdl" );
+    }
 
-	public override void Simulate( Client cl )
-	{
-		base.Simulate( cl );
+    public override void Simulate( Client cl )
+    {
+        base.Simulate( cl );
 
-		if ( Debug.Enabled )
-		{
-			DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
-						$"TimeSinceLastThrow:             {TimeSinceLastThrow}\n" +
-						$"Active ball:                    {BowlingBall}\n" +
-						$"Active ball pos:                {BowlingBall?.Position}", 24 );
-		}
+        if ( Debug.Enabled )
+        {
+            DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
+                        $"TimeSinceLastThrow:             {TimeSinceLastThrow}\n" +
+                        $"Active ball:                    {BowlingBall}\n" +
+                        $"Active ball pos:                {BowlingBall?.Position}", 24 );
+        }
 
-		BowlingBall?.Simulate( cl );
+        BowlingBall?.Simulate( cl );
 
-		if ( CanThrow() )
-			Throw();
+        if ( CanThrow() )
+            Throw();
 
-		// TODO: Remove this later once we determine bowl success criteria.
-		if ( TimeSinceLastThrow > 3f )
-			BowlingPlayer.OnTurnEnded( true );
+        // TODO: Remove this later once we determine bowl success criteria.
+        if ( TimeSinceLastThrow > 3f )
+            BowlingPlayer.OnTurnEnded( true );
 
-		// TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
-		if ( TimeSinceLastThrow > 4.5f )
-			EnableDrawing = true;
-	}
+        // TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
+        if ( TimeSinceLastThrow > 4.5f )
+            EnableDrawing = true;
+    }
 
-	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
-	{
-		if ( name == "release" )
-			ReleaseBall();
-	}
+    public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
+    {
+        if ( name == "release" )
+            ReleaseBall();
+    }
 
-	/// <summary>
-	/// What should happen when the ball is released from the players hand.
-	/// </summary>
-	private void ReleaseBall()
-	{
-		if ( IsServer )
-		{
-			BowlingBall?.Delete();
-			BowlingBall = new();
-		}
+    /// <summary>
+    /// What should happen when the ball is released from the players hand.
+    /// </summary>
+    private void ReleaseBall()
+    {
+        if ( IsServer )
+        {
+            BowlingBall?.Delete();
+            BowlingBall = new();
+        }
 
-		if ( BowlingBall is null )
-			return;
+        if ( BowlingBall is null )
+            return;
 
-		BowlingBall.Position = Position;
-		BowlingBall.Velocity = Parent.Rotation.Forward * 512;
-		BowlingBall.Owner = this;
+        BowlingBall.Position = Position;
+        BowlingBall.Velocity = Parent.Rotation.Forward * 512;
+        BowlingBall.Owner = this;
 
-		EnableDrawing = false;
-	}
+        EnableDrawing = false;
+    }
 
-	private bool CanThrow()
-	{
-		if ( TimeSinceLastThrow < 5 )
-			return false;
+    private bool CanThrow()
+    {
+        if ( TimeSinceLastThrow < 5 )
+            return false;
 
-		if ( !Input.Pressed( InputButton.PrimaryAttack ) )
-			return false;
+        if ( !Input.Pressed( InputButton.PrimaryAttack ) )
+            return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	private void Throw()
-	{
-		BowlingPlayer.HasThrown = true;
+    private void Throw()
+    {
+        BowlingPlayer.HasThrown = true;
 
-		// Tell the animator that we want to throw our ball.
-		BowlingPlayer.PlayerAnimator.DoThrow();
+        // Tell the animator that we want to throw our ball.
+        BowlingPlayer.PlayerAnimator.DoThrow();
 
-		TimeSinceLastThrow = 0;
-	}
+        TimeSinceLastThrow = 0;
+    }
 }

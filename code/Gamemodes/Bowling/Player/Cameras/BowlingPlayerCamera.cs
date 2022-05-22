@@ -1,26 +1,73 @@
 namespace Sports;
 
+public enum BowlingCameraState
+{
+    Default,
+    Focus,
+    Thrown
+}
+
 public partial class BowlingPlayerCamera : BaseCamera
 {
     protected virtual float MouseWheelScale => 5f;
 
-    public int BackwardsOffset { get; set; } = 0;
+    protected int BackwardsOffset { get; set; } = 0;
 
-    public MinMax<int> Clamp = new( 0, 30 );
+    protected MinMax<int> BackwardsBounds = new( 0, 30 );
+
+    public Vector3 TargetPosition { get; set; }
+
+    public BowlingCameraState CameraState { get; set; } = BowlingCameraState.Default;
+
+    public BowlingPlayer Player => Local.Pawn as BowlingPlayer;
+
+    protected void UpdateCameraDefault( BowlingPlayer player )
+    {
+        var center = player.Position + Vector3.Up * 58 + Rotation.Backward * 60f + Rotation.Right * 25f;
+
+        Position = center;
+    }
+
+    protected void UpdateCameraFocus( BowlingPlayer player )
+    {
+        var center = player.Position + Vector3.Up * 16 + Rotation.Backward * 60f + Rotation.Right * 25f;
+
+        Position = center;
+    }
+
+    protected void UpdateCameraFollowBall( BowlingPlayer player )
+    {
+        Entity targetEntity = player.Ball.BowlingBall.IsValid() ? player.Ball.BowlingBall : player.Ball;
+        var center = targetEntity.Position + Vector3.Up * 16 + Rotation.Backward * 60f;
+
+        Position = center;
+    }
 
     public override void Update()
     {
-        var pawn = Local.Pawn as AnimatedEntity;
-        if ( !pawn.IsValid() )
+        Viewer = null;
+
+        var player = Player;
+        if ( !player.IsValid() )
             return;
 
-        Rotation = pawn.Rotation;
+        Rotation = player.Rotation;
+        Position = player.Position;
 
-        var center = pawn.Position + Vector3.Up * 58 + Rotation.Backward * 60f + Rotation.Right * 25f;
-
-        Position = center + pawn.Rotation.Backward * BackwardsOffset;
-
-        Viewer = null;
+        switch ( CameraState )
+        {
+            case BowlingCameraState.Default:
+                UpdateCameraDefault( player );
+                break;
+            case BowlingCameraState.Focus:
+                UpdateCameraFocus( player );
+                break;
+            case BowlingCameraState.Thrown:
+                UpdateCameraFollowBall( player );
+                break;
+            default:
+                break;
+        }
     }
 
     public override void Build( ref CameraSetup camSetup )
@@ -35,7 +82,16 @@ public partial class BowlingPlayerCamera : BaseCamera
         input.AnalogLook = Angles.Zero;
 
         BackwardsOffset -= (int)(input.MouseWheel * MouseWheelScale);
-        BackwardsOffset = Math.Clamp( BackwardsOffset, Clamp.Min, Clamp.Max );
+        BackwardsOffset = Math.Clamp( BackwardsOffset, BackwardsBounds.Min, BackwardsBounds.Max );
+
+        var player = Player;
+
+        if ( player.IsValid() && player.HasThrown )
+            CameraState = BowlingCameraState.Thrown;
+        else if ( input.Down( InputButton.SecondaryAttack ) )
+            CameraState = BowlingCameraState.Focus;
+        else
+            CameraState = BowlingCameraState.Default;
 
         base.BuildInput( input );
     }

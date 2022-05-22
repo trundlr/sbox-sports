@@ -5,6 +5,9 @@ public partial class BowlingPlayer : BasePlayer
     [Net]
     public bool HasThrown { get; set; }
 
+    [Net]
+    public BowlingBallCarriable Ball { get; set; }
+
     public BowlingPlayerAnimator PlayerAnimator => GetActiveAnimator() as BowlingPlayerAnimator;
 
     public override void Respawn()
@@ -29,7 +32,9 @@ public partial class BowlingPlayer : BasePlayer
         // TODO: Face your assigned alley once your turn begins. This is needs to be replaced later when we have alley entities.
         Rotation = Rotation.FromYaw( 90 );
 
-        ActiveChild = new BowlingBallCarriable();
+        Ball = new BowlingBallCarriable();
+
+        ActiveChild = Ball;
         ActiveChild.OnCarryStart( this );
 
         HasThrown = false;
