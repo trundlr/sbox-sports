@@ -4,28 +4,30 @@ public enum BowlingCameraState
 {
     Default,
     Focus,
+    Throwing,
     Thrown
 }
 
 public partial class BowlingPlayerCamera : BaseCamera
 {
     protected virtual float MouseWheelScale => 5f;
+    protected virtual MinMax<int> BackwardsBounds => new( 0, 30 );
+
+    protected BowlingPlayer Player => Local.Pawn as BowlingPlayer;
+    protected Entity BowlingBallEntity => Player.Ball.BowlingBall.IsValid() ? Player.Ball.BowlingBall : Player.Ball;
 
     protected int BackwardsOffset { get; set; } = 0;
+    protected Vector3 TargetPosition { get; set; } = Vector3.Zero;
+    protected float PositionLerpSpeed { get; set; } = 15f;
 
-    protected MinMax<int> BackwardsBounds = new( 0, 30 );
-
-    public Vector3 TargetPosition { get; set; } = Vector3.Zero;
-
-    public BowlingCameraState CameraState { get; set; } = BowlingCameraState.Default;
-
-    public BowlingPlayer Player => Local.Pawn as BowlingPlayer;
+    protected BowlingCameraState CameraState { get; set; } = BowlingCameraState.Default;
 
     protected void UpdateCameraDefault( BowlingPlayer player )
     {
         var center = player.Position + Vector3.Up * 58 + Rotation.Backward * 60f + Rotation.Right * 25f;
 
         TargetPosition = center;
+        PositionLerpSpeed = 15f;
     }
 
     protected void UpdateCameraFocus( BowlingPlayer player )
@@ -33,14 +35,23 @@ public partial class BowlingPlayerCamera : BaseCamera
         var center = player.Position + Vector3.Up * 16 + Rotation.Backward * 60f + Rotation.Right * 25f;
 
         TargetPosition = center;
+        PositionLerpSpeed = 12f;
     }
 
     protected void UpdateCameraFollowBall( BowlingPlayer player )
     {
-        Entity targetEntity = player.Ball.BowlingBall.IsValid() ? player.Ball.BowlingBall : player.Ball;
-        var center = targetEntity.Position + Vector3.Up * 16 + Rotation.Backward * 60f;
+        var center = BowlingBallEntity.Position + Vector3.Up * 16 + Rotation.Backward * 60f;
 
         TargetPosition = center;
+        PositionLerpSpeed = 12f;
+    }
+
+    protected void UpdateCameraThrowing( BowlingPlayer player )
+    {
+        var center = player.Position + Vector3.Up * 16 + Rotation.Backward * 60f + Rotation.Right * 25f;
+
+        TargetPosition = center.WithZ( BowlingBallEntity.Position.z );
+        PositionLerpSpeed = 5f;
     }
 
     public override void Update()
@@ -64,6 +75,9 @@ public partial class BowlingPlayerCamera : BaseCamera
             case BowlingCameraState.Focus:
                 UpdateCameraFocus( player );
                 break;
+            case BowlingCameraState.Throwing:
+                UpdateCameraThrowing( player );
+                break;
             case BowlingCameraState.Thrown:
                 UpdateCameraFollowBall( player );
                 break;
@@ -71,7 +85,7 @@ public partial class BowlingPlayerCamera : BaseCamera
                 break;
         }
 
-        Position = Position.LerpTo( TargetPosition, Time.Delta * 15f );
+        Position = Position.LerpTo( TargetPosition, Time.Delta * PositionLerpSpeed );
     }
 
     public override void Build( ref CameraSetup camSetup )
@@ -89,9 +103,13 @@ public partial class BowlingPlayerCamera : BaseCamera
         BackwardsOffset = Math.Clamp( BackwardsOffset, BackwardsBounds.Min, BackwardsBounds.Max );
 
         var player = Player;
+        if ( !player.IsValid() )
+            return;
 
-        if ( player.IsValid() && player.HasThrown )
+        if ( player.HasThrown && player.Ball.BowlingBall.IsValid() )
             CameraState = BowlingCameraState.Thrown;
+        else if ( player.HasThrown )
+            CameraState = BowlingCameraState.Throwing;
         else if ( input.Down( InputButton.SecondaryAttack ) )
             CameraState = BowlingCameraState.Focus;
         else
