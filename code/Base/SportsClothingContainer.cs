@@ -24,7 +24,11 @@ public class SportsClothingContainer
 	/// </summary>
 	public void Add( Clothing clothing )
 	{
-		if ( clothing is null ) return;
+		if ( clothing is null )
+		{
+			Log.Warning( "Null resource; possibly in need of a manual compile." );
+			return;
+		}
 
 		Clothing.RemoveAll( x => !x.CanBeWornWith( clothing ) );
 		Clothing.Add( clothing );
