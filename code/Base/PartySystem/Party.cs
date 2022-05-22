@@ -13,6 +13,7 @@ public partial class Party : Entity // Use Entity for Parties since BaseNetworka
 				_Host = value;
 		}
 	}
+	
 	[Net]
 	public IList<Client> Members { get; set; } // Can't store the PartyComponent Crashes game when adding to list directly after creation
 
