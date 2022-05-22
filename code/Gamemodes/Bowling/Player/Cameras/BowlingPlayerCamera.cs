@@ -25,14 +25,14 @@ public partial class BowlingPlayerCamera : BaseCamera
     {
         var center = player.Position + Vector3.Up * 58 + Rotation.Backward * 60f + Rotation.Right * 25f;
 
-        Position = center;
+        TargetPosition = center;
     }
 
     protected void UpdateCameraFocus( BowlingPlayer player )
     {
         var center = player.Position + Vector3.Up * 16 + Rotation.Backward * 60f + Rotation.Right * 25f;
 
-        Position = center;
+        TargetPosition = center;
     }
 
     protected void UpdateCameraFollowBall( BowlingPlayer player )
@@ -40,7 +40,7 @@ public partial class BowlingPlayerCamera : BaseCamera
         Entity targetEntity = player.Ball.BowlingBall.IsValid() ? player.Ball.BowlingBall : player.Ball;
         var center = targetEntity.Position + Vector3.Up * 16 + Rotation.Backward * 60f;
 
-        Position = center;
+        TargetPosition = center;
     }
 
     public override void Update()
@@ -52,7 +52,6 @@ public partial class BowlingPlayerCamera : BaseCamera
             return;
 
         Rotation = player.Rotation;
-        Position = player.Position;
 
         switch ( CameraState )
         {
@@ -68,6 +67,8 @@ public partial class BowlingPlayerCamera : BaseCamera
             default:
                 break;
         }
+
+        Position = Position.LerpTo( TargetPosition, Time.Delta * 15f );
     }
 
     public override void Build( ref CameraSetup camSetup )
