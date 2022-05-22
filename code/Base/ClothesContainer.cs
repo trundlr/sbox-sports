@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Sandbox;
+using System.Text.Json.Serialization;
 
 namespace Sports
 {
@@ -8,6 +9,7 @@ namespace Sports
 	public class ClothesContainer
 	{
 		public List<Clothing> Clothing = new();
+		public List<Clothing.ClothingCategory> RestrictedClothingCategories = new();
 
 		/// <summary>
 		/// Add a clothing item if we don't already contain it, else remove it
@@ -72,6 +74,16 @@ namespace Sports
 		}
 
 		/// <summary>
+		/// Remove a specific category of clothing, useful for things like boxing where you want the player to be topless.
+		/// </summary>
+		/// <param name="categorytoRestrict"></param>
+		public void RestrictAllOfCategory( Clothing.ClothingCategory categorytoRestrict )
+		{
+			if ( !RestrictedClothingCategories.Contains( categorytoRestrict ) )
+				RestrictedClothingCategories.Add( categorytoRestrict );
+		}
+
+		/// <summary>
 		/// Returns true if we have this clothing item
 		/// </summary>
 		public bool Has( Clothing clothing ) => Clothing.Contains( clothing );
@@ -115,6 +127,7 @@ namespace Sports
 				foreach ( var entry in entries )
 				{
 					var item = ResourceLibrary.Get<Clothing>( entry.Id );
+
 					if ( item == null ) continue;
 					Add( item );
 				}
@@ -171,6 +184,10 @@ namespace Sports
 			//
 			foreach ( var c in Clothing )
 			{
+				// Ignore any clothing items that are currently prohibited
+				if ( RestrictedClothingCategories.Contains( c.Category ) )
+					continue;
+
 				if ( c.Model == "models/citizen/citizen.vmdl" )
 				{
 					citizen.SetMaterialGroup( c.MaterialGroup );
