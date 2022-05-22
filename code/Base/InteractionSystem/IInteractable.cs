@@ -2,5 +2,5 @@
 
 public interface IInteractable
 {
-	List<Interaction> GetInteractions();
+	IEnumerable<Interaction> GetInteractions();
 }

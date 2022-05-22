@@ -29,7 +29,6 @@ public class InteractionMenu : Panel
 		// Delete this menu if the interaction list is empty.
 		if ( InteractionList.Count == 0 )
 			Delete();
-
 	}
 
 	public void CreatePanel()
@@ -41,13 +40,19 @@ public class InteractionMenu : Panel
 	private Panel AddInteractionOption( Interaction interaction )
 	{
 		Label label = AddChild<Label>( "interaction-entry" );
-		label.Text = interaction.InteractionName;
+		label.Text = interaction.NiceName;
+
 		label.AddEventListener( "onclick", () =>
 		{
-			interaction.Resolve();
+			interaction.ClientResolve();
+
+			if ( interaction.ShouldResolveOnServer() )
+				Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
+
 			DeleteChildren();
 			Delete();
 		} );
+
 		return label;
 	}
 }

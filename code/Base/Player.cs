@@ -138,9 +138,9 @@ public partial class BasePlayer : AnimatedEntity, IInteractable
 		GetActiveAnimator()?.BuildInput( input );
 	}
 
-	public List<Interaction> GetInteractions()
+	public IEnumerable<Interaction> GetInteractions()
 	{
-		return new()
+		return new List<Interaction>()
 		{
 			new PartyInteraction( this )
 		};
