@@ -4,11 +4,24 @@ namespace Sports;
 
 public class BowlingPlayerAnimator : PawnAnimator
 {
+	private BowlingMoveType currentMoveType = BowlingMoveType.Move;
+
 	public override void Simulate()
 	{
-		SetAnimParameter( "move_x", MathX.LerpTo( AnimPawn.GetAnimParameterFloat( "move_x" ), Input.Left * -50f, Time.Delta * 10f ) );
+		float inputLeft = 0;
 
-		Position += Rotation * AnimPawn.RootMotion * Time.Delta * 1.5f;
+		// Switch between move types
+		if ( Input.Released( InputButton.Reload ) )
+			currentMoveType = currentMoveType == BowlingMoveType.Move ? BowlingMoveType.Rotate : BowlingMoveType.Move;
+
+		if ( currentMoveType == BowlingMoveType.Move )
+			inputLeft = Input.Left;
+
+		if ( currentMoveType == BowlingMoveType.Rotate )
+			Rotation *= Rotation.FromYaw( Input.Left * 2 );
+
+		SetAnimParameter( "move_x", MathX.LerpTo( AnimPawn.GetAnimParameterFloat( "move_x" ), inputLeft * -50f, Time.Delta * 10f ) );
+		Position += AnimPawn.RootMotion * Rotation * Time.Delta * 1.5f;
 	}
 
 	public void DoResultAnimation( bool wasGoodBowl )
