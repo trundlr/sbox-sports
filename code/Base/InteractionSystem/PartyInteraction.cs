@@ -12,6 +12,11 @@ public partial class PartyInteraction : Interaction
 		Owner = interactableEntity;
 	}
 
+	public override bool CanResolve()
+	{
+		return !Owner.Client.IsSameParty( Local.Client );
+	}
+
 	protected override void OnServerResolve()
 	{
 		if ( Owner.Client.GetParty() == null )
