@@ -20,6 +20,6 @@ public class PartyKickInteraction : Interaction
 
 	protected override void OnServerResolve()
 	{
-		Party.KickPlayer( Owner.Client.NetworkIdent );
+		PartyManager.KickPlayer( Owner.Client.NetworkIdent );
 	}
 }
