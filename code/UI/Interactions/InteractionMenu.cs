@@ -2,7 +2,6 @@
 
 public class InteractionMenu : Panel
 {
-	private Entity Entity { get; set; }
 	private List<Interaction> InteractionList { get; set; } = new();
 
 	public Label NameLabel { get; set; }
@@ -16,21 +15,27 @@ public class InteractionMenu : Panel
 
 	public void SetEntity( Entity entity )
 	{
-		Entity = entity;
 		NameLabel.Text = entity.Client.Name;
 
-		foreach ( Interaction interaction in (entity as BasePlayer).GetInteractions() )
+		// Populate the InteractionMenu with the Entity's Interactions.
+		if ( entity is IInteractable interactableEntity )
 		{
-			InteractionList.Add( interaction );
+			foreach ( Interaction interaction in interactableEntity.GetInteractions() )
+				InteractionList.Add( interaction );
+
+			CreatePanel();
 		}
+
+		// Delete this menu if the interaction list is empty.
+		if ( InteractionList.Count == 0 )
+			Delete();
+
 	}
 
 	public void CreatePanel()
 	{
 		foreach ( Interaction interaction in InteractionList )
-		{
 			AddInteractionOption( interaction );
-		}
 	}
 
 	private Panel AddInteractionOption( Interaction interaction )

@@ -20,12 +20,14 @@ public class PlazaPlayer : BasePlayer
 		if ( Debug.Enabled )
 			DebugOverlay.TraceResult( tr );
 
-		if ( tr.Hit && tr.Entity is BasePlayer player && IsClient )
+		if ( tr.Hit && tr.Entity is Entity entity && IsClient )
 		{
 			if ( Input.Pressed( InputButton.Use ) )
 			{
+				if ( entity is not IInteractable )
+					return;
 				var menu = new InteractionMenu();
-				menu.SetEntity( player );
+				menu.SetEntity( entity );
 				SportsGame.Instance.Hud.AddChild( menu );
 			}
 		}
