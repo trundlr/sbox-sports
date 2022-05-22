@@ -3,8 +3,10 @@
 public partial class BowlingBallCarriable : BaseCarriable
 {
 	public BowlingBall BowlingBall { get; set; }
-	[Net] public bool HasThrown { get; set; }
-	[Net, Predicted] TimeSince TimeSinceLastThrow { get; set; }
+	[Net]
+	public bool HasThrown { get; set; }
+	[Net, Predicted]
+	TimeSince TimeSinceLastThrow { get; set; }
 	BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
 
 	public override void Spawn()
