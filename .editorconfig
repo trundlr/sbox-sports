@@ -119,3 +119,14 @@ csharp_style_allow_embedded_statements_on_same_line_experimental = false:suggest
 
 dotnet_style_allow_multiple_blank_lines_experimental = false:suggestion
 dotnet_style_allow_statement_immediately_after_block_experimental = false:suggestion
+
+# Naming preferences
+dotnet_naming_style._pp.capitalization = pascal_case
+dotnet_naming_style._pp.required_prefix = _
+
+dotnet_naming_symbols.pp.applicable_kinds  = property
+dotnet_naming_symbols.pp.applicable_accessibilities = private
+
+dotnet_naming_rule.privatePropertiesUnderscore.symbols = pp
+dotnet_naming_rule.privatePropertiesUnderscore.style = _pp
+dotnet_naming_rule.privatePropertiesUnderscore.severity = none
