@@ -8,9 +8,9 @@ public partial class BowlingBallCarriable : BaseCarriable
 	public bool HasThrown { get; set; }
 
 	[Net, Predicted]
-	TimeSince TimeSinceLastThrow { get; set; }
+	private TimeSince TimeSinceLastThrow { get; set; }
 
-	BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
+	private BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
 
 	public override void Spawn()
 	{
