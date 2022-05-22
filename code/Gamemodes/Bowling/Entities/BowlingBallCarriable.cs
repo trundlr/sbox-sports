@@ -43,7 +43,12 @@ public partial class BowlingBallCarriable : BaseCarriable
 
         // TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
         if ( TimeSinceLastThrow > 4.5f )
+        {
             EnableDrawing = true;
+
+            if ( Host.IsServer )
+                BowlingBall?.Delete();
+        }
     }
 
     public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
