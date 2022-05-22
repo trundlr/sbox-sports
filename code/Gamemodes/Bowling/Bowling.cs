@@ -1,4 +1,5 @@
-﻿using Sports.StateSystem;
+﻿using Sandbox;
+using Sports.StateSystem;
 
 namespace Sports;
 
@@ -68,6 +69,15 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 		base.OnFinish();
 
 		StateMachine?.EndGame();
+	}
+
+	public override void DressPlayer( BasePlayer pawn, ClothesContainer container )
+	{
+		// TODO: Get the clothing files from our own clothing collection later on - players will want to be able to select which variant they use.
+		container.AddRange( new Clothing[] {
+			ResourceLibrary.Get<Clothing>( "resources/clothing/bowling/glove_apetavern.clothing" ),
+			ResourceLibrary.Get<Clothing>( "resources/clothing/bowling/shoes_france.clothing" ),
+		} );
 	}
 
 	[ConCmd.Server]
