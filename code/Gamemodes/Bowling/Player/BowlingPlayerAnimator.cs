@@ -22,6 +22,11 @@ public class BowlingPlayerAnimator : PawnAnimator
 
 		SetAnimParameter( "move_x", MathX.LerpTo( AnimPawn.GetAnimParameterFloat( "move_x" ), inputLeft * -50f, Time.Delta * 10f ) );
 		Position += AnimPawn.RootMotion * Rotation * Time.Delta * 1.5f;
+
+		if ( Debug.Enabled )
+			DebugOverlay.ScreenText( "[BOWLING MOVEMENT]\n" +
+				$"Move type: {currentMoveType}"
+				);
 	}
 
 	public void DoResultAnimation( bool wasGoodBowl )
