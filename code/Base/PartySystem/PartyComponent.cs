@@ -12,19 +12,21 @@ public partial class PartyComponent : EntityComponent, ISingletonComponent
 
 	public Client Client => Entity as Client;
 
-	[Net] private Party party { get; set; }
+	[Net]
+	private Party _Party { get; set; }
+
 	public Party Party
 	{
-		get => party; set
+		get => _Party; set
 		{
-			if ( party == value || Host.IsClient )
+			if ( _Party == value || Host.IsClient )
 				return;
-			if ( party.IsValid() )
+			if ( _Party.IsValid() )
 			{
-				party.LeaveParty( this );
-				PartyManager.PartyChanged( To.Multiple( party.Members ) );
+				_Party.LeaveParty( this );
+				PartyManager.PartyChanged( To.Multiple( _Party.Members ) );
 			}
-			party = value;
+			_Party = value;
 			if ( value.IsValid() )
 			{
 				value.JoinParty( this );

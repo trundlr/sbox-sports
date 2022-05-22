@@ -13,22 +13,24 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 	[Net]
 	public TurnStateMachine StateMachine { get; set; }
 
-	public override BasePlayer CreatePawn()
-	{
-		return new BowlingPlayer();
-	}
+	public override BasePlayer CreatePawn() => new BowlingPlayer();
+
 	public override void Spawn()
 	{
 		base.Spawn();
+
 		StateMachine = new()
 		{
 			Gamemode = this,
 		};
+
 		StateMachine.SetState( nameof( LobbyState ) );
 	}
+
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
+
 		if ( Host.IsServer )
 			StateMachine?.Delete();
 	}
@@ -36,22 +38,22 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
-		StateMachine?.Simulate( cl );
 
+		StateMachine?.Simulate( cl );
 
 		if ( !Debug.Enabled )
 			return;
-		//End turn of yourself
+
+		// End turn of yourself
 		if ( Input.Pressed( InputButton.Duck ) && !cl.IsBot )
 		{
 			cl.EndTurn();
 		}
-		//End any player's turn
+		// End any player's turn
 		if ( Input.Pressed( InputButton.View ) )
 		{
 			StateMachine?.EndTurn();
 		}
-
 	}
 
 	public override void OnStart()
@@ -60,9 +62,11 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 
 		StateMachine?.StartGame();
 	}
+
 	public override void OnFinish()
 	{
 		base.OnFinish();
+
 		StateMachine?.EndGame();
 	}
 
@@ -74,6 +78,7 @@ public partial class Bowling : BaseGamemode, IStateMachine<TurnStateMachine>
 
 		game.Start();
 	}
+
 	[ConCmd.Server]
 	public static void EndBowling()
 	{
