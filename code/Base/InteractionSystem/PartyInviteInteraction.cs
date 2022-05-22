@@ -2,12 +2,12 @@
 
 namespace Sports;
 
-public partial class PartyInteraction : Interaction
+public partial class PartyInviteInteraction : Interaction
 {
 	public override string ID => "invite_party";
-	public override string NiceName => "Add to party";
+	public override string NiceName => "Invite to party";
 
-	public PartyInteraction( Entity interactableEntity )
+	public PartyInviteInteraction( Entity interactableEntity )
 	{
 		Owner = interactableEntity;
 	}
