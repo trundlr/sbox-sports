@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Sports;
+﻿namespace Sports;
 
 public enum BowlingMoveType
 {

@@ -1,11 +1,10 @@
-﻿using Sandbox;
-
-namespace Sports;
+﻿namespace Sports;
 
 public partial class BowlingPlayer : BasePlayer
 {
 	[Net]
 	public bool HasThrown { get; set; }
+
 	public BowlingPlayerAnimator PlayerAnimator => GetActiveAnimator() as BowlingPlayerAnimator;
 
 	public override void Respawn()
