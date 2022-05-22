@@ -1,6 +1,7 @@
 ﻿@import "/UI/Theme.scss";
 
 InteractionMenu {
+  left: $safe-area-x;
   position: absolute;
   align-self: center;
   border-radius: $secondary-rounding;
