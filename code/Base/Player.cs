@@ -150,7 +150,8 @@ public partial class BasePlayer : AnimatedEntity, IInteractable
 		return new List<Interaction>()
 		{
 			new PartyInviteInteraction( this ),
-			new PartyKickInteraction( this )
+			new PartyKickInteraction( this ),
+			new TestInteraction( this )
 		};
 	}
 
