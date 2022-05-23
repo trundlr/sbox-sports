@@ -1,8 +1,7 @@
 namespace Sports.StateSystem;
 
 [Library]
-[PredictStates( nameof( TurnState ) )]
-public partial class WaitState : BaseState<TurnStateMachine>
+public partial class WaitState : BaseState<TurnStateMachine>, IPredictState<TurnStateMachine>
 {
 	[Net, Predicted]
 	public TimeSince CreationTime { get; set; }

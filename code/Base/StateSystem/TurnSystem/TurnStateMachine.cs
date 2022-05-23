@@ -2,6 +2,7 @@ using Sports.StateSystem;
 
 namespace Sports;
 
+[Library]
 public partial class TurnStateMachine : StateMachine
 {
 
@@ -29,7 +30,7 @@ public partial class TurnStateMachine : StateMachine
 	public override void Spawn()
 	{
 		base.Spawn();
-		PreSpawnEntities( nameof( LobbyState ) );
+		PreSpawnEntities();
 	}
 
 	public virtual void StartGame()

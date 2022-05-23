@@ -64,19 +64,18 @@ public partial class StateMachine : Entity
 		}
 	}
 
-	protected virtual void PreSpawnEntities( string StartState )
+	protected virtual void PreSpawnEntities()
 	{
 		if ( Host.IsClient )
 			return;
 
-		var firstPredictionState = TypeLibrary.GetAttribute<PredictStatesAttribute>( TypeLibrary.GetTypeByName( StartState ) );
+		Type genericPredictType = typeof( IPredictState<> ).MakeGenericType( GetType() );
 
-		if ( !States.ContainsKey( StartState ) )
-			CacheState( StartState );
+		var predictStates = TypeLibrary.GetTypes( genericPredictType );
 
-		foreach ( var item in firstPredictionState.PredictedStates )
+		foreach ( var item in predictStates )
 		{
-			CacheState( item );
+			CacheState( item.Name );
 		}
 	}
 
@@ -89,15 +88,5 @@ public partial class StateMachine : Entity
 		entity.Parent = this;
 		entity.StateMachine = this;
 		States.Add( name, entity );
-
-		var predictionState = TypeLibrary.GetAttribute<PredictStatesAttribute>( entity.GetType() );
-
-		if ( predictionState != null )
-		{
-			foreach ( var item in predictionState.PredictedStates )
-			{
-				CacheState( item );
-			}
-		}
 	}
 }
