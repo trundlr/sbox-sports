@@ -151,9 +151,7 @@ public partial class BasePlayer : AnimatedEntity, IInteractable
 		{
 			new PartyInviteInteraction( this ),
 			new PartyKickInteraction( this ),
-			new TestInteraction( this ),
-			new TestInteraction( this ),
-			new TestInteraction( this ),
+			new TestInteraction( this )
 		};
 	}
 
