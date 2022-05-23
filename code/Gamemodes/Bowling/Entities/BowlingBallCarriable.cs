@@ -4,12 +4,6 @@ public partial class BowlingBallCarriable : BaseCarriable
 {
 	public BowlingBall BowlingBall { get; set; }
 
-	[Net]
-	public bool HasThrown { get; set; }
-
-	[Net, Predicted]
-	private TimeSince TimeSinceLastThrow { get; set; }
-
 	private BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
 
 	public override void Spawn()
@@ -26,7 +20,7 @@ public partial class BowlingBallCarriable : BaseCarriable
 		if ( Debug.Enabled )
 		{
 			DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
-						$"TimeSinceLastThrow:             {TimeSinceLastThrow}\n" +
+						$"TimeSinceLastThrow:             {BowlingPlayer?.TimeSinceLastThrow}\n" +
 						$"Active ball:                    {BowlingBall}\n" +
 						$"Active ball pos:                {BowlingBall?.Position}", 24 );
 		}
@@ -35,14 +29,6 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 		if ( CanThrow() )
 			Throw();
-
-		// TODO: Remove this later once we determine bowl success criteria.
-		if ( TimeSinceLastThrow > 3f )
-			BowlingPlayer.OnTurnEnded( true );
-
-		// TODO: When the anim event is added, re-enable drawing of this once the celebration has finished.
-		if ( TimeSinceLastThrow > 4.5f )
-			EnableDrawing = true;
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
@@ -74,7 +60,7 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 	private bool CanThrow()
 	{
-		if ( TimeSinceLastThrow < 5 )
+		if ( BowlingPlayer.TimeSinceLastThrow < 5 )
 			return false;
 
 		if ( !Input.Pressed( InputButton.PrimaryAttack ) )
@@ -85,11 +71,11 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 	private void Throw()
 	{
+		// pawn has thrown
 		BowlingPlayer.HasThrown = true;
+		BowlingPlayer.TimeSinceLastThrow = 0;
 
 		// Tell the animator that we want to throw our ball.
 		BowlingPlayer.PlayerAnimator.DoThrow();
-
-		TimeSinceLastThrow = 0;
 	}
 }
