@@ -2,7 +2,6 @@ using Sports.StateSystem;
 
 namespace Sports;
 
-[Library]
 public partial class TurnStateMachine : StateMachine
 {
 
