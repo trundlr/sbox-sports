@@ -69,7 +69,7 @@ public partial class StateMachine : Entity
 		if ( Host.IsClient )
 			return;
 
-		Type genericPredictType = typeof( IPredictState<> ).MakeGenericType( GetType() );
+		Type genericPredictType = typeof( PredictedBaseState<> ).MakeGenericType( GetType() );
 
 		var predictStates = TypeLibrary.GetTypes( genericPredictType );
 
