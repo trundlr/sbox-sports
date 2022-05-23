@@ -20,8 +20,9 @@ public static class StateMachineExtensions
 	public static T GetStateMachine<T>( this BaseGamemode gm ) where T : StateMachine
 	{
 		if ( gm is IStateMachine<T> gamemode )
-			return gamemode.StateMachine as T;
-
+			return gamemode.StateMachine;
+		if ( gm.StateMachine.IsValid() )
+			return gm.StateMachine as T;
 		return null;
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace Sports;
+﻿using Sports.StateSystem;
+
+namespace Sports;
 
 public abstract partial class BaseGamemode : Entity
 {
@@ -19,23 +21,30 @@ public abstract partial class BaseGamemode : Entity
 		base.OnDestroy();
 
 		SportsGame.Instance?.Gamemodes.Remove( this );
+
+		if ( Host.IsServer )
+			StateMachine?.Delete();
 	}
 
 	public override void Simulate( Client cl )
 	{
+		StateMachine?.Simulate( cl );
 	}
 
 	public override void FrameSimulate( Client cl )
 	{
+		StateMachine?.FrameSimulate( cl );
 	}
 
 	public void Start()
 	{
+		StateMachine?.OnGamemodeStart();
 		OnStart();
 	}
 
 	public void Finish()
 	{
+		StateMachine?.OnGamemodeEnd();
 		OnFinish();
 	}
 
