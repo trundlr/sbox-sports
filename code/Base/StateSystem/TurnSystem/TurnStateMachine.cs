@@ -32,20 +32,16 @@ public partial class TurnStateMachine : StateMachine
 		PreSpawnEntities();
 	}
 
-	public virtual void StartGame()
+	public override void OnGamemodeStart()
 	{
+		base.OnGamemodeStart();
+
 		TurnOrder.Clear();
 		foreach ( var item in Gamemode.Clients )
 		{
 			TurnOrder.Add( item );
 		}
 		TurnIndex = 0;
-		SetState( nameof( TurnState ) );
-	}
-
-	public virtual void EndGame()
-	{
-		SetState( nameof( LobbyState ) );
 	}
 
 	public override void Simulate( Client cl )

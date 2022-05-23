@@ -17,7 +17,7 @@ public partial class StateMachine : Entity
 		{
 			return _CurrentState;
 		}
-		private set
+		protected set
 		{
 			if ( _CurrentState.IsValid() )
 			{
@@ -26,7 +26,8 @@ public partial class StateMachine : Entity
 			_CurrentState = value;
 			if ( _CurrentState.IsValid() )
 			{
-				CurrentState.StateMachine = this;
+				_CurrentState.StateMachine = this;
+				_CurrentState.Parent = this;
 				_CurrentState.OnEnter();
 			}
 		}
@@ -58,11 +59,30 @@ public partial class StateMachine : Entity
 		}
 		else if ( Host.IsServer )
 		{
-			CurrentState = TypeLibrary.Create<BaseState>( name );
-			CurrentState.Parent = this;
-			States.Add( name, CurrentState );
+			var state = TypeLibrary.Create<BaseState>( name );
+			state.Parent = this;
+			state.StateMachine = this;
+			States.Add( name, state );
+
+			CurrentState = state;
 		}
 	}
+
+	public virtual void SetState( BaseState state )
+	{
+		if ( !state.IsValid() )
+			return;
+
+		state.StateMachine = this;
+		state.Parent = this;
+		States.TryAdd( CurrentState.GetType().Name, CurrentState );
+
+		CurrentState = state;
+	}
+
+	public virtual void OnGamemodeStart() { }
+
+	public virtual void OnGamemodeEnd() { }
 
 	protected virtual void PreSpawnEntities()
 	{
@@ -87,6 +107,7 @@ public partial class StateMachine : Entity
 		var entity = TypeLibrary.Create<BaseState>( name );
 		entity.Parent = this;
 		entity.StateMachine = this;
+
 		States.Add( name, entity );
 	}
 }

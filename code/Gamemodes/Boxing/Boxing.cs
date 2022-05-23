@@ -8,10 +8,10 @@ namespace Sports;
 [Title( "Boxing Gamemode" )]
 [Category( "Gamemodes" )]
 [Sphere( 128f, 0, 125, 255 )]
-public partial class Boxing : BaseGamemode, IStateMachine<TurnStateMachine>
+public partial class Boxing : BaseGamemode
 {
 	[Net]
-	public TurnStateMachine StateMachine { get; set; }
+	public TurnStateMachine TurnStateMachine => this.GetStateMachine<TurnStateMachine>();
 
 	public override BasePlayer CreatePawn() => new BoxingPlayer();
 
@@ -19,27 +19,12 @@ public partial class Boxing : BaseGamemode, IStateMachine<TurnStateMachine>
 	{
 		base.Spawn();
 
-		StateMachine = new()
-		{
-			Gamemode = this,
-		};
-
-		StateMachine.SetState( nameof( LobbyState ) );
-	}
-
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-
-		if ( Host.IsServer )
-			StateMachine?.Delete();
+		SetStateMachine<TurnStateMachine>( nameof( LobbyState ) );
 	}
 
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
-
-		StateMachine?.Simulate( cl );
 
 		if ( !Debug.Enabled )
 			return;
@@ -52,7 +37,7 @@ public partial class Boxing : BaseGamemode, IStateMachine<TurnStateMachine>
 		// End any player's turn
 		if ( Input.Pressed( InputButton.View ) )
 		{
-			StateMachine?.EndTurn();
+			TurnStateMachine?.EndTurn();
 		}
 	}
 
@@ -60,14 +45,14 @@ public partial class Boxing : BaseGamemode, IStateMachine<TurnStateMachine>
 	{
 		base.OnStart();
 
-		StateMachine?.StartGame();
+		StateMachine?.SetState( nameof( TurnState ) );
 	}
 
 	public override void OnFinish()
 	{
 		base.OnFinish();
 
-		StateMachine?.EndGame();
+		StateMachine?.SetState( nameof( LobbyState ) );
 	}
 
 	[ConCmd.Server]
