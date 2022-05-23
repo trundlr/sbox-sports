@@ -3,9 +3,6 @@
 public class InteractionMenu : Panel
 {
 	private List<Interaction> InteractionList { get; set; } = new();
-
-	private List<Panel> PanelList { get; set; } = new();
-
 	public Label NameLabel { get; set; }
 
 	public InteractionMenu()
@@ -18,37 +15,29 @@ public class InteractionMenu : Panel
 	public void SetEntity( Entity entity )
 	{
 		InteractionList.Clear();
-		PanelList.Clear();
 
 		NameLabel.Text = entity.Client.Name;
 
 		// Populate the InteractionMenu with the Entity's Interactions.
 		if ( entity is IInteractable interactableEntity )
 		{
-			foreach ( Interaction interaction in interactableEntity.GetInteractions() )
+			foreach ( Interaction interaction in interactableEntity.GetInteractions().Where( interaction => interaction.CanResolve() ) )
 				InteractionList.Add( interaction );
 
 			CreatePanel();
 		}
-
-		// Delete this menu if the interaction list is empty.
-		if ( InteractionList.Count == 0 )
-			Delete();
 	}
 
 	public void CreatePanel()
 	{
 		foreach ( Interaction interaction in InteractionList )
 			AddInteractionOption( interaction );
-
-		if ( PanelList.Count == 0 )
-			Delete();
 	}
 
-	private Panel AddInteractionOption( Interaction interaction )
+	private void AddInteractionOption( Interaction interaction )
 	{
 		if ( !interaction.CanResolve() )
-			return null;
+			return;
 
 		Label label = AddChild<Label>( "interaction-entry" );
 		label.Text = interaction.NiceName;
@@ -60,12 +49,44 @@ public class InteractionMenu : Panel
 			if ( interaction.ResolveOnServer )
 				Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
 
-			DeleteChildren();
-			Delete();
+			foreach ( var child in Children )
+			{
+				if ( child == NameLabel )
+					continue;
+
+				child.Delete();
+			}
+
+			InteractionList.Clear();
+
 		} );
+	}
 
-		PanelList.Add( label );
+	public override void Tick()
+	{
+		SetClass( "hide", InteractionList.Count == 0 );
 
-		return label;
+		if ( InteractionList.Count > 0 )
+			return;
+
+		var player = Local.Pawn;
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 200 )
+			.Ignore( player )
+			.Run();
+
+		if ( Debug.Enabled )
+			DebugOverlay.TraceResult( tr );
+
+		if ( tr.Hit && tr.Entity is Entity entity )
+		{
+			if ( Input.Pressed( InputButton.Use ) )
+			{
+				if ( entity is not IInteractable )
+					return;
+
+				SetEntity( entity );
+			}
+
+		}
 	}
 }

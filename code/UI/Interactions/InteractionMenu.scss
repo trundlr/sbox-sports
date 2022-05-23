@@ -11,6 +11,10 @@ InteractionMenu {
   flex-direction: column;
   padding: 16px;
 
+  &.hide {
+    opacity: 0;
+  }
+
   label {
     font-family: $primary-font;
     font-weight: bold;
