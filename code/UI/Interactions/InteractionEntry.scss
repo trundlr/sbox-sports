@@ -24,6 +24,8 @@ InteractionEntry {
   }
 
   &.active-interaction {
+    padding-left: 16px;
+
     .label {
       color: white;
       font-size: 20px;
