@@ -1,0 +1,38 @@
+@import "/UI/Theme.scss";
+
+InteractionEntry {
+  background-image: linear-gradient( to left, rgba($theme-color, 0) 0%, rgba($theme-color, 0.1) 10%, rgba($theme-color, 1) 100% );
+  padding: 8px;
+  border-radius: 0px, $secondary-rounding, $secondary-rounding, 0px;
+  transition: all 0.05s ease;
+
+  &:first-child {
+    border-radius: $secondary-rounding, $secondary-rounding, $secondary-rounding, 0px;
+  }
+
+  &:last-child {
+    border-radius: 0px, $secondary-rounding, $secondary-rounding, $secondary-rounding;
+  }
+
+  .label {
+    transition: all 0.05s ease;
+    font-size: 20px;
+    color: lightgray;
+    font-family: $primary-font;
+    font-weight: bold;
+    text-shadow: 0px 0px 2px 20px rgba(black, 1);
+  }
+
+  &.active-interaction {
+    .label {
+      color: white;
+      font-size: 20px;
+    }
+  }
+
+  &:hover {
+    .label {
+      color: lightgray;
+    }
+  }
+}

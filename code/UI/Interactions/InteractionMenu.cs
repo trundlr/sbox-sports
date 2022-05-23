@@ -17,8 +17,17 @@ public class InteractionMenu : Panel
 
 	public InteractionMenu()
 	{
-		UpArrow.BindClass( "active", () => ShouldShowArrow( false ) );
-		DownArrow.BindClass( "active", () => ShouldShowArrow( true ) );
+
+	}
+
+	protected bool ShouldHideArrows()
+	{
+		if ( InteractionList.Count == 1 )
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	protected bool ShouldShowArrow( bool ascending )
@@ -40,6 +49,7 @@ public class InteractionMenu : Panel
 		CurrentEntity = entity;
 		CurrentInteractionIndex = 0;
 		InteractionList.Clear();
+		UpdateArrows();
 
 		// Populate the InteractionMenu with the Entity's Interactions.
 		if ( entity is IInteractable interactableEntity )
@@ -53,7 +63,6 @@ public class InteractionMenu : Panel
 
 	protected void Clear()
 	{
-		CurrentEntity = null;
 		InteractionList.Clear();
 		Options.DeleteChildren( true );
 	}
@@ -73,9 +82,11 @@ public class InteractionMenu : Panel
 		if ( !interaction.CanResolve() )
 			return;
 
-		Label label = Options.AddChild<Label>( "interaction-entry" );
-		label.Text = interaction.NiceName;
+		var label = Options.AddChild<InteractionEntry>( "interaction-entry" );
+		label.Name.Text = interaction.NiceName;
 		label.BindClass( "active-interaction", () => index == CurrentInteractionIndex );
+
+		UpdateArrows();
 	}
 
 	protected void Use()
@@ -97,6 +108,17 @@ public class InteractionMenu : Panel
 
 		CurrentInteractionIndex += isAscending ? -1 : 1;
 		CurrentInteractionIndex = (CurrentInteractionIndex + length) % length;
+
+		UpdateArrows();
+	}
+
+	protected void UpdateArrows()
+	{
+		UpArrow.SetClass( "active", ShouldShowArrow( false ) );
+		DownArrow.SetClass( "active", ShouldShowArrow( true ) );
+
+		UpArrow.SetClass( "hide", ShouldHideArrows() );
+		DownArrow.SetClass( "hide", ShouldHideArrows() );
 	}
 
 	[Event.BuildInput]
@@ -118,7 +140,9 @@ public class InteractionMenu : Panel
 		}
 		else
 		{
+			CurrentEntity = null;
 			Clear();
+
 			return;
 		}
 
