@@ -4,6 +4,7 @@
 [HammerEntity]
 [Category( "Bowling" )]
 [Title( "Event Trigger" )]
+[AutoApplyMaterial( "materials/bowling/tools/event_trigger.vmat" )]
 public class BowlingEventTrigger : GamemodeBaseTrigger
 {
 	public override void Spawn()

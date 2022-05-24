@@ -4,6 +4,7 @@
 [HammerEntity]
 [Category( "Bowling" )]
 [Title( "Pit Trigger" )]
+[AutoApplyMaterial( "materials/bowling/tools/pit_trigger.vmat" )]
 public partial class BowlingPitTrigger : GamemodeBaseTrigger
 {
 	public override void Spawn()
