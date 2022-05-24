@@ -6,7 +6,7 @@
 [AutoApplyMaterial( "materials/tools/toolstrigger.vmat" )]
 public partial class GamemodeBaseTrigger : GamemodeModelEntity
 {
-	[ConCmd.Admin( "drawtriggers_toggle" )]
+	[ConCmd.Admin( "sports_drawtriggers_toggle" )]
 	public static void ToggleDrawTriggers()
 	{
 		foreach ( var trigger in All.OfType<BaseTrigger>() )
@@ -27,13 +27,13 @@ public partial class GamemodeBaseTrigger : GamemodeModelEntity
 	[Property]
 	public bool Enabled { get; protected set; } = true;
 
-	public IEnumerable<Entity> TouchingEntities => touchingEntities;
-	public int TouchingEntityCount => touchingEntities.Count;
+	public IEnumerable<Entity> TouchingEntities => _TouchingEntities;
+	public int TouchingEntityCount => _TouchingEntities.Count;
 
-	readonly List<Entity> touchingEntities = new();
+	private readonly List<Entity> _TouchingEntities = new();
 
 	// Used for when an entity enters the trigger while it is disabled, and then the trigger gets enabled
-	readonly List<Entity> touchingEntitiesWhileDisabled = new();
+	private readonly List<Entity> _TouchingEntitiesWhileDisabled = new();
 
 	public override void Spawn()
 	{
@@ -76,17 +76,17 @@ public partial class GamemodeBaseTrigger : GamemodeModelEntity
 		if ( other.IsWorld )
 			return;
 
-		if ( touchingEntitiesWhileDisabled.Contains( other ) )
+		if ( _TouchingEntitiesWhileDisabled.Contains( other ) )
 		{
-			touchingEntitiesWhileDisabled.Remove( other );
+			_TouchingEntitiesWhileDisabled.Remove( other );
 		}
 
-		if ( touchingEntities.Contains( other ) )
+		if ( _TouchingEntities.Contains( other ) )
 		{
-			touchingEntities.Remove( other );
+			_TouchingEntities.Remove( other );
 			OnTouchEnd( other );
 
-			if ( touchingEntities.Count < 1 ) OnTouchEndAll( other );
+			if ( _TouchingEntities.Count < 1 ) OnTouchEndAll( other );
 		}
 	}
 
@@ -98,23 +98,23 @@ public partial class GamemodeBaseTrigger : GamemodeModelEntity
 		if ( !Enabled )
 		{
 			// We don't care about the filter because we will pass these entities to StartTouch
-			if ( !touchingEntitiesWhileDisabled.Contains( toucher ) )
+			if ( !_TouchingEntitiesWhileDisabled.Contains( toucher ) )
 			{
-				touchingEntitiesWhileDisabled.Add( toucher );
+				_TouchingEntitiesWhileDisabled.Add( toucher );
 			}
 
 			return;
 		}
 
-		if ( touchingEntities.Contains( toucher ) )
+		if ( _TouchingEntities.Contains( toucher ) )
 			return;
 
 		if ( !PassesTriggerFilters( toucher ) )
 			return;
 
-		bool anyoneTouching = touchingEntities.Count > 0;
+		bool anyoneTouching = _TouchingEntities.Count > 0;
 
-		touchingEntities.Add( toucher );
+		_TouchingEntities.Add( toucher );
 		OnTouchStart( toucher );
 
 		if ( !anyoneTouching ) OnTouchStartAll( toucher );
@@ -149,13 +149,13 @@ public partial class GamemodeBaseTrigger : GamemodeModelEntity
 		Enabled = true;
 
 		// Everything that is already inside the volume now just started touching us.
-		foreach ( var entity in touchingEntitiesWhileDisabled.ToArray() )
+		foreach ( var entity in _TouchingEntitiesWhileDisabled.ToArray() )
 		{
 			if ( !entity.IsValid() ) continue;
 
 			StartTouch( entity );
 		}
-		touchingEntitiesWhileDisabled.Clear();
+		_TouchingEntitiesWhileDisabled.Clear();
 	}
 
 	/// <summary>
@@ -173,9 +173,9 @@ public partial class GamemodeBaseTrigger : GamemodeModelEntity
 
 			EndTouch( entity );
 
-			if ( !touchingEntitiesWhileDisabled.Contains( entity ) )
+			if ( !_TouchingEntitiesWhileDisabled.Contains( entity ) )
 			{
-				touchingEntitiesWhileDisabled.Add( entity );
+				_TouchingEntitiesWhileDisabled.Add( entity );
 			}
 		}
 	}
