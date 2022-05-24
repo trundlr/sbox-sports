@@ -1,5 +1,8 @@
 namespace Sports;
 
+/// <summary>
+/// A generic gamemode Entity. To be inherited from for entities that have to be directly linked to a gamemode instance.
+/// </summary>
 public partial class GamemodeEntity : Entity, IGamemodeEntity
 {
 	/// <summary>
