@@ -19,11 +19,9 @@ public partial class BowlingPitTrigger : GamemodeBaseTrigger
 	{
 		base.OnTouchStart( toucher );
 
-		Log.Debug( "pit touch start" );
-
 		if ( toucher is BowlingBall ball )
 		{
-			Log.Debug( $"ball start touch {ball}" );
+			Log.Debug( $"pit ball start touch {ball}" );
 		}
 	}
 
@@ -33,7 +31,7 @@ public partial class BowlingPitTrigger : GamemodeBaseTrigger
 
 		if ( other is BowlingBall ball )
 		{
-			Log.Debug( $"ball end touch {ball}" );
+			Log.Debug( $"pit ball end touch {ball}" );
 		}
 	}
 }
