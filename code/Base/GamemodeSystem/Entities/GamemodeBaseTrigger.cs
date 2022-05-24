@@ -1,9 +1,9 @@
 ﻿namespace Sports;
 
-[AutoApplyMaterial( "materials/tools/toolstrigger.vmat" )]
 [Solid]
 [VisGroup( VisGroup.Trigger )]
 [Title( "Gamemode Base Trigger" ), Icon( "select_all" )]
+[AutoApplyMaterial( "materials/tools/toolstrigger.vmat" )]
 public partial class GamemodeBaseTrigger : GamemodeModelEntity
 {
 	[ConCmd.Admin( "drawtriggers_toggle" )]
