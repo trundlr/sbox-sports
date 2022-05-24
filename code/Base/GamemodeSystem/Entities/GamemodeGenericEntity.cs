@@ -2,8 +2,10 @@
 
 /// <summary>
 /// Utility entity for generic gamemode purposes.
+/// This entity will be gathered automatically by its linked gamemode and can be used via its tags and generic information for meta purposes.
 /// </summary>
 [HammerEntity]
+[Icon( "transform" )]
 [Category( "Gamemode Meta" )]
 [Title( "Generic Gamemode Entity" )]
 [EditorModel( "models/editor/info_target.vmdl" )]

@@ -1,5 +1,9 @@
 ﻿namespace Sports;
 
+/// <summary>
+/// Used to trigger generic events around the pin group.
+/// Should encompass the pin group fully, with some margin, to be able to trigger events as possible spare/strikes happen.
+/// </summary>
 [Solid]
 [HammerEntity]
 [Category( "Bowling" )]

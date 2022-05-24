@@ -1,5 +1,8 @@
 ﻿namespace Sports;
 
+/// <summary>
+/// Represents the group of pins in a normal 10-pin bowling game.
+/// </summary>
 [HammerEntity]
 [Title( "Pin Group" )]
 [Category( "Bowling" )]

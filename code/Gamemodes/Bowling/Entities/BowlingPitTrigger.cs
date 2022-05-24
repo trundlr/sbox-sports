@@ -1,5 +1,8 @@
 ﻿namespace Sports;
 
+/// <summary>
+/// Represents the pit at the end of a bowling lane. Will automatically mark the throw as "done".
+/// </summary>
 [Solid]
 [HammerEntity]
 [Category( "Bowling" )]

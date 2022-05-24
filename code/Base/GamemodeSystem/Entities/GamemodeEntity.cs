@@ -2,8 +2,12 @@ namespace Sports;
 
 public partial class GamemodeEntity : Entity, IGamemodeEntity
 {
+	/// <summary>
+	/// The targetname of the linked gamemode entity.
+	/// </summary>
 	[Property( Title = "Gamemode Name" ), Net, FGDType( "target_destination" )]
 	public string GamemodeName { get; set; }
+
 	[Net]
 	public BaseGamemode Gamemode { get; set; }
 
