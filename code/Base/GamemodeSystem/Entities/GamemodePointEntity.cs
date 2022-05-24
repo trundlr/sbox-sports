@@ -9,7 +9,7 @@
 [Category( "Gamemode Meta" )]
 [Title( "Generic Gamemode Entity" )]
 [EditorModel( "models/editor/info_target.vmdl" )]
-public class GamemodeGenericEntity : GamemodeEntity
+public sealed class GamemodePointEntity : GamemodeEntity
 {
 	public override void Spawn()
 	{
