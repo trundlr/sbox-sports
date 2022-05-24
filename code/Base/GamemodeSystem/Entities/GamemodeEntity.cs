@@ -1,10 +1,5 @@
 namespace Sports;
 
-[HammerEntity]
-[Icon( "transform" )]
-[Category( "Gamemode Setup" )]
-[Title( "Generic Gamemode Entity" )]
-[EditorModel( "models/editor/info_target.vmdl" )]
 public partial class GamemodeEntity : Entity, IGamemodeEntity
 {
 	[Property( Title = "Gamemode Name" ), Net, FGDType( "target_destination" )]

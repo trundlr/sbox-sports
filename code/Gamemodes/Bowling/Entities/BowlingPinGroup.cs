@@ -1,5 +1,6 @@
 ﻿namespace Sports;
 
+[HammerEntity]
 [Title( "Pin Group" )]
 [Category( "Bowling" )]
 [EditorModel( "models/bowling/pin_group.vmdl" )]
