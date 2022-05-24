@@ -49,7 +49,7 @@ public partial class TurnStateMachine : StateMachine
 		base.Simulate( cl );
 		if ( !Debug.Enabled )
 			return;
-		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Name}, State: {CurrentState}", 8 );
+		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Name}, State: {CurrentState}", 15 );
 	}
 
 	public virtual void EndTurn()
