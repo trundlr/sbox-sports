@@ -28,7 +28,7 @@ public partial class BowlingPinGroup : GamemodeModelEntity
 		// remove all currently referenced pins
 		foreach ( var pin in Pins )
 		{
-			if ( !pin.IsValid || !pin.IsAuthority )
+			if ( !pin.IsValid() || !pin.IsAuthority )
 				continue;
 
 			pin?.Delete();

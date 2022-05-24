@@ -42,7 +42,7 @@ public partial class BowlingPlayer : BasePlayer
 		// TODO: Face your assigned alley once your turn begins. This is needs to be replaced later when we have alley entities.
 		Rotation = Rotation.FromYaw( 90 );
 
-		if ( ActiveChild is not BowlingBallCarriable )
+		if ( ActiveChild is not BowlingBallCarriable || !ActiveChild.IsValid() )
 		{
 			ActiveChild = new BowlingBallCarriable();
 			ActiveChild.OnCarryStart( this );
