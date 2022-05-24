@@ -2,7 +2,7 @@ namespace Sports;
 
 public partial class BaseGamemode
 {
-	public List<GamemodePointEntity> Entities { get; protected set; } = new();
+	public List<GamemodeEntity> Entities { get; protected set; } = new();
 
 	public IEnumerable<Entity> GetEntitiesWithTag( string tag )
 	{
@@ -25,7 +25,8 @@ public partial class BaseGamemode
 	[Event.Entity.PostSpawn]
 	protected virtual void GatherTargetEntities()
 	{
-		var ents = All.OfType<GamemodePointEntity>();
+		/*
+		var ents = All.OfType<GamemodeEntity>();
 
 		Log.Debug( $"[{Name}] Finding gamemode entities, count: {ents.Count()}" );
 
@@ -40,5 +41,6 @@ public partial class BaseGamemode
 				gamemodeEntity.Parent = this;
 			}
 		}
+		*/
 	}
 }
