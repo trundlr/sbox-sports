@@ -37,7 +37,7 @@ public class BowlingBall : ModelEntity
 			WallBounce = 0.25f
 		};
 
-		moveHelper.Trace = moveHelper.Trace.Size( Size ).Ignore( this ).WithoutTags( "bowling_owner" );
+		moveHelper.Trace = moveHelper.Trace.Size( Size ).Ignore( this ).WithoutTags( "bowling_owner", "bowling_pin" );
 
 		CheckGroundEntity();
 
@@ -61,7 +61,7 @@ public class BowlingBall : ModelEntity
 
 	private void CheckGroundEntity()
 	{
-		var tr = Trace.Ray( Position, Position + Vector3.Down * Gravity * Time.Delta ).WorldOnly().Size( Size ).Run();
+		var tr = Trace.Ray( Position, Position + Vector3.Down * 2 ).WorldOnly().Size( Size ).Run();
 
 		if ( tr.Hit )
 			GroundEntity = tr.Entity;
