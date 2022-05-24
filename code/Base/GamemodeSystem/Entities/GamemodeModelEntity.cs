@@ -1,13 +1,13 @@
 namespace Sports;
 
 [HammerEntity]
-[Title( "Generic Gamemode ModelEntity" )]
-[Category( "Gamemode Setup" )]
 [Icon( "transform" )]
+[Category( "Gamemode Setup" )]
+[Title( "Generic Gamemode ModelEntity" )]
 [EditorModel( "models/editor/info_target.vmdl" )]
 public partial class GamemodeModelEntity : ModelEntity, IGamemodeEntity
 {
-	[Property( Title = "Gamemode Name" ), Net]
+	[Property( Title = "Gamemode Name" ), Net, FGDType( "target_destination" )]
 	public string GamemodeName { get; set; }
 	[Net]
 	public BaseGamemode Gamemode { get; set; }
