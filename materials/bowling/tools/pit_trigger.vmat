@@ -49,7 +49,12 @@ Layer0
 
 	Attributes
 	{
-		tools.toolsmaterial
- "1"
+		tools.toolsmaterial "1"
+	}
+
+	SystemAttributes
+	{
+		WorldMappingWidth "32"
+		WorldMappingHeight "32"
 	}
 }
