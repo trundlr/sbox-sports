@@ -14,8 +14,12 @@
 						remaps = 
 						[
 							{
-								from = "materials/bowl_ball.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								from = "material1.vmat"
+								to = "models/bowling/materials/bpin_eo.vmat"
+							},
+							{
+								from = "material.vmat"
+								to = "material.vmat"
 							},
 						]
 						use_global_default = false
@@ -31,7 +35,7 @@
 						_class = "Attachment"
 						name = "pin0"
 						parent_bone = ""
-						relative_origin = [ 40.0, 0.0, 0.0 ]
+						relative_origin = [ 0.0, 0.0, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -40,7 +44,7 @@
 						_class = "Attachment"
 						name = "pin1"
 						parent_bone = ""
-						relative_origin = [ 20.0, -12.0, 0.0 ]
+						relative_origin = [ -8.5, -5.75, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -49,7 +53,7 @@
 						_class = "Attachment"
 						name = "pin2"
 						parent_bone = ""
-						relative_origin = [ 20.0, 12.0, 0.0 ]
+						relative_origin = [ -8.5, 5.75, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -58,7 +62,7 @@
 						_class = "Attachment"
 						name = "pin3"
 						parent_bone = ""
-						relative_origin = [ 0.0, -24.0, 0.0 ]
+						relative_origin = [ -17.0, -11.5, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -67,7 +71,7 @@
 						_class = "Attachment"
 						name = "pin4"
 						parent_bone = ""
-						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_origin = [ -17.0, 0.0, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -76,7 +80,7 @@
 						_class = "Attachment"
 						name = "pin5"
 						parent_bone = ""
-						relative_origin = [ 0.0, 24.0, 0.0 ]
+						relative_origin = [ -17.0, 11.5, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -85,7 +89,7 @@
 						_class = "Attachment"
 						name = "pin6"
 						parent_bone = ""
-						relative_origin = [ -20.0, -36.0, 0.0 ]
+						relative_origin = [ -25.5, -17.0, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -94,7 +98,7 @@
 						_class = "Attachment"
 						name = "pin7"
 						parent_bone = ""
-						relative_origin = [ -20.0, -12.0, 0.0 ]
+						relative_origin = [ -25.5, -5.75, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -103,7 +107,7 @@
 						_class = "Attachment"
 						name = "pin8"
 						parent_bone = ""
-						relative_origin = [ -20.0, 12.0, 0.0 ]
+						relative_origin = [ -25.5, 5.75, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -112,7 +116,7 @@
 						_class = "Attachment"
 						name = "pin9"
 						parent_bone = ""
-						relative_origin = [ -20.0, 36.0, 0.0 ]
+						relative_origin = [ -25.5, 17.0, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -125,10 +129,10 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						name = "pin_group"
-						filename = "models/Bowling/pin_group.dmx"
+						name = "BowlingPin_10PinFormation"
+						filename = "models/Bowling/BowlingPin_10PinFormation.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 90.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
