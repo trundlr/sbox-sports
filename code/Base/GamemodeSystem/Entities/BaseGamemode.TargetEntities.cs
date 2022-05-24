@@ -37,7 +37,7 @@ public partial class BaseGamemode
 	}
 
 	[Event.Entity.PostSpawn]
-	private void OnPostSpawn()
+	public void OnPostSpawn()
 	{
 		var ents = All.OfType<IGamemodeEntity>();
 
@@ -49,9 +49,9 @@ public partial class BaseGamemode
 			if ( ent is not Entity gamemodeEnt )
 				continue;
 
-			if ( ent.GamemodeName.ToLower() == Name.ToLower() )
+			if ( ent.GamemodeName?.ToLower() == Name?.ToLower() )
 			{
-				Log.Debug( $"	> Matched IGamemodeEntity for {Name}" );
+				Log.Debug( $"	> Matched IGamemodeEntity {gamemodeEnt.ClassName} for {Name}" );
 
 				_Entities.Add( gamemodeEnt );
 				ent.Gamemode = this;
@@ -60,5 +60,11 @@ public partial class BaseGamemode
 		}
 
 		Log.Debug( $"	> Successfully matched {_Entities.Count} Entities" );
+
+		// call this at the end so gamemodes can do stuff
+		// like verify integrity by checking if all needed ents are there
+		OnEntitiesGathered();
 	}
+
+	protected virtual void OnEntitiesGathered() { }
 }
