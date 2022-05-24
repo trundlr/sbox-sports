@@ -20,7 +20,7 @@
 					{
 						m_id = 72977801
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "ReplacePins"
@@ -42,7 +42,7 @@
 					{
 						m_id = 142762453
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_weightListName = "NoSetter"
 					m_inputConnection1 = 
@@ -96,7 +96,7 @@
 					{
 						m_id = 329789551
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_states = 
 					[
@@ -204,7 +204,7 @@
 					{
 						m_id = 364687486
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "IdlePose"
@@ -226,7 +226,7 @@
 					{
 						m_id = 1192097898
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_inputConnection = 
 					{
@@ -255,7 +255,7 @@
 					{
 						m_id = 1329586660
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_states = 
 					[
@@ -490,7 +490,7 @@
 					{
 						m_id = 1962386641
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "IdlePose"
@@ -512,7 +512,7 @@
 					{
 						m_id = 1978215099
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "CyclePins"
@@ -534,7 +534,7 @@
 					{
 						m_id = 2094318518
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ServerAuthoritative"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "ClearPins"
