@@ -43,7 +43,7 @@
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
 						filename = "models/Bowling/BPin_hull.fbx"
-						import_scale = 1.0
+						import_scale = 0.45
 						faceMergeAngle = 5.0
 						maxHullVertices = 128
 						import_mode = "HullPerElement"
@@ -65,7 +65,7 @@
 						filename = "models/Bowling/BPin.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
+						import_scale = 0.45
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
