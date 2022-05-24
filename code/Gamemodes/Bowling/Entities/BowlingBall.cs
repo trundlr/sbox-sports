@@ -11,6 +11,14 @@ public class BowlingBall : ModelEntity
 		base.Spawn();
 
 		SetModel( "models/bowling/bowlingball.vmdl" );
+
+		// create hull for triggers and such
+		CollisionGroup = CollisionGroup.Player;
+		AddCollisionLayer( CollisionLayer.Player );
+		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		MoveType = MoveType.MOVETYPE_WALK;
+
+		Tags.Add( "bowling_ball" );
 	}
 
 	public override void Simulate( Client cl )
@@ -29,7 +37,7 @@ public class BowlingBall : ModelEntity
 			WallBounce = 0.25f
 		};
 
-		moveHelper.Trace = moveHelper.Trace.Size( Size );
+		moveHelper.Trace = moveHelper.Trace.Size( Size ).Ignore( this ).WithoutTags( "bowling_owner" );
 
 		CheckGroundEntity();
 
@@ -43,11 +51,17 @@ public class BowlingBall : ModelEntity
 		Velocity = moveHelper.Velocity;
 
 		Rotation *= Rotation.FromRoll( Velocity.Length );
+
+		if ( !Debug.Enabled )
+			return;
+
+		DebugOverlay.Text( $"grounded:{IsGrounded}\nspeed:{Velocity.Length}\nwall:{moveHelper.HitWall}", Position );
+		DebugOverlay.Line( Position, Position + Velocity.Normal * 10 );
 	}
 
 	private void CheckGroundEntity()
 	{
-		var tr = Trace.Ray( Position, Position ).WorldOnly().Size( Size ).Run();
+		var tr = Trace.Ray( Position, Position + Vector3.Down * Gravity * Time.Delta ).WorldOnly().Size( Size ).Run();
 
 		if ( tr.Hit )
 			GroundEntity = tr.Entity;

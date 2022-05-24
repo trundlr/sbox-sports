@@ -28,6 +28,8 @@ public partial class BowlingPlayer : BasePlayer
 
 		// This should be fired from the state handler once implemented.
 		OnTurnStarted();
+
+		Tags.Add( "bowling_owner" );
 	}
 
 	/// <summary>
@@ -40,10 +42,14 @@ public partial class BowlingPlayer : BasePlayer
 		// TODO: Face your assigned alley once your turn begins. This is needs to be replaced later when we have alley entities.
 		Rotation = Rotation.FromYaw( 90 );
 
-		if ( IsServer )
-			ActiveChild?.Delete();
-		ActiveChild = new BowlingBallCarriable();
-		ActiveChild.OnCarryStart( this );
+		if ( ActiveChild is not BowlingBallCarriable )
+		{
+			ActiveChild = new BowlingBallCarriable();
+			ActiveChild.OnCarryStart( this );
+		}
+
+		// reset draw
+		(ActiveChild as BowlingBallCarriable).Reset();
 
 		// reset turn
 		HasThrown = false;

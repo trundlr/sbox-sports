@@ -11,6 +11,7 @@ public partial class BowlingBallCarriable : BaseCarriable
 		base.Spawn();
 
 		SetModel( "models/bowling/bowlingball.vmdl" );
+		Tags.Add( "bowling_owner" );
 	}
 
 	public override void Simulate( Client cl )
@@ -56,6 +57,11 @@ public partial class BowlingBallCarriable : BaseCarriable
 		BowlingBall.Owner = this;
 
 		EnableDrawing = false;
+	}
+
+	public void Reset()
+	{
+		EnableDrawing = true;
 	}
 
 	private bool CanThrow()
