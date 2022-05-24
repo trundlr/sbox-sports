@@ -10,7 +10,7 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class Boxing : BaseGamemode
 {
-	public TurnStateMachine TurnStateMachine => this.GetStateMachine<TurnStateMachine>();
+	public TurnStateMachine TurnStateMachine => StateMachine as TurnStateMachine;
 
 	public override BasePlayer CreatePawn() => new BoxingPlayer();
 

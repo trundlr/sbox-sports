@@ -11,7 +11,7 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class Bowling : BaseGamemode
 {
-	public TurnStateMachine TurnStateMachine => this.GetStateMachine<TurnStateMachine>();
+	public TurnStateMachine TurnStateMachine => StateMachine as TurnStateMachine;
 	public override BasePlayer CreatePawn() => new BowlingPlayer();
 
 	public override void Spawn()
