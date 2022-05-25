@@ -1,23 +1,16 @@
-namespace Sports;
+﻿namespace Sports;
 
+/// <summary>
+/// Utility entity for generic gamemode purposes.
+/// This entity will be gathered automatically by its linked gamemode and can be used via its tags and generic information for meta purposes.
+/// </summary>
 [HammerEntity]
-[Title( "Gamemode Point" )]
-[Category( "Gamemode Setup" )]
 [Icon( "transform" )]
-[EditorModel( "models/editor/camera.vmdl" )]
-public partial class GamemodePointEntity : Entity
+[Category( "Gamemode Meta" )]
+[Title( "Generic Gamemode Entity" )]
+[EditorModel( "models/editor/info_target.vmdl" )]
+public sealed class GamemodePointEntity : GamemodeEntity
 {
-	[Net]
-	public BaseGamemode Gamemode { get; set; }
-
-	[Property, Title( "Gamemode ID" )]
-	public string GamemodeId { get; set; }
-
-	public override string ToString()
-	{
-		return $"Gamemode Point [{GamemodeId}] ({string.Join( ", ", Tags.List )})";
-	}
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -25,5 +18,10 @@ public partial class GamemodePointEntity : Entity
 		// Ideally we'd transmit this to participants of the gamemode but we don't really
 		// have control over that just yet.
 		Transmit = TransmitType.Always;
+	}
+
+	public override string ToString()
+	{
+		return $"{ClassName}:[{Gamemode.ClassName}] ({string.Join( ", ", Tags.List )})";
 	}
 }

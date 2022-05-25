@@ -1,0 +1,201 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "material1.vmat"
+								to = "models/bowling/materials/bpin_eo.vmat"
+							},
+							{
+								from = "material.vmat"
+								to = "material.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "models/bowling_pin.vmat"
+					},
+				]
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "pin0"
+						parent_bone = ""
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin1"
+						parent_bone = ""
+						relative_origin = [ -8.5, -5.75, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin2"
+						parent_bone = ""
+						relative_origin = [ -8.5, 5.75, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin3"
+						parent_bone = ""
+						relative_origin = [ -17.0, -11.5, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin4"
+						parent_bone = ""
+						relative_origin = [ -17.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin5"
+						parent_bone = ""
+						relative_origin = [ -17.0, 11.5, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin6"
+						parent_bone = ""
+						relative_origin = [ -25.5, -17.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin7"
+						parent_bone = ""
+						relative_origin = [ -25.5, -5.75, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin8"
+						parent_bone = ""
+						relative_origin = [ -25.5, 5.75, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pin9"
+						parent_bone = ""
+						relative_origin = [ -25.5, 17.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "BowlingPin_10PinFormation"
+						filename = "models/Bowling/BowlingPin_10PinFormation.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "SpawnConfig"
+				children = 
+				[
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+					{
+						_class = "ConfigAttachedModel"
+						model_name = "models/bowling/bpin.vmdl"
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}
