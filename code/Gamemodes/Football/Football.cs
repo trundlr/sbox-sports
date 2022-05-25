@@ -20,6 +20,7 @@ public partial class FootballGame : BaseGamemode
 	[Property, FGDType( "target_destination" )]
 	public string BallSpawnerName { get; set; }
 
+	[Net]
 	public Ball CurrentBall { get; set; }
 
 	public void OnGoal( Goal goal )

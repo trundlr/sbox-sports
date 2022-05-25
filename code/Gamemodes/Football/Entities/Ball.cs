@@ -19,7 +19,8 @@ public class Ball : ModelEntity
 
 	public override void Simulate( Client cl )
 	{
-		Move();
+		if ( !IsServer ) // Can't be Predicted, need to find better way
+			Move();
 	}
 
 	//
