@@ -74,9 +74,6 @@ public partial class SportsGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
-		//Ignore default ClientJoined behaviour for bots. this is handled by the gamemode
-		if ( cl.IsBot )
-			return;
 
 		Log.Info( $"{cl.Name} has joined the session" );
 		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} joined the session", $"avatar:{cl.PlayerId}" );
@@ -118,6 +115,10 @@ public partial class SportsGame : Game
 		if ( ConsoleSystem.Caller is Client cl && cl.GetGamemode() is BaseGamemode gamemode )
 		{
 			gamemode.AddBot( new SportsBot() );
+		}
+		else
+		{
+			_ = new SportsBot();
 		}
 	}
 }
