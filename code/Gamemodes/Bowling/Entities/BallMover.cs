@@ -24,7 +24,7 @@ public struct BallMover
 		GroundVelocity = Vector3.Zero;
 		GroundBounce = 0.0f;
 		WallBounce = 0.0f;
-		MaxStandableAngle = 10.0f;
+		MaxStandableAngle = 45.0f;
 
 		// Hit everything but other balls and things marked to specifically be ignored by the ball
 		Trace = Trace.Ray( 0, 0 )

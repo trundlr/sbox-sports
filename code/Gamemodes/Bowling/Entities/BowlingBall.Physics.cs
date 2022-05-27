@@ -41,9 +41,6 @@ public partial class BowlingBall
 	{
 		var mover = new BallMover( Position, Velocity, "bowling_ball", "bowling_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
-		mover.MaxStandableAngle = 50.0f;
-		mover.GroundBounce = 0.25f;
-		mover.WallBounce = 0.5f;
 
 		var groundTrace = mover.TraceDirection( Vector3.Down * 0.5f );
 
