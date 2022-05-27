@@ -119,9 +119,5 @@ public partial class SportsGame : Game
 		{
 			gamemode.AddBot( new SportsBot() );
 		}
-		else
-		{
-			SportsGame.Instance.ClientJoined( new SportsBot().Client );
-		}
 	}
 }
