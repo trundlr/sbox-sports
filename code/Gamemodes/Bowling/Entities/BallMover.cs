@@ -17,7 +17,7 @@ public struct BallMover
 	public float MaxStandableAngle;
 	public Trace Trace;
 
-	public BallMover( Vector3 position, Vector3 velocity ) : this()
+	public BallMover( Vector3 position, Vector3 velocity, params string[] ignoretags ) : this()
 	{
 		Velocity = velocity;
 		Position = position;
@@ -32,7 +32,7 @@ public struct BallMover
 			.HitLayer( CollisionLayer.Solid, true )
 			.HitLayer( CollisionLayer.PLAYER_CLIP, true )
 			.HitLayer( CollisionLayer.GRATE, true )
-			.WithoutTags( "bowling_ball", "bowling_ball_ignore" );
+			.WithoutTags( ignoretags );
 	}
 
 	public TraceResult TraceFromTo( Vector3 start, Vector3 end )

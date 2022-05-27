@@ -39,7 +39,7 @@ public partial class BowlingBall
 
 	public virtual void Move()
 	{
-		var mover = new BallMover( Position, Velocity );
+		var mover = new BallMover( Position, Velocity, "bowling_ball", "bowling_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
 		mover.MaxStandableAngle = 50.0f;
 		mover.GroundBounce = 0.25f;
