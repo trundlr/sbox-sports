@@ -41,8 +41,7 @@ public partial class BowlingPinGroup : GamemodeModelEntity
 	{
 		for ( int i = 0; i < Model?.AttachmentCount; i++ )
 		{
-			var name = Model.GetAttachmentName( i );
-			var attachement = GetAttachment( name, true ).Value;
+			var attachement = GetAttachment( $"pin{i}", true ).Value;
 
 			var pin = new BowlingPin();
 			pin.Transform = attachement;
@@ -76,8 +75,5 @@ public partial class BowlingPinGroup : GamemodeModelEntity
 			DebugOverlay.Text( name, attachement.Position );
 			DebugOverlay.Sphere( attachement.Position, 1, Color.White );
 		}
-
-		DebugOverlay.Text( $"pingroup", Position );
-
 	}
 }
