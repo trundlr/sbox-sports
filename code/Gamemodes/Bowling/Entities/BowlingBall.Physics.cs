@@ -21,8 +21,9 @@ public partial class BowlingBall
 
 	public virtual void Move()
 	{
-		var mover = new BallMover( Position, Velocity, "bowling_ball", "bowling_ball_ignore" );
+		var mover = new BallMover( Position, Velocity, "bowling_obstructor", "bowling_ball", "bowling_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
+		mover.WallBounce = -1.0f;
 
 		var groundTrace = mover.TraceDirection( Vector3.Down * 0.5f );
 
@@ -78,7 +79,7 @@ public partial class BowlingBall
 
 		if ( mover.Hit )
 		{
-			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, mover.HitVelocity );
+			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, -mover.HitNormal * mover.HitVelocity.Length );
 			ImpactEffects( mover.HitPos, mover.HitNormal, mover.HitVelocity.Length );
 		}
 	}
