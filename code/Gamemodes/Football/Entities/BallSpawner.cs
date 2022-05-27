@@ -5,9 +5,9 @@ namespace Sports.Football;
 [EditorModel( "models/football/football_ball.vmdl" )]
 public class BallSpawner : GamemodeEntity
 {
-	public Ball SpawnBall()
+	public SoccerBall SpawnBall()
 	{
-		return new Ball
+		return new SoccerBall
 		{
 			Transform = Transform
 		};

@@ -30,9 +30,16 @@ public partial class FootballPlayer : BasePlayer
 
 		if ( tr.Hit && IsServer && LastBallTouch > 0.1 )
 		{
-			if ( tr.Entity is Ball ball )
+			if ( tr.Entity is SoccerBall ball )
 			{
-				ball.Velocity += Rotation.Forward * 100;
+				if ( Input.Down( InputButton.PrimaryAttack ) )
+					ball.Velocity = Input.Rotation.Forward * 1000;
+				else
+					ball.Velocity += Input.Rotation.Forward * 100;
+
+				ball.Velocity += Velocity + Vector3.Up * 100;
+				ball.Position += Vector3.Up * 1;
+				ball.GroundEntity = null;
 				LastBallTouch = 0;
 			}
 		}
