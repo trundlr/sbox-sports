@@ -17,7 +17,7 @@ public struct BallMover
 	public float MaxStandableAngle;
 	public Trace Trace;
 
-	private string[] Ignoretags;
+	private string[] IgnoreTags;
 	private string ObstructorTag;
 
 	/// <summary>
@@ -39,7 +39,7 @@ public struct BallMover
 		WallBounce = 0.0f;
 		MaxStandableAngle = 45.0f;
 
-		Ignoretags = ignoretags;
+		IgnoreTags = ignoretags;
 		ObstructorTag = obstructor;
 
 		// Hit everything but other balls and things marked to specifically be ignored by the ball
@@ -48,7 +48,7 @@ public struct BallMover
 			.HitLayer( CollisionLayer.Solid, true )
 			.HitLayer( CollisionLayer.PLAYER_CLIP, true )
 			.HitLayer( CollisionLayer.GRATE, true )
-			.WithoutTags( ignoretags );
+			.WithoutTags( IgnoreTags );
 	}
 
 	public TraceResult TraceFromTo( Vector3 start, Vector3 end )
