@@ -81,8 +81,11 @@ public partial class BowlingBall
 
 	private void ImpactObject( PhysicsBody body, Vector3 hitpos, Vector3 velocity )
 	{
-		if ( body.IsValid() )
-			body.ApplyForceAt( hitpos, velocity * 100.0f );
+		if ( !body.IsValid() )
+			return;
+
+		var force = Mass * (Velocity / Time.Delta);
+		body.ApplyForceAt( hitpos, force );
 	}
 
 	private void ImpactEffects( Vector3 pos, Vector3 normal, float speed )
