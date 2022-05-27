@@ -28,7 +28,7 @@ public class BaseBotBehaviour
 	/// </summary>
 	/// <param name="target"></param>
 	/// <returns></returns>
-	public virtual Vector3 EvaulatePositon( Entity target )
+	public virtual Vector3 EvaluatePosition( Entity target )
 	{
 		return 0;
 	}
@@ -37,7 +37,7 @@ public class BaseBotBehaviour
 	/// Choose what the bot should move to; the main decision making process. Override this for different gamemodes ande write your own logic
 	/// </summary>
 	/// <returns></returns>
-	public virtual Entity EvaulateTarget()
+	public virtual Entity EvaluateTarget()
 	{
 		return null;
 	}
