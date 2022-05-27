@@ -4,6 +4,7 @@ public partial class BowlingBall
 {
 	protected Vector3 _velocity;
 	public override Vector3 Velocity { get => _velocity; set => _velocity = value; }
+	public Vector3 AngularDirection { get; set; }
 
 	public override void Simulate( Client cl )
 	{
@@ -32,6 +33,9 @@ public partial class BowlingBall
 
 		// apply gravity
 		mover.Velocity += Vector3.Down * 800 * Time.Delta;
+
+		// apply simple angular twist
+		mover.Velocity += AngularDirection * Time.Delta * 0.5f;
 
 		// we're on a straight surface, align our velocity so we don't vibrate along the surface because of clip bumps
 		if ( groundTrace.Hit && groundTrace.Normal.Angle( Vector3.Up ) < 1.0f )

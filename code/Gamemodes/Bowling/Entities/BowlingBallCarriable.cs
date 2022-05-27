@@ -53,7 +53,8 @@ public partial class BowlingBallCarriable : BaseCarriable
 			return;
 
 		BowlingBall.Position = Position;
-		BowlingBall.Velocity = Parent.Rotation.Forward * 512;
+		BowlingBall.Velocity = Parent.Rotation.Forward * 420;
+		BowlingBall.AngularDirection = Parent.Rotation.Left * 15;
 		BowlingBall.Owner = this;
 
 		EnableDrawing = false;
