@@ -2,8 +2,11 @@
 
 public partial class BowlingBall
 {
-	protected Vector3 _velocity;
-	public override Vector3 Velocity { get => _velocity; set => _velocity = value; }
+	protected Vector3 _Velocity;
+	public override Vector3 Velocity { get => _Velocity; set => _Velocity = value; }
+	/// <summary>
+	/// Direction to deviate the ball's velocity towards. Can be used as a simple Angular Velocity spin.
+	/// </summary>
 	public Vector3 AngularDirection { get; set; }
 
 	public override void Simulate( Client cl )
@@ -21,9 +24,10 @@ public partial class BowlingBall
 
 	public virtual void Move()
 	{
+		Host.AssertServer();
+
 		var mover = new BallMover( Position, Velocity, "bowling_obstructor", "bowling_ball", "bowling_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
-		mover.WallBounce = -1.0f;
 
 		var groundTrace = mover.TraceDirection( Vector3.Down * 0.5f );
 
@@ -79,7 +83,10 @@ public partial class BowlingBall
 
 		if ( mover.Hit )
 		{
+			// try to shove our hit object
 			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, -mover.HitNormal * mover.HitVelocity.Length );
+
+			// TODO: only send impact effect to clients participating in gamemode?
 			ImpactEffects( mover.HitPos, mover.HitNormal, mover.HitVelocity.Length );
 		}
 	}
@@ -93,8 +100,12 @@ public partial class BowlingBall
 		body.ApplyForceAt( hitpos, force );
 	}
 
+	[ClientRpc]
 	private void ImpactEffects( Vector3 pos, Vector3 normal, float speed )
 	{
+		if ( !Debug.Enabled )
+			return;
+
 		DebugOverlay.Line( pos, pos + normal * speed * 0.01f, 10.0f );
 		DebugOverlay.Sphere( pos, 1.0f, Color.Red, 10.0f );
 	}
@@ -102,6 +113,9 @@ public partial class BowlingBall
 	[Event.Tick.Server]
 	public void Tick()
 	{
+		if ( !Debug.Enabled )
+			return;
+
 		DebugOverlay.Sphere( Position, 0.1f, Color.White, 10.0f );
 	}
 }
