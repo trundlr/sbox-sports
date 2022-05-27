@@ -12,6 +12,25 @@ public partial class BowlingBallCarriable : BaseCarriable
 	[Net, Predicted]
 	public float Twist { get; set; } = 0;
 
+	public float DefaultTwist => 0.0f;
+	/// <summary>
+	/// Maximum twist amount for left and right twist.
+	/// </summary>
+	public float MaximumTwist => 10.0f;
+
+	public float DefaultStrength => 10.0f;
+	public float MinimumStrength => 5.0f;
+	public float MaximumStrength => 15.0f;
+
+	/// <summary>
+	/// Rate at which to change input variables (Strength, Twist)
+	/// </summary>
+	public float InputRate => 7.0f;
+	/// <summary>
+	/// Rate at which to change input variables (Strength, Twist) when Shift is held.
+	/// </summary>
+	public float FineInputRate => 2.3f;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -47,18 +66,18 @@ public partial class BowlingBallCarriable : BaseCarriable
 		if ( BowlingPlayer.HasThrown )
 			return;
 
-		var rate = Input.Down( InputButton.Run ) ? 2.3f : 7.0f;
+		var rate = Input.Down( InputButton.Run ) ? FineInputRate : InputRate;
 
 		// temp strength and twist controls
 		Strength += Input.Forward * Time.Delta * rate;
-		Strength = Strength.Clamp( 5, 15 );
+		Strength = Strength.Clamp( MinimumStrength, MaximumStrength );
 
 		var twist = 0;
 		twist += Input.Down( InputButton.Menu ) ? 1 : 0;
 		twist += Input.Down( InputButton.Use ) ? -1 : 0;
 
 		Twist += twist * Time.Delta * rate;
-		Twist = Twist.Clamp( -10, 10 );
+		Twist = Twist.Clamp( -MaximumTwist, MaximumTwist );
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
@@ -93,8 +112,8 @@ public partial class BowlingBallCarriable : BaseCarriable
 	{
 		EnableDrawing = true;
 
-		Twist = 0;
-		Strength = 10;
+		Twist = DefaultTwist;
+		Strength = DefaultStrength;
 	}
 
 	private bool CanThrow()

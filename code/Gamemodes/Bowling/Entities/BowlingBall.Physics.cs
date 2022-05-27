@@ -8,6 +8,7 @@ public partial class BowlingBall
 	/// Direction to deviate the ball's velocity towards. Can be used as a simple Angular Velocity spin.
 	/// </summary>
 	public Vector3 AngularDirection { get; set; }
+	public Vector3 Gravity => Vector3.Down * 350.0f;
 
 	public override void Simulate( Client cl )
 	{
@@ -29,7 +30,7 @@ public partial class BowlingBall
 		var mover = new BallMover( Position, Velocity, "bowling_obstructor", "bowling_ball", "bowling_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
 
-		var groundTrace = mover.TraceDirection( Vector3.Down * 0.5f );
+		var groundTrace = mover.TraceDirection( Gravity.Normal * 0.5f );
 
 		if ( groundTrace.Entity.IsValid() )
 		{
@@ -37,7 +38,7 @@ public partial class BowlingBall
 		}
 
 		// apply gravity
-		mover.Velocity += Vector3.Down * 350 * Time.Delta;
+		mover.Velocity += Gravity * Time.Delta;
 
 		// apply simple angular twist
 		mover.Velocity += AngularDirection * Time.Delta * 0.5f;
