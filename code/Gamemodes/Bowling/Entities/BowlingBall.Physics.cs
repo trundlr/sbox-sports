@@ -84,19 +84,20 @@ public partial class BowlingBall
 		if ( mover.Hit )
 		{
 			// try to shove our hit object
-			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, -mover.HitNormal * mover.HitVelocity.Length );
+			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, mover.HitNormal, mover.HitVelocity );
 
 			// TODO: only send impact effect to clients participating in gamemode?
 			ImpactEffects( mover.HitPos, mover.HitNormal, mover.HitVelocity.Length );
 		}
 	}
 
-	private void ImpactObject( PhysicsBody body, Vector3 hitpos, Vector3 velocity )
+	private void ImpactObject( PhysicsBody body, Vector3 hitpos, Vector3 hitnormal, Vector3 velocity )
 	{
 		if ( !body.IsValid() )
 			return;
 
-		var force = Mass * (velocity / Time.Delta);
+		var vel = -hitnormal * velocity.Dot( -hitnormal );
+		var force = Mass * (vel / Time.Delta);
 		body.ApplyForceAt( hitpos, force );
 	}
 
