@@ -109,7 +109,7 @@ public partial class SportsGame : Game
 		cl.GetPartyComponent()?.Leave();
 	}
 
-	[ConCmd.Admin( "AddBot" )]
+	[ConCmd.Admin( "sports_bot_add" )]
 	public static void AddBot()
 	{
 		if ( ConsoleSystem.Caller is Client cl && cl.GetGamemode() is BaseGamemode gamemode )
