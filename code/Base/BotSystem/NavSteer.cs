@@ -39,14 +39,21 @@ public class NavSteer
 
 		foreach ( var ent in Entity.FindInSphere( center, radius ) )
 		{
-			if ( ent is not BasePlayer ) continue;
-			if ( ent.IsWorld ) continue;
+			if ( ent is not BasePlayer )
+				continue;
+
+			if ( ent.IsWorld )
+				continue;
 
 			var delta = (position - ent.Position).WithZ( 0 );
 			var closeness = delta.Length;
-			if ( closeness < 0.001f ) continue;
+			if ( closeness < 0.001f )
+				continue;
+
 			var thrust = ((objectRadius - closeness) / objectRadius).Clamp( 0, 1 );
-			if ( thrust <= 0 ) continue;
+
+			if ( thrust <= 0 )
+				continue;
 
 			//avoidance += delta.Cross( Output.Direction ).Normal * thrust * 2.5f;
 			avoidance += delta.Normal * thrust * thrust;

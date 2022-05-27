@@ -28,11 +28,6 @@ public class SportsBot : Bot
 
 	public override void Tick()
 	{
-		if ( behaviour is null )
-		{
-			return;
-		}
-
-		behaviour.Tick();
+		behaviour?.Tick();
 	}
 }

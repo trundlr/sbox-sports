@@ -142,7 +142,6 @@ public abstract partial class BaseGamemode : Entity
 	/// <param name="bot"></param>
 	public virtual void OnBotAdded( SportsBot bot )
 	{
-		bot.ApplyBehaviour<BaseBotBehaviour>();
 	}
 
 	/// <summary>

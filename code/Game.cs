@@ -74,6 +74,10 @@ public partial class SportsGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
+		//Ignore default ClientJoined behaviour for bots. this is handled by the gamemode
+		if ( cl.IsBot )
+			return;
+
 		Log.Info( $"{cl.Name} has joined the session" );
 		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} joined the session", $"avatar:{cl.PlayerId}" );
 
@@ -83,9 +87,6 @@ public partial class SportsGame : Game
 		// Give the client the PartyComponent
 		cl.GetPartyComponent();
 
-		//don't setup the default pawn if its a bot.
-		if ( cl.IsBot )
-			return;
 
 		// Set up the default pawn
 		SetupDefaultPawn( cl );
@@ -111,7 +112,7 @@ public partial class SportsGame : Game
 		cl.GetPartyComponent()?.Leave();
 	}
 
-	[ConCmd.Admin( "sport_bot" )]
+	[ConCmd.Admin( "AddBot" )]
 	public static void AddBot()
 	{
 		if ( ConsoleSystem.Caller is Client cl && cl.GetGamemode() is BaseGamemode gamemode )
