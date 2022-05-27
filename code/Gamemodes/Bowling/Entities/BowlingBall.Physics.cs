@@ -103,13 +103,13 @@ public partial class BowlingBall
 	private void ImpactObject( PhysicsBody body, Vector3 hitpos, Vector3 velocity )
 	{
 		if ( body.IsValid() )
-			body.ApplyForceAt( hitpos, velocity * 1000.0f );
+			body.ApplyForceAt( hitpos, velocity * 100.0f );
 	}
 
 	private void ImpactEffects( Vector3 pos, Vector3 normal, float speed )
 	{
 		DebugOverlay.Line( pos, pos + normal * speed * 0.01f, 10.0f );
-		DebugOverlay.Sphere( pos, Radius, Color.Red, 10.0f );
+		DebugOverlay.Sphere( pos, 1.0f, Color.Red, 10.0f );
 	}
 
 	[Event.Tick.Server]
