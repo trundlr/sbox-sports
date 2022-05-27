@@ -4,7 +4,7 @@ public partial class BowlingBall : ModelEntity
 {
 	// 13 lbs = 5.89 kg
 	// 4.2975 inch radius
-	public static float Radius = 4.2975f;
+	public static float Radius = 6.4744f;//4.2975f;
 	public static float Mass = 5.89f;
 
 	static readonly Model BallModel = Model.Load( "models/bowling/bowlingball.vmdl" );

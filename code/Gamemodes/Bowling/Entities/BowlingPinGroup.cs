@@ -72,7 +72,7 @@ public partial class BowlingPinGroup : GamemodeModelEntity
 			var name = Model.GetAttachmentName( i );
 			var attachement = GetAttachment( name, true ).Value;
 
-			DebugOverlay.Text( name, attachement.Position );
+			//DebugOverlay.Text( name, attachement.Position );
 			DebugOverlay.Sphere( attachement.Position, 1, Color.White );
 		}
 	}
