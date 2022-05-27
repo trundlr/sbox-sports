@@ -1,0 +1,37 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		BaseSurface = resource:"surfaces/wood.surface"
+		Description = ""
+		Friction = 0.1
+		Elasticity = 0.25
+		Density = 2000
+		Thickness = -1
+		Dampening = 0
+		BounceThreshold = 40
+		ImpactEffects = 
+		{
+			Regular = null
+			Bullet = null
+			BulletDecal = null
+		}
+		Sounds = 
+		{
+			FootLeft = null
+			FootRight = null
+			FootLaunch = null
+			FootLand = null
+			Bullet = null
+			SmoothScrape = null
+			RoughScrape = null
+			ImpactHard = null
+			ImpactSoft = null
+		}
+		Breakables = 
+		{
+			BreakSound = null
+			GenericGibs = null
+		}
+	}
+}
