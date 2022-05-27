@@ -3,7 +3,7 @@
 public class NavPath
 {
 	public Vector3 TargetPosition;
-	public List<Vector3> Points = new List<Vector3>();
+	public List<Vector3> Points = new();
 
 	public bool IsEmpty => Points.Count <= 1;
 
@@ -13,7 +13,6 @@ public class NavPath
 
 		if ( !TargetPosition.AlmostEqual( to, 5 ) )
 		{
-			//TargetPosition = to;
 			needsBuild = true;
 		}
 
@@ -26,7 +25,6 @@ public class NavPath
 			NavMesh.GetClosestPoint( from );
 			if ( from_fixed.HasValue && tofixed.HasValue )
 				NavMesh.BuildPath( from_fixed.Value, tofixed.Value, Points );
-			//Points.Add( NavMesh.GetClosestPoint( to ) );
 		}
 
 		if ( Points.Count <= 1 )
