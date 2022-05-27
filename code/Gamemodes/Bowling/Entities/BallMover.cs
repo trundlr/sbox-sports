@@ -25,7 +25,10 @@ public struct BallMover
 	/// </summary>
 	/// <param name="position">The Position of the object.</param>
 	/// <param name="velocity">The Velocity of the object.</param>
-	/// <param name="obstructor">The Tag for objects to be treated as obstructors. That means, objects we'd try to shove around and not restrict against.</param>
+	/// <param name="obstructor">The Tag for objects to be treated as obstructors. 
+	/// That means, objects we'd try to shove around and not restrict against.
+	/// Pass null or empty string for no obstructor tag.
+	/// </param>
 	/// <param name="ignoretags">Tags the trace query should ignore entirely.</param>
 	public BallMover( Vector3 position, Vector3 velocity, string obstructor, params string[] ignoretags ) : this()
 	{
@@ -132,7 +135,7 @@ public struct BallMover
 			timeLeft -= timeLeft * pm.Fraction;
 
 			// don't restrict velocity against objects marked as obstructors
-			if ( pm.Entity.IsValid() && pm.Entity.Tags.Has( ObstructorTag ) )
+			if ( ObstructorTag is not null && pm.Entity.IsValid() && pm.Entity.Tags.Has( ObstructorTag ) )
 				continue;
 
 			if ( !moveplanes.TryAdd( pm.Normal, ref Velocity, IsFloor( pm ) ? GroundBounce : WallBounce ) )
