@@ -45,11 +45,31 @@ public struct BallMover
 		return TraceFromTo( Position, Position + down );
 	}
 
+	public void ProjectOntoPlane( Vector3 normal, float overBounce = 1.0f )
+	{
+		float backoff = Velocity.Dot( normal );
+
+		if ( overBounce != 1.0f )
+		{
+			if ( backoff < 0 )
+			{
+				backoff *= overBounce;
+			}
+			else
+			{
+				backoff /= overBounce;
+			}
+		}
+
+		Velocity -= backoff * normal;
+	}
+
 	public float TryMove( float timestep )
 	{
 		var timeLeft = timestep;
 		float travelFraction = 0;
 
+		// reset hit info
 		Hit = false;
 		HitEntity = null;
 		HitPos = Vector3.Zero;
@@ -62,11 +82,13 @@ public struct BallMover
 
 		for ( int bump = 0; bump < moveplanes.Max; bump++ )
 		{
+			// we bumped to a stop, no need for more bumps
 			if ( Velocity.Length.AlmostEqual( 0.0f ) )
 				break;
 
 			var pm = TraceFromTo( Position, Position + Velocity * timeLeft );
 
+			// we're inside a solid, bump away slightly
 			if ( pm.StartedSolid )
 			{
 				Position += pm.Normal * 0.01f;
@@ -76,6 +98,7 @@ public struct BallMover
 
 			travelFraction += pm.Fraction;
 
+			// we were able to move
 			if ( pm.Fraction > 0.0f )
 			{
 				Position = pm.EndPosition + pm.Normal * 0.01f;
@@ -83,6 +106,7 @@ public struct BallMover
 				moveplanes.StartBump( Velocity );
 			}
 
+			// We've hit something, make the info available to handle impact events from the outside
 			if ( !Hit && !pm.StartedSolid && pm.Hit )
 			{
 				Hit = true;
@@ -98,6 +122,7 @@ public struct BallMover
 				break;
 		}
 
+		// we got nowhere, we're fully up to an obstacle, stop fully
 		if ( travelFraction == 0 )
 			Velocity = 0;
 

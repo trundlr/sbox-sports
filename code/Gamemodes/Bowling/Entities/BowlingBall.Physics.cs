@@ -18,25 +18,6 @@ public partial class BowlingBall
 		}
 	}
 
-	static Vector3 ProjectOntoPlane( Vector3 v, Vector3 normal, float overBounce = 1.0f )
-	{
-		float backoff = v.Dot( normal );
-
-		if ( overBounce != 1.0f )
-		{
-			if ( backoff < 0 )
-			{
-				backoff *= overBounce;
-			}
-			else
-			{
-				backoff /= overBounce;
-			}
-		}
-
-		return v - backoff * normal;
-	}
-
 	public virtual void Move()
 	{
 		var mover = new BallMover( Position, Velocity, "bowling_ball", "bowling_ball_ignore" );
@@ -52,9 +33,10 @@ public partial class BowlingBall
 		// apply gravity
 		mover.Velocity += Vector3.Down * 800 * Time.Delta;
 
+		// we're on a straight surface, align our velocity so we don't vibrate along the surface because of clip bumps
 		if ( groundTrace.Hit && groundTrace.Normal.Angle( Vector3.Up ) < 1.0f )
 		{
-			mover.Velocity = ProjectOntoPlane( mover.Velocity, groundTrace.Normal );
+			mover.ProjectOntoPlane( groundTrace.Normal );
 		}
 
 		mover.TryMove( Time.Delta );
