@@ -12,10 +12,6 @@ public class BaseBotBehaviour
 	public Angles ViewAngles { get; set; }
 	public Vector3 InputDirection { get; set; }
 
-	public Vector3 InputVelocity { get; protected set; }
-
-
-
 	public virtual void Tick()
 	{
 	}
