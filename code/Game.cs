@@ -6,7 +6,7 @@ global using System;
 global using System.Collections.Generic;
 global using System.ComponentModel;
 global using System.Linq;
-
+using Sports.BotSystem;
 using Sports.UI;
 
 namespace Sports;
@@ -83,6 +83,10 @@ public partial class SportsGame : Game
 		// Give the client the PartyComponent
 		cl.GetPartyComponent();
 
+		//don't setup the default pawn if its a bot.
+		if ( cl.IsBot )
+			return;
+
 		// Set up the default pawn
 		SetupDefaultPawn( cl );
 	}
@@ -105,5 +109,18 @@ public partial class SportsGame : Game
 		}
 
 		cl.GetPartyComponent()?.Leave();
+	}
+
+	[ConCmd.Admin( "sport_bot" )]
+	public static void AddBot()
+	{
+		if ( ConsoleSystem.Caller is Client cl && cl.GetGamemode() is BaseGamemode gamemode )
+		{
+			gamemode.AddBot( new SportsBot() );
+		}
+		else
+		{
+			SportsGame.Instance.ClientJoined( new SportsBot().Client );
+		}
 	}
 }
