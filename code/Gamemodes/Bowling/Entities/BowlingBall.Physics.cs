@@ -88,7 +88,7 @@ public partial class BowlingBall
 		if ( !body.IsValid() )
 			return;
 
-		var force = Mass * (Velocity / Time.Delta);
+		var force = Mass * (velocity / Time.Delta);
 		body.ApplyForceAt( hitpos, force );
 	}
 
