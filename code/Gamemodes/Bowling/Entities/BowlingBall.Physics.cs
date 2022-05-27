@@ -32,7 +32,7 @@ public partial class BowlingBall
 		}
 
 		// apply gravity
-		mover.Velocity += Vector3.Down * 800 * Time.Delta;
+		mover.Velocity += Vector3.Down * 350 * Time.Delta;
 
 		// apply simple angular twist
 		mover.Velocity += AngularDirection * Time.Delta * 0.5f;

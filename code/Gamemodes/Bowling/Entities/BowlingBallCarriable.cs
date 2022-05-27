@@ -6,6 +6,12 @@ public partial class BowlingBallCarriable : BaseCarriable
 
 	private BowlingPlayer BowlingPlayer => Owner as BowlingPlayer;
 
+	[Net, Predicted]
+	public float Strength { get; set; } = 10;
+
+	[Net, Predicted]
+	public float Twist { get; set; } = 0;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -21,15 +27,38 @@ public partial class BowlingBallCarriable : BaseCarriable
 		if ( Debug.Enabled )
 		{
 			DebugOverlay.ScreenText( "[BOWLING CARRIABLE]\n" +
-						$"TimeSinceLastThrow:             {BowlingPlayer?.TimeSinceLastThrow}\n" +
-						$"Active ball:                    {BowlingBall}\n" +
-						$"Active ball pos:                {BowlingBall?.Position}", 24 );
+						$"TimeSinceLastThrow:			{BowlingPlayer?.TimeSinceLastThrow}\n" +
+						$"Active ball:					{BowlingBall}\n" +
+						$"Active ball pos:				{BowlingBall?.Position}\n" +
+						$"Strength:						{Strength}\n" +
+						$"Twist:						{Twist}\n" +
+						$"\n" +
+						$"", 24 );
 		}
 
 		BowlingBall?.Simulate( cl );
 
 		if ( CanThrow() )
+		{
 			Throw();
+			return;
+		}
+
+		if ( BowlingPlayer.HasThrown )
+			return;
+
+		var rate = Input.Down( InputButton.Run ) ? 2.3f : 7.0f;
+
+		// temp strength and twist controls
+		Strength += Input.Forward * Time.Delta * rate;
+		Strength = Strength.Clamp( 5, 15 );
+
+		var twist = 0;
+		twist += Input.Down( InputButton.Menu ) ? 1 : 0;
+		twist += Input.Down( InputButton.Use ) ? -1 : 0;
+
+		Twist += twist * Time.Delta * rate;
+		Twist = Twist.Clamp( -10, 10 );
 	}
 
 	public override void OnAnimEventGeneric( string name, int intData, float floatData, Vector3 vectorData, string stringData )
@@ -53,8 +82,8 @@ public partial class BowlingBallCarriable : BaseCarriable
 			return;
 
 		BowlingBall.Position = Position;
-		BowlingBall.Velocity = Parent.Rotation.Forward * 420;
-		BowlingBall.AngularDirection = Parent.Rotation.Left * 15;
+		BowlingBall.Velocity = Parent.Rotation.Forward * 35 * Strength;
+		BowlingBall.AngularDirection = Parent.Rotation.Left * 3 * Twist;
 		BowlingBall.Owner = this;
 
 		EnableDrawing = false;
@@ -63,6 +92,9 @@ public partial class BowlingBallCarriable : BaseCarriable
 	public void Reset()
 	{
 		EnableDrawing = true;
+
+		Twist = 0;
+		Strength = 10;
 	}
 
 	private bool CanThrow()
