@@ -55,7 +55,6 @@ public class NavSteer
 			if ( thrust <= 0 )
 				continue;
 
-			//avoidance += delta.Cross( Output.Direction ).Normal * thrust * 2.5f;
 			avoidance += delta.Normal * thrust * thrust;
 		}
 
