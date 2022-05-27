@@ -5,29 +5,14 @@ namespace Sports;
 [Title( "Gamemode Orb" )]
 [Category( "Map Setup" )]
 [Particle]
-public partial class GamemodeOrb : BaseTrigger
+public partial class GamemodeOrb : GamemodeBaseTrigger
 {
 	public static HashSet<GamemodeOrb> Orbs { get; set; } = new();
 
 	[Property( "effect_name", Title = "Particle System Name" ), ResourceType( "vpcf" )]
 	public string ParticleSystemName { get; set; }
-	public BaseGamemode LinkedGamemode { get; set; }
-
-	[Property( "gamemode_name", Title = "Gamemode Name" ), FGDType( "target_destination" )]
-	public string Gamemode { get; set; }
 
 	protected TimeSince LastTouch = 1f;
-
-	[Event.Entity.PostSpawn]
-	protected void PostEntitiesSpawned()
-	{
-		LinkedGamemode = SportsGame.Instance?.GetGamemodeFromId( Gamemode );
-
-		if ( LinkedGamemode.IsValid() )
-			Log.Debug( $"Orb: Linked to gamemode: {Gamemode}" );
-		else
-			Log.Debug( $"Orb: Couldn't link gamemode: {Gamemode}" );
-	}
 
 	public override void Spawn()
 	{
@@ -57,7 +42,7 @@ public partial class GamemodeOrb : BaseTrigger
 		if ( other is PlazaPlayer player )
 		{
 			Log.Debug( $"Orb trying to add player: {player.Client.Name} to gamemode: {Gamemode}" );
-			LinkedGamemode?.AddClient( player.Client );
+			Gamemode?.AddClient( player.Client );
 			LastTouch = 0;
 		}
 	}
