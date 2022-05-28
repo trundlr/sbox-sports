@@ -1,7 +1,9 @@
 ﻿namespace Sports;
 
-public partial class BowlingPin : ModelEntity
+public partial class BowlingPin : BasePhysics
 {
+	static readonly Model PinModel = Model.Load( "models/bowling/bpin.vmdl" );
+
 	[Net]
 	public int Index { get; set; }
 	[Net]
@@ -13,18 +15,15 @@ public partial class BowlingPin : ModelEntity
 
 	public override void Spawn()
 	{
+		Model = PinModel;
+
+		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+
 		base.Spawn();
 
 		Transmit = TransmitType.Always;
-		SetModel( "models/bowling/bpin.vmdl" );
-		SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
 
-		MoveType = MoveType.Physics;
-		CollisionGroup = CollisionGroup.Weapon;
-		PhysicsEnabled = true;
-		UsePhysicsCollision = true;
-
-		Tags.Add( "bowling_pin" );
+		Tags.Add( "bowling_obstructor", "bowling_pin" );
 	}
 
 	[Event.Tick.Server]
