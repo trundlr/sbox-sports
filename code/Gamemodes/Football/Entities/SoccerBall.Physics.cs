@@ -2,8 +2,8 @@ namespace Sports.Football;
 
 public partial class SoccerBall
 {
-	protected Vector3 _velocity;
-	public override Vector3 Velocity { get => _velocity; set => _velocity = value; }
+	protected Vector3 _Velocity;
+	public override Vector3 Velocity { get => _Velocity; set => _Velocity = value; }
 
 	public override void Simulate( Client cl )
 	{
@@ -18,28 +18,9 @@ public partial class SoccerBall
 		}
 	}
 
-	static Vector3 ProjectOntoPlane( Vector3 v, Vector3 normal, float overBounce = 1.0f )
-	{
-		float backoff = v.Dot( normal );
-
-		if ( overBounce != 1.0f )
-		{
-			if ( backoff < 0 )
-			{
-				backoff *= overBounce;
-			}
-			else
-			{
-				backoff /= overBounce;
-			}
-		}
-
-		return v - backoff * normal;
-	}
-
 	public virtual void Move()
 	{
-		var mover = new SoccerBallMover( Position, Velocity, "football", "football_ball_ignore" );
+		var mover = new BallMover( Position, Velocity, "", "football", "football_ball_ignore" );
 		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
 		mover.MaxStandableAngle = 50.0f;
 		mover.GroundBounce = 0.9f;
@@ -57,7 +38,7 @@ public partial class SoccerBall
 
 		if ( groundTrace.Hit && groundTrace.Normal.Angle( Vector3.Up ) < 1.0f )
 		{
-			mover.Velocity = ProjectOntoPlane( mover.Velocity, groundTrace.Normal );
+			mover.ProjectOntoPlane( groundTrace.Normal );
 		}
 
 		mover.TryMove( Time.Delta );
