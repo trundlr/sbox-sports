@@ -41,7 +41,7 @@
 						disable_compression = false
 						source_filename = "models/sportscitizen/animations/football/citizen_football_kicks.fbx"
 						start_frame = 9
-						end_frame = 39
+						end_frame = 25
 						framerate = 25.0
 						take = 0
 						reverse = false
@@ -78,7 +78,7 @@
 						disable_compression = false
 						source_filename = "models/sportscitizen/animations/football/citizen_football_kicks.fbx"
 						start_frame = 69
-						end_frame = 99
+						end_frame = 85
 						framerate = 25.0
 						take = 0
 						reverse = false
@@ -115,7 +115,7 @@
 						disable_compression = false
 						source_filename = "models/sportscitizen/animations/football/citizen_football_kicks.fbx"
 						start_frame = 39
-						end_frame = 69
+						end_frame = 55
 						framerate = 25.0
 						take = 0
 						reverse = false
@@ -152,7 +152,7 @@
 						disable_compression = false
 						source_filename = "models/sportscitizen/animations/football/citizen_football_kicks.fbx"
 						start_frame = 99
-						end_frame = 129
+						end_frame = 115
 						framerate = 25.0
 						take = 0
 						reverse = false
