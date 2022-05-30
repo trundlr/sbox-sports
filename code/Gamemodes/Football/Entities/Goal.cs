@@ -10,7 +10,7 @@ public class Goal : GamemodeBaseTrigger
 
 	public override void OnTouchStart( Entity toucher )
 	{
-		if ( toucher is SoccerBall )
+		if ( toucher is Ball )
 		{
 			GamemodeInstance?.OnGoal();
 		}

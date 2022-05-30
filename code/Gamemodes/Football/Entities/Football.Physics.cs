@@ -1,6 +1,6 @@
 namespace Sports.Football;
 
-public partial class SoccerBall
+public partial class Ball
 {
 
 	private readonly float Radius = 25.9223f;

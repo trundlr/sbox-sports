@@ -20,7 +20,7 @@ public partial class FootballGame : BaseGamemode
 	public string BallSpawnerName { get; set; }
 
 	[Net]
-	public SoccerBall CurrentBall { get; set; }
+	public Ball CurrentBall { get; set; }
 
 	public void OnGoal()
 	{

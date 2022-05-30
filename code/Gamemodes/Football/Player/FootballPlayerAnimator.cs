@@ -19,9 +19,7 @@ public class FootballPlayerAnimator : PawnAnimator
 		Vector3 aimPos = Pawn.EyePosition + Input.Rotation.Forward * 200;
 		Vector3 lookPos = aimPos;
 
-		//
 		// Look in the direction what the player's input is facing
-		//
 		SetLookAt( "aim_eyes", lookPos );
 		SetLookAt( "aim_head", lookPos );
 		SetLookAt( "aim_body", aimPos );
