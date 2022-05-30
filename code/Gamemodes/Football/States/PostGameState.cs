@@ -2,14 +2,16 @@ using Sports.StateSystem;
 
 namespace Sports.Football.States;
 
-public class FBPostGameState : BaseState<FBStateMachine>
+public class FootballPostGameState : BaseState<FootballStateMachine>
 {
+
 	public override void CheckSwitchState()
 	{
 		base.CheckSwitchState();
 
 		StateMachine.Game.Finish();
 	}
+
 	public override void OnEnter()
 	{
 		base.OnEnter();

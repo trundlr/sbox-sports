@@ -2,12 +2,15 @@ namespace Sports.Football;
 
 public partial class SoccerBall
 {
+
+	private readonly float Radius = 25.9223f;
+	private readonly float FrictionStrength = 0.5f;
+
 	protected Vector3 _Velocity;
 	public override Vector3 Velocity { get => _Velocity; set => _Velocity = value; }
 
-
-	public TimeSince ActivePlayerKick { get; set; }
-	public FootballPlayer ActivePlayer { get; set; }
+	public TimeSince SincePlayerKick { get; set; }
+	public FootballPlayer KickingPlayer { get; set; }
 
 	public override void Simulate( Client cl )
 	{
@@ -19,30 +22,31 @@ public partial class SoccerBall
 			{
 				Move();
 			}
-			if ( ActivePlayerKick > 0.5f )
+
+			if ( SincePlayerKick > 0.5f )
 			{
-				ActivePlayer = null;
+				KickingPlayer = null;
 			}
 		}
 	}
 
 	public void SetActivePlayer( FootballPlayer player )
 	{
-		ActivePlayer = player;
-		ActivePlayerKick = 0;
+		KickingPlayer = player;
+		SincePlayerKick = 0;
 	}
 
 	public virtual void Move()
 	{
 		var mover = new BallMover( Position, Velocity, "", "football", "football_ball_ignore" );
-		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this ).Ignore( ActivePlayer );
+		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this ).Ignore( KickingPlayer );
 		mover.MaxStandableAngle = 50.0f;
 		mover.GroundBounce = 0.9f;
 		mover.WallBounce = 0.5f;
 
 		var groundTrace = mover.TraceDirection( Vector3.Down * 0.1f );
 
-		if ( groundTrace.Entity.IsValid() )
+		if ( groundTrace.Entity.IsValid() && groundTrace.Entity is not FootballPlayer )
 		{
 			mover.GroundVelocity = groundTrace.Entity.Velocity;
 		}
@@ -67,7 +71,7 @@ public partial class SoccerBall
 			if ( mover.Velocity.Length < 1.0f )
 				friction = 5.0f;
 			else
-				friction *= frictionCoefficient;
+				friction *= FrictionStrength;
 
 			mover.ApplyFriction( friction, Time.Delta );
 		}
@@ -78,7 +82,6 @@ public partial class SoccerBall
 		}
 
 		Position = mover.Position;
-		BaseVelocity = mover.GroundVelocity;
 		Velocity = mover.Velocity;
 
 		// Rotate the ball
@@ -86,21 +89,14 @@ public partial class SoccerBall
 		{
 			var dir = Velocity.Normal;
 			var axis = new Vector3( -dir.y, dir.x, 0.0f );
-			var angle = (Velocity.Length * Time.Delta) / (10.0f * (float)Math.PI);
+			var angle = (Velocity.Length * Time.Delta) / (Radius * (float)Math.PI);
 			Rotation = Rotation.FromAxis( axis, 180.0f * angle ) * Rotation;
 		}
 
-		if ( mover.Hit )
+		if ( mover.Hit && Debug.Enabled )
 		{
-			ImpactObject( (mover.HitEntity as ModelEntity).PhysicsBody, mover.HitPos, mover.HitVelocity );
 			ImpactEffects( mover.HitPos, mover.HitNormal, mover.HitVelocity.Length );
 		}
-	}
-
-	private void ImpactObject( PhysicsBody body, Vector3 hitpos, Vector3 velocity )
-	{
-		if ( body.IsValid() )
-			body.ApplyForceAt( hitpos, velocity * 100.0f );
 	}
 
 	private void ImpactEffects( Vector3 pos, Vector3 normal, float speed )

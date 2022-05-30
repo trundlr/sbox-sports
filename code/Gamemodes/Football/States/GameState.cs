@@ -2,18 +2,19 @@ using Sports.StateSystem;
 
 namespace Sports.Football.States;
 
-public partial class FBGameState : PredictedBaseState<FBStateMachine>
+public partial class FootballGameState : PredictedBaseState<FootballStateMachine>
 {
+
 	[Net, Predicted]
-	public float RoundTime { get; set; } = 120;
+	public float RoundTime { get; set; }
+
 	public override void CheckSwitchState()
 	{
 		base.CheckSwitchState();
 		if ( StateMachine.Goal )
 		{
-			StateMachine.SetState( nameof( FBPreGameState ) );
+			StateMachine.SetState( nameof( FootballPreGameState ) );
 			StateMachine.Goal = false;
-			Log.Debug( "Goal" );
 		}
 	}
 
@@ -31,12 +32,12 @@ public partial class FBGameState : PredictedBaseState<FBStateMachine>
 	{
 		RoundTime -= Time.Delta;
 
-
-		DebugOverlay.ScreenText( $"Time: {RoundTime}", 2 );
+		if ( Debug.Enabled )
+			DebugOverlay.ScreenText( $"Time: {RoundTime}", 2 );
 
 		if ( RoundTime <= 0 )
 		{
-			StateMachine.SetState( nameof( FBPostGameState ) );
+			StateMachine.SetState( nameof( FootballPostGameState ) );
 		}
 	}
 }

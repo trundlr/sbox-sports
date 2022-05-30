@@ -10,9 +10,14 @@ public class Goal : GamemodeBaseTrigger
 
 	public override void OnTouchStart( Entity toucher )
 	{
-		if ( toucher is SoccerBall ball )
+		if ( toucher is SoccerBall )
 		{
-			GamemodeInstance?.OnGoal( this );
+			GamemodeInstance?.OnGoal();
+		}
+		else if ( toucher is FootballPlayer player )
+		{
+			Log.Info( "Player touched goal" );
+			player.Respawn(); // make players respawn if they fall into the goal
 		}
 	}
 }

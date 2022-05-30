@@ -1,9 +1,10 @@
 using Sports.StateSystem;
 
-namespace Sports.Football.States;
+namespace Sports.Football;
 
-public partial class FBStateMachine : StateMachine
+public partial class FootballStateMachine : StateMachine
 {
+
 	public FootballGame Game { get => Gamemode as FootballGame; set => Gamemode = value; }
 
 	[Net]

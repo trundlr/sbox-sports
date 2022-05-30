@@ -2,7 +2,6 @@ namespace Sports;
 
 public class FootballPlayerAnimator : PawnAnimator
 {
-	TimeSince TimeSinceFootShuffle = 60;
 
 	public override void Simulate()
 	{
@@ -67,7 +66,6 @@ public class FootballPlayerAnimator : PawnAnimator
 
 	public override void OnEvent( string name )
 	{
-		// DebugOverlay.Text( Pos + Vector3.Up * 100, name, 5.0f );
 
 		if ( name == "jump" )
 		{
@@ -85,8 +83,8 @@ public class FootballPlayerAnimator : PawnAnimator
 
 	public enum KickDirection
 	{
-		forward = 0,
-		left = 1,
-		right = 2,
+		Forward = 0,
+		Left = 1,
+		Right = 2,
 	}
 }

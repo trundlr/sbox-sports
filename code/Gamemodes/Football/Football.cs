@@ -11,11 +11,10 @@ namespace Sports;
 [Sphere( 128f, 0, 125, 255 )]
 public partial class FootballGame : BaseGamemode
 {
-	public FBStateMachine FootballStateMachine => StateMachine as FBStateMachine;
 
-
-
+	public FootballStateMachine FootballStateMachine => StateMachine as FootballStateMachine;
 	public override BasePlayer CreatePawn() => new FootballPlayer();
+
 
 	[Property, FGDType( "target_destination" )]
 	public string BallSpawnerName { get; set; }
@@ -23,7 +22,7 @@ public partial class FootballGame : BaseGamemode
 	[Net]
 	public SoccerBall CurrentBall { get; set; }
 
-	public void OnGoal( Goal goal )
+	public void OnGoal()
 	{
 		FootballStateMachine.Goal = true;
 	}
@@ -32,21 +31,21 @@ public partial class FootballGame : BaseGamemode
 	{
 		base.Spawn();
 
-		SetStateMachine<FBStateMachine>( nameof( FBWarmupState ) );
+		SetStateMachine<FootballStateMachine>( nameof( FootballWarmupState ) );
 	}
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
-		StateMachine?.SetState( nameof( FBPreGameState ) );
+		StateMachine?.SetState( nameof( FootballPreGameState ) );
 	}
 
 	public override void OnFinish()
 	{
 		base.OnFinish();
 
-		StateMachine?.SetState( nameof( FBWarmupState ) );
+		StateMachine?.SetState( nameof( FootballWarmupState ) );
 
 		if ( CurrentBall.IsValid() && IsServer )
 		{
@@ -88,7 +87,7 @@ public partial class FootballGame : BaseGamemode
 
 		if ( !string.IsNullOrEmpty( BallSpawnerName ) )
 		{
-			var ballSpawner = Entity.FindByName( BallSpawnerName ) as BallSpawner;
+			var ballSpawner = Entity.FindAllByName( BallSpawnerName ).OrderBy( e => Guid.NewGuid() ).First() as BallSpawner;
 
 			CurrentBall = ballSpawner.SpawnBall();
 		}

@@ -2,8 +2,9 @@ using Sports.StateSystem;
 
 namespace Sports.Football.States;
 
-public class FBWarmupState : BaseState<FBStateMachine>
+public class FootballWarmupState : BaseState<FootballStateMachine>
 {
+
 	public override void OnEnter()
 	{
 		base.OnEnter();

@@ -2,17 +2,19 @@ using Sports.StateSystem;
 
 namespace Sports.Football.States;
 
-public partial class FBPreGameState : PredictedBaseState<FBStateMachine>
+public partial class FootballPreGameState : PredictedBaseState<FootballStateMachine>
 {
+
 	[Net, Predicted]
 	public TimeSince StartTime { get; set; }
+
 	public override void CheckSwitchState()
 	{
 		base.CheckSwitchState();
 
 		if ( StartTime > 2 )
 		{
-			StateMachine.SetState( nameof( FBGameState ) );
+			StateMachine.SetState( nameof( FootballGameState ) );
 			StateMachine.Game.SpawnBall();
 		}
 	}
