@@ -14,5 +14,4 @@ public partial class Ball : ModelEntity
 
 		Tags.Add( "football" );
 	}
-
 }
