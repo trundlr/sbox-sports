@@ -86,8 +86,6 @@ public partial class FootballPlayer : BasePlayer
 
 				ball.SetActivePlayer( this );
 			}
-
 		}
-
 	}
 }
