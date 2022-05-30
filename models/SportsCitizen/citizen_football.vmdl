@@ -12,6 +12,22 @@
 					{
 						_class = "AnimFile"
 						name = "Citizen_FootBall_Kick_Straight_R"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_GENERIC_EVENT"
+								event_frame = 10
+								event_keys = 
+								{
+									TypeName = "kick"
+									Int = 0
+									Float = 0.0
+									Vector = [ 0.0, 0.0, 0.0 ]
+									StringData = ""
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -33,6 +49,22 @@
 					{
 						_class = "AnimFile"
 						name = "Citizen_FootBall_Kick_Straight_L"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_GENERIC_EVENT"
+								event_frame = 10
+								event_keys = 
+								{
+									TypeName = "kick"
+									Int = 0
+									Float = 0.0
+									Vector = [ 0.0, 0.0, 0.0 ]
+									StringData = ""
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -54,6 +86,22 @@
 					{
 						_class = "AnimFile"
 						name = "Citizen_FootBall_Kick_Left"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_GENERIC_EVENT"
+								event_frame = 10
+								event_keys = 
+								{
+									TypeName = "kick"
+									Int = 1
+									Float = 0.0
+									Vector = [ 0.0, 0.0, 0.0 ]
+									StringData = ""
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -75,6 +123,22 @@
 					{
 						_class = "AnimFile"
 						name = "Citizen_FootBall_Kick_Right"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_GENERIC_EVENT"
+								event_frame = 10
+								event_keys = 
+								{
+									TypeName = "kick"
+									Int = 2
+									Float = 0.0
+									Vector = [ 0.0, 0.0, 0.0 ]
+									StringData = ""
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""

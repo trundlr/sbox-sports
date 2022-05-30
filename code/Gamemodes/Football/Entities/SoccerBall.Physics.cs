@@ -5,6 +5,10 @@ public partial class SoccerBall
 	protected Vector3 _Velocity;
 	public override Vector3 Velocity { get => _Velocity; set => _Velocity = value; }
 
+
+	public TimeSince ActivePlayerKick { get; set; }
+	public FootballPlayer ActivePlayer { get; set; }
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -15,13 +19,23 @@ public partial class SoccerBall
 			{
 				Move();
 			}
+			if ( ActivePlayerKick > 0.5f )
+			{
+				ActivePlayer = null;
+			}
 		}
+	}
+
+	public void SetActivePlayer( FootballPlayer player )
+	{
+		ActivePlayer = player;
+		ActivePlayerKick = 0;
 	}
 
 	public virtual void Move()
 	{
 		var mover = new BallMover( Position, Velocity, "", "football", "football_ball_ignore" );
-		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this );
+		mover.Trace = mover.Trace.Radius( Radius ).Ignore( this ).Ignore( ActivePlayer );
 		mover.MaxStandableAngle = 50.0f;
 		mover.GroundBounce = 0.9f;
 		mover.WallBounce = 0.5f;

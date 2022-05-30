@@ -5,6 +5,7 @@ public partial class SoccerBall : ModelEntity
 	private float Radius => 25.9223f;
 	private float Mass => 3f;
 
+
 	private float frictionCoefficient = 0.5f;
 
 	public override void Spawn()
@@ -15,7 +16,7 @@ public partial class SoccerBall : ModelEntity
 
 		Transmit = TransmitType.Always;
 
-		Predictable = false;
+		Predictable = true;
 
 		Tags.Add( "football" );
 	}
