@@ -22,9 +22,7 @@ public class FootballPlayerAnimator : PawnAnimator
 		SetLookAt( "aim_eyes", lookPos );
 		SetLookAt( "aim_head", lookPos );
 		SetLookAt( "aim_body", aimPos );
-
 	}
-
 
 	void DoWalk()
 	{
