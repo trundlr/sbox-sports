@@ -14,7 +14,6 @@ public partial class FootballGame : BaseGamemode
 	public FootballStateMachine FootballStateMachine => StateMachine as FootballStateMachine;
 	public override BasePlayer CreatePawn() => new FootballPlayer();
 
-
 	[Property, FGDType( "target_destination" )]
 	public string BallSpawnerName { get; set; }
 
