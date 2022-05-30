@@ -4,7 +4,6 @@ namespace Sports.Football.States;
 
 public partial class FootballPreGameState : PredictedBaseState<FootballStateMachine>
 {
-
 	[Net, Predicted]
 	public TimeSince StartTime { get; set; }
 

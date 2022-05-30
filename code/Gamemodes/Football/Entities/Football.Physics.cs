@@ -2,7 +2,6 @@ namespace Sports.Football;
 
 public partial class Ball
 {
-
 	private readonly float Radius = 25.9223f;
 	private readonly float FrictionStrength = 0.5f;
 

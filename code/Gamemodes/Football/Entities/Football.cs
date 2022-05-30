@@ -2,7 +2,6 @@ namespace Sports.Football;
 
 public partial class Ball : ModelEntity
 {
-
 	public override void Spawn()
 	{
 		base.Spawn();

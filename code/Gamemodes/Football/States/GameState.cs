@@ -4,7 +4,6 @@ namespace Sports.Football.States;
 
 public partial class FootballGameState : PredictedBaseState<FootballStateMachine>
 {
-
 	[Net, Predicted]
 	public float RoundTime { get; set; }
 

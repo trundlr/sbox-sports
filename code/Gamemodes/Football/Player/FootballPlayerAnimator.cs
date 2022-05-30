@@ -2,7 +2,6 @@ namespace Sports;
 
 public class FootballPlayerAnimator : PawnAnimator
 {
-
 	public override void Simulate()
 	{
 		Rotation = Rotation.LookAt( Input.Rotation.Forward.WithZ( 0 ), Vector3.Up );

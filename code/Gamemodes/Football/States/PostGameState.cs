@@ -4,7 +4,6 @@ namespace Sports.Football.States;
 
 public class FootballPostGameState : BaseState<FootballStateMachine>
 {
-
 	public override void CheckSwitchState()
 	{
 		base.CheckSwitchState();

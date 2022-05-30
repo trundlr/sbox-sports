@@ -5,7 +5,6 @@ namespace Sports.Football;
 [Title( "Goal Trigger" ), Icon( "select_all" )]
 public class Goal : GamemodeBaseTrigger
 {
-
 	public FootballGame GamemodeInstance => Gamemode as FootballGame;
 
 	public override void OnTouchStart( Entity toucher )

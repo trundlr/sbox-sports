@@ -4,7 +4,6 @@ namespace Sports.Football;
 
 public partial class FootballStateMachine : StateMachine
 {
-
 	public FootballGame Game { get => Gamemode as FootballGame; set => Gamemode = value; }
 
 	[Net]

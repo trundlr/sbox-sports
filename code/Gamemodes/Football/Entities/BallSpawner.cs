@@ -6,7 +6,6 @@ namespace Sports.Football;
 [Title( "Ball Spawner" )]
 public class BallSpawner : GamemodeEntity
 {
-
 	public Ball SpawnBall()
 	{
 		return new Ball

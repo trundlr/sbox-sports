@@ -5,7 +5,6 @@ namespace Sports;
 
 public partial class FootballPlayer : BasePlayer
 {
-
 	public FootballPlayerAnimator PlayerAnimator => GetActiveAnimator() as FootballPlayerAnimator;
 
 	public override void Respawn()
