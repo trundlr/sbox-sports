@@ -16941,8 +16941,8 @@
 	]
 	m_boneMergeModels = 
 	[
-		"models/citizen_clothes/shorts/summer_shorts/model/summer_shorts.vmdl",
+		"models/sportscitizen/clothes/football/football_shorts.vmdl",
 		"models/citizen_clothes/shoes/trainers.vmdl",
-		"models/citizen_clothes/shirt/tanktop/models/tanktop.vmdl",
+		"models/sportscitizen/clothes/football/football_shirt.vmdl",
 	]
 }
