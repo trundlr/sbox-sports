@@ -6,7 +6,7 @@ global using System;
 global using System.Collections.Generic;
 global using System.ComponentModel;
 global using System.Linq;
-
+using Sports.BotSystem;
 using Sports.UI;
 
 namespace Sports;
@@ -74,6 +74,7 @@ public partial class SportsGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
+
 		Log.Info( $"{cl.Name} has joined the session" );
 		SportsChatBox.AddInformation( To.Everyone, $"{cl.Name} joined the session", $"avatar:{cl.PlayerId}" );
 
@@ -82,6 +83,7 @@ public partial class SportsGame : Game
 
 		// Give the client the PartyComponent
 		cl.GetPartyComponent();
+
 
 		// Set up the default pawn
 		SetupDefaultPawn( cl );
@@ -105,5 +107,18 @@ public partial class SportsGame : Game
 		}
 
 		cl.GetPartyComponent()?.Leave();
+	}
+
+	[ConCmd.Admin( "sports_bot_add" )]
+	public static void AddBot()
+	{
+		if ( ConsoleSystem.Caller is Client cl && cl.GetGamemode() is BaseGamemode gamemode )
+		{
+			gamemode.AddBot( new SportsBot() );
+		}
+		else
+		{
+			_ = new SportsBot();
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Sports.StateSystem;
+﻿using Sports.BotSystem;
+using Sports.StateSystem;
 
 namespace Sports;
 
@@ -94,6 +95,12 @@ public abstract partial class BaseGamemode : Entity
 		OnClientRemoved( cl, reason );
 	}
 
+	public void AddBot( SportsBot bot )
+	{
+		AddClient( bot.Client );
+		OnBotAdded( bot );
+	}
+
 	/// <summary>
 	/// Decides which hud panel to display when a part of this gamemode
 	/// </summary>
@@ -130,6 +137,14 @@ public abstract partial class BaseGamemode : Entity
 	}
 
 	/// <summary>
+	/// Called when a bot has joined the gamemode
+	/// </summary>
+	/// <param name="bot"></param>
+	public virtual void OnBotAdded( SportsBot bot )
+	{
+	}
+
+	/// <summary>
 	/// Can we add a client to the gamemode? I.e it's full, or it's in progress (maybe we can delete this)
 	/// </summary>
 	/// <param name="cl"></param>
@@ -142,6 +157,14 @@ public abstract partial class BaseGamemode : Entity
 	/// <param name="cl"></param>
 	/// <param name="reason"></param>
 	public virtual void OnClientRemoved( Client cl, LeaveReason reason = LeaveReason.Leave )
+	{
+	}
+
+	/// <summary>
+	/// Called when a bot leaves a gamemode. We can use this to clean up and alter the gamemode's state if required.
+	/// </summary>
+	/// <param name="bot"></param>
+	public virtual void OnBotRemoved( SportsBot bot )
 	{
 	}
 

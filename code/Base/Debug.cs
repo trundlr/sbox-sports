@@ -6,6 +6,8 @@ public static class Debug
 
 	// @TODO: revert when ConVar.Replicated is fixed
 	public static bool Enabled => true;
+
+	public static bool Bots => true;
 }
 
 public static class LoggerExtension
