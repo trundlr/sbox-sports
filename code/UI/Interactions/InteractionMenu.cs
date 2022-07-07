@@ -91,6 +91,9 @@ public class InteractionMenu : Panel
 
 	protected void Use()
 	{
+		if ( InteractionList.Count == 0 )
+			return;
+
 		var interaction = InteractionList[CurrentInteractionIndex];
 
 		interaction.ClientResolve();
