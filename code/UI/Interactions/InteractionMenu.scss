@@ -4,33 +4,66 @@ InteractionMenu {
   left: $safe-area-x;
   position: absolute;
   align-self: center;
-  border-radius: $secondary-rounding;
-  background-image: linear-gradient( to left, rgba($theme-color, 0) 0%, rgba($theme-color, 0.1) 10%, rgba($theme-color, 1) 100% );
   opacity: 1;
-  pointer-events: all;
-  flex-direction: column;
-  padding: 16px;
 
   &.hide {
     opacity: 0;
-  }
-
-  label {
-    font-family: $primary-font;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0px 0px 2px 20px rgba(black,1);
   }
 
   .name {
     font-size: 32px;
   }
 
-  .interaction-entry {
-    font-size: 22px;
+  .container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+  }
 
-    &:hover {
-      color: lightgray;
+  .glyph {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-right: 8px;
+  }
+
+  .control-area {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .control {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 16px;
+    background-image-tint: rgb( 128, 128, 128 );
+    opacity: 1;
+
+    &.up {
+      background-image: url( /ui/interaction/option_up.png );
     }
+
+    &.down {
+      background-image: url( /ui/interaction/option_down.png );
+    }
+
+    &.active {
+      background-image-tint: #ffffff;
+    }
+
+    &.hide {
+      opacity: 0;
+    }
+  }
+
+  .canvas {
+    height: 100%;
+    border-radius: $secondary-rounding;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
   }
 }
